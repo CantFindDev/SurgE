@@ -408,11 +408,12 @@ class Patient:
     def GetCurrentStatus(self) -> str:
         if self.IsSurgeryEnded:
             usedtext = ""
-            usedtext += f"### Malady:{TextManager.AddSpace(6)}Special Condition:"
-            if self.SpecialCondition != "" and self.SpecialConditionVisibility:
-                usedtext += f"\n{self.CurrentDisease["diagnostic"]}{TextManager.AddSpace(5)} {self.SpecialCondition}"
+            usedtext += f"## {self.EndText}\n\n"
+            usedtext += f"### Malady:{TextManager.AddSpace(6)}{("Special Condition:")if self.SpecialConditionText != "" and self.SpecialConditionVisibility else ""}"
+            usedtext += f"\n{self.CurrentDisease["diagnostic"]}{TextManager.AddSpace(5)} {self.SpecialCondition if self.SpecialConditionText != "" and self.SpecialConditionVisibility else ""}"
+            usedtext += f"\n### Skill Level: \n{self.SkillLevel}"
             if (self.SkillFailCount > 0):
-                usedtext += f"\n\n### Skill Fails: {self.SkillFailCount}"
+                usedtext += f"\n### Skill Fails: \n{self.SkillFailCount}"
             usedtext += "\n### Tools Used:\n"
             if self.SpongeCount > 0:
                  usedtext +=  ToolIcon.SurgicalSponge.value + " Sponges: "  + str(self.SpongeCount) + "\n"
@@ -440,10 +441,10 @@ class Patient:
                 usedtext += ToolIcon.SurgicalClamp.value +  " Clamps: " + str(self.ClampCount) + "\n"
             if self.TransfusionCount > 0:
                 usedtext += ToolIcon.SurgicalTransfusion.value + " Transfusions: " + str(self.TransfusionCount) + "\n"
-            return f"### [{self.EndText}](https://discord.gg/d9puKpHWjn)\n" + usedtext 
+            return usedtext
 
         spacecount = 8
-        return (("```ansi\n" if TextManager.ColoredUI else "") + f"{(TextManager.WarningText(self.SpecialConditionText)+"\n" if self.SpecialCondition != "" and self.SpecialConditionVisibility else "")}"
+        return (f"### Surgery Simulator| Skill Level: {self.SkillLevel}\n\n" + ("```ansi\n" if TextManager.ColoredUI else "") + f"{(TextManager.WarningText(self.SpecialConditionText)+"\n" if self.SpecialConditionText != "" and self.SpecialConditionVisibility else "")}"
                 f"{TextManager.BoldText(self.ScanText)}\n\n"
                 f"Pulse: {self.PulseText}{TextManager.AddSpace(SpaceCount=spacecount)}Status: {self.PatientStatus} \n"
                 f"Temp: {self.TempText}{TextManager.AddSpace(SpaceCount=spacecount +2)}Operation site: {self.SiteText}\n"
@@ -451,7 +452,7 @@ class Patient:
                 f"{self.PatientText}"
                 f"{self.BleedingText}"
                 f"{self.FeverText}"
-                f"\n{TextManager.SoftText(self.ToolText)}" + ("```" if TextManager.ColoredUI else ""))
+                f"\n{TextManager.SoftText(self.ToolText)}" + ("```" if TextManager.ColoredUI else "\n\n"))
 
 class PatientState(Enum):
     HeartStopped = 0
@@ -605,7 +606,7 @@ class SurgeryView(View):
     async def GiveUpOnSurgery(self, interaction: discord.Interaction):
         self.clear_items()
         embed = discord.Embed(
-            title=f"Surgery Simulator| Skill Level: {self.patient.SkillLevel}",
+            title= "",
             description="You gave up on the surgery.",
             color=discord.Color.red()
         )
@@ -623,17 +624,14 @@ class SurgeryView(View):
                 self.clear_items()
 
             embed = discord.Embed(
-                title=f"Surgery Simulator | Skill Level: {self.patient.SkillLevel}",
+                title= "",
                 description=self.patient.GetCurrentStatus(),
                 color=embed_color
             )
-            file = discord.File("./Images/SurgE.png", filename="SurgE.png")
             self.clear_items()
             if not self.patient.IsSurgeryEnded:
                 self.GenerateToolButtons()
 
-            # file = discord.File("./Images/SurgE.png", filename="SurgE.png")
-            # embed.set_thumbnail(url="attachment://SurgE.png")
             embed.set_footer(text="Surg system is being developed by CantFind")
             await interaction.response.edit_message(embed=embed, view=self)
 
@@ -730,7 +728,7 @@ class SurgeryCog(commands.Cog):
         TextManager.ColoredUI = coloredui
         patient.UpdatePatientUI()
         embed = discord.Embed(
-            title=f"Surgery Simulator| Skill Level: {patient.SkillLevel}",
+            title= "",
             description=patient.GetCurrentStatus(),
             color=discord.Color.blue()
         )
