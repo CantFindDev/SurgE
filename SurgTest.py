@@ -444,7 +444,7 @@ class Patient:
             return usedtext
 
         spacecount = 8
-        return (f"### Surgery Simulator| Skill Level: {self.SkillLevel}\n\n" + ("```ansi\n" if TextManager.ColoredUI else "") + f"{(TextManager.WarningText(self.SpecialConditionText)+"\n" if self.SpecialConditionText != "" and self.SpecialConditionVisibility else "")}"
+        return ((f"### Surgery Simulator| Skill Level: {self.SkillLevel}\n\n") + ("```ansi\n" if TextManager.ColoredUI else "") + f"{(TextManager.WarningText(self.SpecialConditionText)+"\n" if self.SpecialConditionText != "" and self.SpecialConditionVisibility else "")}"
                 f"{TextManager.BoldText(self.ScanText)}\n\n"
                 f"Pulse: {self.PulseText}{TextManager.AddSpace(SpaceCount=spacecount)}Status: {self.PatientStatus} \n"
                 f"Temp: {self.TempText}{TextManager.AddSpace(SpaceCount=spacecount +2)}Operation site: {self.SiteText}\n"
