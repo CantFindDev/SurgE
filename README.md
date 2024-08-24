@@ -1,2 +1,191 @@
-THIS BOT IS MADE BY CANTFIND
-The bot is currently at alpha state
+
+![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+
+
+# Surg-E Discord Bot
+
+This Discord bot is designed to simulate Growtopia's surgery system, providing an interactive way to learn and practice surgery without the need for in-game tools, world locks, or waiting hours for malpractice. The bot features two distinct modes:
+
+## SurgE Mode
+SurgE Mode offers a casual environment where you can practice and reinforce your existing knowledge of surgery techniques. It's a great way to familiarize yourself with the surgery system at your own pace.
+
+## TrainE Mode
+SurgE Mode offers a casual environment where you can practice and reinforce your existing knowledge of surgery techniques. It's a great way to familiarize yourself with the surgery system at your own pace.# How to Use
+
+To get started with the bot, use the following commands to simulate the Growtopia surgery system:
+
+## Generate a Random Malady
+
+Generate a random malady with a special condition and set the skill level to 100:
+```
+/surgery
+```
+
+## Enable Surgery UI with Colors
+
+Activate a surgery UI that mimics the Growtopia surgery simulator with colors:
+```
+/surgery coloredui:True
+```
+![Surgery UI](https://i.imgur.com/q0oDU7V.png)
+
+## Select a Specific Malady
+
+Choose from a list of available maladies to practice with:
+```
+/surgery malady:[MALADY_NAME]
+```
+![Malady Selection](https://i.imgur.com/DuI6Hzq.png)
+
+## Activate TrainE Mode
+
+Enable TrainE mode to receive tips and suggestions based on your situation:
+```
+/surgery trainemode:True
+```
+![TrainE Mode](https://i.imgur.com/PNVKYhX.png)
+
+## Enable Ephemeral Embeds
+
+Configure the bot to send ephemeral embedded messages:
+```
+/surgery hidden:True
+```
+![Ephemeral Embeds](https://i.imgur.com/T0PqwGK.png)
+
+## Set Special Condition
+
+Customize the special condition of the patient:
+```
+/surgery specialcondition:[CONDITION_NAME]
+```
+![Special Condition](https://i.imgur.com/psWrpON.png)
+
+## Adjust Skill Level
+
+Set your skill level to any value between 0 and 100:
+```
+/surgery skilllevel:[SKILL_LEVEL]
+```
+## How to Use the Source Code
+
+### Prerequisites
+
+Ensure that Python is installed on your device. If not, you can download it from [Python's official website](https://www.python.org/downloads/).
+
+### Cloning the Repository
+
+Clone the source code repository to your local machine using the following command:
+
+```bash
+git clone https://github.com/CantFindDev/SurgE.git
+```
+
+### Opening the Project
+
+Open the source code in [Visual Studio Code](https://code.visualstudio.com):
+
+![Visual Studio Code Interface](https://i.imgur.com/OWmwUcP.png)
+
+The following files are essential once you open the project:
+
+![Project Files](https://i.imgur.com/hbpQ6Dp.png)
+![Project Structure](https://i.imgur.com/remA2hO.png)
+
+### Creating a Discord Bot
+
+1. Navigate to the [Discord Developer Portal](https://discord.com/developers/applications).
+2. Click on "Create Application":
+
+   ![Create Application](https://i.imgur.com/BOQkEv9.png)
+
+3. Configure your application:
+
+   ![Configure Application](https://i.imgur.com/M7o2OrD.png)
+
+4. Go to the "Bot" section:
+
+   ![Bot Section](https://i.imgur.com/VhUUk8V.png)
+
+5. Scroll down and enable all **Privileged Gateway Intents**:
+
+   ![Privileged Gateway Intents](https://i.imgur.com/PN8FVGs.gif)
+
+6. At the top of the page, click "Reset Token" to copy your bot token (ensure you keep this token confidential):
+
+   ![Copy Token](https://i.imgur.com/CaCziMe.png)
+
+### Configuring the Bot
+
+1. Return to your local project directory.
+2. Rename the `EMPTY_.env` file to `.env`:
+
+   ![Rename .env File](https://i.imgur.com/FuHFt5Z.png)
+
+3. Paste your bot token into the `.env` file as shown below:
+
+   ![Edit .env File](https://i.imgur.com/vKy02mE.png)
+
+### Running the Bot
+
+1. Open a new terminal in Visual Studio Code:
+
+   ![Open Terminal](https://i.imgur.com/uQcK0uF.png)
+
+2. Execute the following command:
+
+   ```bash
+   python Bot.py
+   ```
+
+   ![Run Bot](https://i.imgur.com/aB1lgyu.png)
+
+3. Wait for the "synced commands" message:
+
+   ![Synced Commands](https://i.imgur.com/G0cLw1A.png)
+
+### Adding the Bot to Your Server
+
+1. Go back to the Discord Developer Portal and navigate to the "OAuth2" section:
+
+   ![OAuth2](https://i.imgur.com/SxPutnw.png)
+
+2. Enable `applications.commands` and select the `Administrator` scope. Scroll down and copy the bot invite link:
+
+   ![Invite Link](https://i.imgur.com/pElJf4A.gif)
+
+3. Open the invite link in your browser to add the bot to your server:
+
+   ![Add Bot to Server](https://i.imgur.com/ygClVmj.png)
+
+---
+
+Enjoy using your bot! Remember to continue coding and stay curious. If you have any questions or run into issues, feel free to reach out.
+# My Socials
+
+<div align="left">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="30" alt="python logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" height="30" alt="csharp logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" height="30" alt="cplusplus logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" height="30" alt="java logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unrealengine/unrealengine-original.svg" height="30" alt="unrealengine logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unity/unity-original.svg" height="30" alt="unity logo"  />
+</div>
+
+<div align="left">
+  <a href="https://www.youtube.com/@TheRealCantFind" target="_blank">
+    <img src="https://img.shields.io/static/v1?message=Youtube&logo=youtube&label=&color=FF0000&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="youtube logo"  />
+  </a>
+  <a href="CantFind" target="_blank">
+    <img src="https://img.shields.io/static/v1?message=Discord&logo=discord&label=&color=7289DA&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="discord logo"  />
+  </a>
+</div>
+
+[![MIT License](https://img.shields.io/badge/CantFind-SurgE-red
+)](https://choosealicense.com/licenses/mit/)
+[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
