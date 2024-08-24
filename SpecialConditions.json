@@ -1,0 +1,32 @@
+[
+  {
+    "condition_name": "None",
+    "condition_text": "\u200b",
+    "condition_visibility": false
+  },
+  {
+    "condition_name": "Tough Skin",
+    "condition_text": "The patient exhibits very tough skin. Possibly a superhero.",
+    "condition_visibility": true
+  },
+  {
+    "condition_name": "Antibiotic-Resistant Infection",
+    "condition_text": "The patient has an antibiotic-resistant infection.",
+    "condition_visibility": false
+  },
+  {
+    "condition_name": "Filthy",
+    "condition_text": "The patient is absolutely filthy.",
+    "condition_visibility": true
+  },
+  {
+    "condition_name": "Hyperactive",
+    "condition_text": "The patient is hyperactive.",
+    "condition_visibility": true
+  },
+  {
+    "condition_name": "Hemophiliac",
+    "condition_text": "The patient is a hemophiliac.",
+    "condition_visibility": false
+  }
+]

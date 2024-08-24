@@ -7,6 +7,7 @@ from discord.ui import Button, View
 from typing import Optional
 import typing
 import math
+import json
 
 class Patient:
     def __init__(self, SkillLevel: int = 100, malady: Optional[str] = None, specialcondition: Optional[str] = None):
@@ -88,13 +89,13 @@ class Patient:
                 break
 
     def SetSpesificSpecialCondition(self, ConditionName: str):
-        for cond in SpecialConditions.conditions:
+        for cond in SpecialConditions.Conditions:
             if cond['condition_name'].lower() == ConditionName.lower():
                 self.ApplyCondition(cond)
                 break
                 
     def SetRandomSpecialCondition(self):
-        cond = random.choice(SpecialConditions.conditions)
+        cond = random.choice(SpecialConditions.Conditions)
         self.ApplyCondition(cond)
 
     def ApplyCondition(self,cond):
@@ -480,50 +481,32 @@ class PatientStatus:
             case 3:
                 return f"{TextManager.PositiveText("Unconscious")}"
 class SpecialConditions:
-    conditions = [
-        {"condition_name": "None", "condition_text": "\u200b","condition_visibility": False},
-        {"condition_name": "Tough Skin", "condition_text": "The patient exhibits very tough skin. Possibly a superhero.","condition_visibility": True},
-        {"condition_name": "Antibiotic-Resistant Infection", "condition_text": "The patient has an antibiotic-resistant infection.","condition_visibility": False},
-        {"condition_name": "Filthy", "condition_text": "The patient is absolutely filthy.","condition_visibility": True},
-        {"condition_name": "Hyperactive", "condition_text": "The patient is hyperactive.","condition_visibility": True},
-        {"condition_name": "Hemophiliac", "condition_text": "The patient is a hemophiliac.","condition_visibility": False}
-        ]
+    Conditions = []
     @staticmethod
     def GetAllSpecialConditions():
-        return [cond["condition_name"] for cond in SpecialConditions.conditions]
+        return [cond["condition_name"] for cond in SpecialConditions.Conditions]
+    @staticmethod
+    def WriteSpecialConditions():
+        with open("SpecialConditions.json", "w+") as file:
+            json.dump(SpecialConditions.Conditions, file, indent=4)
+    @staticmethod
+    def SetSpecialConditions():
+        with open("SpecialConditions.json", "r+") as file:
+            SpecialConditions.Conditions = json.load(file)
+    
 class Maladies:
-    Maladies = [
-        {"diagnostic": "Broken Arm", "scan_text": "Patient broke his arm.","patient_fixed": True, "bleeding": 1, "broken": 1, "incisions_needed": 1, "steps": ["Use Surgical Splint", "Use Surgical Stitches to reduce bleeding"]},
-        {"diagnostic": "Broken Leg", "scan_text": "Patient broke his leg.","patient_fixed": True,  "bleeding": 1, "broken": 1, "shattered": 1, "incisions_needed": random.randint(1, 2), "steps": ["Use Surgical Splint", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Use Surgical Pins", "Close incisions with Surgical Stitches"]},
-        {"diagnostic": "Bird Flu", "scan_text": "Patient is showing signs of the bird flu.","patient_fixed": True, "flu": True, "temperature": round(random.uniform(102.0, 105.0)), "fever": 3.0, "dirt": 3, "steps": ["Use Surgical Lab Kit", "Use Surgical Antibiotics until fever stabilizes"]},
-        {"diagnostic": "Turtle Flu", "scan_text": "Patient is showing signs of the turtle flu.","patient_fixed": True, "flu": True, "temperature": round(random.uniform(101.0, 104.0)), "fever": 3.0, "dirt": 3, "steps": ["Use Surgical Lab Kit", "Use Surgical Antibiotics until fever stabilizes"]},
-        #ADD MONKEY FLU
-        {"diagnostic": "Nose Job", "scan_text": "Patient is showing signs of the turtle flu.", "incisions_needed": 1, "steps": ["Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Stitches"]},
-        {"diagnostic": "Lung Tumor", "scan_text": "a lung tumor!", "incisions_needed": 1, "steps": ["Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Stitches"]},
-        {"diagnostic": "Heart Attack", "scan_text": "a heart attack!", "incisions_needed": 2, "steps": ["Use Surgical Antibiotics (optional)", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Stitches"]},
-        {"diagnostic": "Brain Tumor", "scan_text": "a brain tumor!", "incisions_needed": 5, "steps": ["Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Stitches"]},
-        {"diagnostic": "Appendicitis", "scan_text": "appendicitis!", "incisions_needed": 3, "steps": ["Use Surgical Antibiotics", "Use Surgical Antiseptic", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Stitches"]},
-        {"diagnostic": "Liver Infection", "scan_text": "liver infection!", "incisions_needed": 2, "steps": ["Use Surgical Antibiotics", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Stitches"]},
-        {"diagnostic": "Kidney Failure", "scan_text": "kidney failure!", "incisions_needed": 2, "steps": ["Use Surgical Antibiotics", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Stitches"]},
-        {"diagnostic": "Broken Heart", "scan_text": "a broken heart!", "incisions_needed": 3, "steps": ["Use Surgical Lab Kit", "Use Surgical Antibiotics", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Pins", "Use Surgical Stitches", "Use Surgical Splint"]},
-        {"diagnostic": "Swallowed a World Lock", "scan_text": "swallowed a world lock!", "incisions_needed": 2, "steps": ["Use Surgical Antibiotics", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Stitches"]},
-        {"diagnostic": "Serious Head Injury", "scan_text": "a serious head injury!", "incisions_needed": 1, "steps": ["Use Surgical Stitches", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Stitches"]},
-        {"diagnostic": "Serious Trauma", "scan_text": "serious trauma with a punctured lung!", "incisions_needed": 2, "steps": ["Use Surgical Stitches", "Use Surgical Splint", "Use Surgical Antiseptic", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Pins", "Close incisions with Surgical Stitches"]},
-        {"diagnostic": "Massive Trauma", "scan_text": "massive trauma!", "incisions_needed": 3, "steps": ["Use Surgical Stitches", "Use Surgical Transfusion", "Use Surgical Ultrasound", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Pins", "Close incisions with Surgical Stitches", "Use Surgical Splint"]},
-        {"diagnostic": "Torn Punching Muscle", "scan_text": "a torn punching muscle!", "incisions_needed": 1, "steps": ["Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Stitches"]},
-        {"diagnostic": "Gem Cuts", "scan_text": "gem cuts!", "incisions_needed": 2, "steps": ["Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Stitches"]},
-        {"diagnostic": "Grumbleteeth", "scan_text": "grumbleteeth!", "incisions_needed": 2, "steps": ["Use Surgical Antibiotics", "Use Surgical Ultrasound", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Pins", "Close incisions with Surgical Stitches", "Use Surgical Splint"]},
-        {"diagnostic": "Chicken Feet", "scan_text": "chicken feet!", "incisions_needed": 2, "steps": ["Use Surgical Lab Kit", "Use Surgical Antibiotics", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Pins", "Use Surgical Splint", "Use Surgical Stitches"]},
-        {"diagnostic": "Chaos Infection", "scan_text": "chaos infection!", "incisions_needed": 3, "steps": ["Use Surgical Sponge", "Use Surgical Lab Kit", "Use Surgical Antibiotics", "Use Surgical Splint", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Stitches"]},
-        {"diagnostic": "Lupus", "scan_text": "lupus!", "incisions_needed": 5, "steps": ["Use Surgical Lab Kit", "Use Surgical Antibiotics", "Use Surgical Stitches", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Use Surgical Clamp", "Use Surgical Stitches"]},
-        {"diagnostic": "Brainworms", "scan_text": "brainworms!", "incisions_needed": 1, "steps": ["Use Surgical Lab Kit", "Use Surgical Antibiotics", "Use Surgical Stitches", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Pins", "Use Surgical Splint", "Use Surgical Stitches", "Use Surgical Transfusion"]},
-        {"diagnostic": "Moldy Guts", "scan_text": "moldy guts!", "incisions_needed": 2, "steps": ["Use Surgical Lab Kit", "Use Surgical Antibiotics", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Pins", "Use Surgical Stitches", "Use Surgical Splint", "Use Surgical Sponge"]},
-        {"diagnostic": "Ecto-Bones", "scan_text": "ecto-bones!", "incisions_needed": 1, "steps": ["Use Surgical Anesthetic", "Use Surgical Splint", "Use Surgical Scalpel", "Fix it", "Use Surgical Pins", "Close incisions with Surgical Stitches", "Use Surgical Splint"]},
-        {"diagnostic": "Fatty-Liver", "scan_text": "fatty-liver!", "incisions_needed": 3, "steps": ["Use Surgical Lab Kit", "Use Surgical Antibiotics", "Use Surgical Sponge", "Use Surgical Antiseptic", "Use Surgical Anesthetic", "Use Surgical Scalpel", "Fix it", "Use Surgical Stitches"]}
-        ]
+    Maladies = []
     @staticmethod
     def GetAllMaladieNames():
         return [disease["diagnostic"] for disease in Maladies.Maladies]
+    @staticmethod
+    def WriteMaladies():
+        with open("Maladies.json", "w+") as file:
+            json.dump(Maladies.Maladies, file, indent=4)
+    @staticmethod
+    def SetMaladies():
+        with open("Maladies.json", "r+") as file:
+            Maladies.Maladies = json.load(file)
 class ToolType(Enum):
     SurgicalAntibiotics = "SurgicalAntibiotics"
     SurgicalAntiseptic = "SurgicalAntiseptic"
@@ -725,6 +708,8 @@ class SurgeryCog(commands.Cog):
     @app_commands.autocomplete(malady=AutoCompleteMalady,specialcondition=AutoCompleteCondition)
     async def surgery(self ,interaction: discord.Interaction,coloredui: Optional[bool] = False, hidden: Optional[bool] = False, malady: Optional[str] = None, specialcondition: Optional[str] = None, skilllevel: Optional[int] = 100):
         await interaction.response.defer(ephemeral=hidden)
+        Maladies.SetMaladies()
+        SpecialConditions.SetSpecialConditions()
 
         if malady is not None and malady not in Maladies.GetAllMaladieNames():
             return await interaction.followup.send(
@@ -735,7 +720,7 @@ class SurgeryCog(commands.Cog):
             return await interaction.followup.send(
                 embed=discord.Embed( title="Invalid Condition!",description="**Please choose from the following:**\n" + "\n".join(SpecialConditions.GetAllSpecialConditions()), color=discord.Color.red())
             )
-            
+        
         patient = Patient(SkillLevel=100 if skilllevel > 100 else 0 if skilllevel < 0 else skilllevel, malady=malady, specialcondition=specialcondition)
         surgery = Surgery(patient=patient, user=interaction.user)
         view = SurgeryView(surgery,interaction.user)

@@ -1,0 +1,348 @@
+[
+  {
+    "diagnostic": "Broken Arm",
+    "scan_text": "Patient broke his arm.",
+    "patient_fixed": true,
+    "bleeding": 1,
+    "broken": 1,
+    "incisions_needed": 1,
+    "steps": ["Use Surgical Splint", "Use Surgical Stitches to reduce bleeding"]
+  },
+  {
+    "diagnostic": "Broken Leg",
+    "scan_text": "Patient broke his leg.",
+    "patient_fixed": true,
+    "bleeding": 1,
+    "broken": 1,
+    "shattered": 1,
+    "incisions_needed": 1,
+    "steps": [
+      "Use Surgical Splint",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Use Surgical Pins",
+      "Close incisions with Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Bird Flu",
+    "scan_text": "Patient is showing signs of the bird flu.",
+    "patient_fixed": true,
+    "flu": true,
+    "temperature": 102,
+    "fever": 3.0,
+    "dirt": 3,
+    "steps": [
+      "Use Surgical Lab Kit",
+      "Use Surgical Antibiotics until fever stabilizes"
+    ]
+  },
+  {
+    "diagnostic": "Turtle Flu",
+    "scan_text": "Patient is showing signs of the turtle flu.",
+    "patient_fixed": true,
+    "flu": true,
+    "temperature": 103,
+    "fever": 3.0,
+    "dirt": 3,
+    "steps": [
+      "Use Surgical Lab Kit",
+      "Use Surgical Antibiotics until fever stabilizes"
+    ]
+  },
+  {
+    "diagnostic": "Nose Job",
+    "scan_text": "Patient is showing signs of the turtle flu.",
+    "incisions_needed": 1,
+    "steps": [
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Lung Tumor",
+    "scan_text": "a lung tumor!",
+    "incisions_needed": 1,
+    "steps": [
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Heart Attack",
+    "scan_text": "a heart attack!",
+    "incisions_needed": 2,
+    "steps": [
+      "Use Surgical Antibiotics (optional)",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Brain Tumor",
+    "scan_text": "a brain tumor!",
+    "incisions_needed": 5,
+    "steps": [
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Appendicitis",
+    "scan_text": "appendicitis!",
+    "incisions_needed": 3,
+    "steps": [
+      "Use Surgical Antibiotics",
+      "Use Surgical Antiseptic",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Liver Infection",
+    "scan_text": "liver infection!",
+    "incisions_needed": 2,
+    "steps": [
+      "Use Surgical Antibiotics",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Kidney Failure",
+    "scan_text": "kidney failure!",
+    "incisions_needed": 2,
+    "steps": [
+      "Use Surgical Antibiotics",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Broken Heart",
+    "scan_text": "a broken heart!",
+    "incisions_needed": 3,
+    "steps": [
+      "Use Surgical Lab Kit",
+      "Use Surgical Antibiotics",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Pins",
+      "Use Surgical Stitches",
+      "Use Surgical Splint"
+    ]
+  },
+  {
+    "diagnostic": "Swallowed a World Lock",
+    "scan_text": "swallowed a world lock!",
+    "incisions_needed": 2,
+    "steps": [
+      "Use Surgical Antibiotics",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Serious Head Injury",
+    "scan_text": "a serious head injury!",
+    "incisions_needed": 1,
+    "steps": [
+      "Use Surgical Stitches",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Serious Trauma",
+    "scan_text": "serious trauma with a punctured lung!",
+    "incisions_needed": 2,
+    "steps": [
+      "Use Surgical Stitches",
+      "Use Surgical Splint",
+      "Use Surgical Antiseptic",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Pins",
+      "Close incisions with Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Massive Trauma",
+    "scan_text": "massive trauma!",
+    "incisions_needed": 3,
+    "steps": [
+      "Use Surgical Stitches",
+      "Use Surgical Transfusion",
+      "Use Surgical Ultrasound",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Pins",
+      "Close incisions with Surgical Stitches",
+      "Use Surgical Splint"
+    ]
+  },
+  {
+    "diagnostic": "Torn Punching Muscle",
+    "scan_text": "a torn punching muscle!",
+    "incisions_needed": 1,
+    "steps": [
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Gem Cuts",
+    "scan_text": "gem cuts!",
+    "incisions_needed": 2,
+    "steps": [
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Grumbleteeth",
+    "scan_text": "grumbleteeth!",
+    "incisions_needed": 2,
+    "steps": [
+      "Use Surgical Antibiotics",
+      "Use Surgical Ultrasound",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Pins",
+      "Close incisions with Surgical Stitches",
+      "Use Surgical Splint"
+    ]
+  },
+  {
+    "diagnostic": "Chicken Feet",
+    "scan_text": "chicken feet!",
+    "incisions_needed": 2,
+    "steps": [
+      "Use Surgical Lab Kit",
+      "Use Surgical Antibiotics",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Pins",
+      "Use Surgical Splint",
+      "Use Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Chaos Infection",
+    "scan_text": "chaos infection!",
+    "incisions_needed": 3,
+    "steps": [
+      "Use Surgical Sponge",
+      "Use Surgical Lab Kit",
+      "Use Surgical Antibiotics",
+      "Use Surgical Splint",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Lupus",
+    "scan_text": "lupus!",
+    "incisions_needed": 5,
+    "steps": [
+      "Use Surgical Lab Kit",
+      "Use Surgical Antibiotics",
+      "Use Surgical Stitches",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Use Surgical Clamp",
+      "Use Surgical Stitches"
+    ]
+  },
+  {
+    "diagnostic": "Brainworms",
+    "scan_text": "brainworms!",
+    "incisions_needed": 1,
+    "steps": [
+      "Use Surgical Lab Kit",
+      "Use Surgical Antibiotics",
+      "Use Surgical Stitches",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Pins",
+      "Use Surgical Splint",
+      "Use Surgical Stitches",
+      "Use Surgical Transfusion"
+    ]
+  },
+  {
+    "diagnostic": "Moldy Guts",
+    "scan_text": "moldy guts!",
+    "incisions_needed": 2,
+    "steps": [
+      "Use Surgical Lab Kit",
+      "Use Surgical Antibiotics",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Pins",
+      "Use Surgical Stitches",
+      "Use Surgical Splint",
+      "Use Surgical Sponge"
+    ]
+  },
+  {
+    "diagnostic": "Ecto-Bones",
+    "scan_text": "ecto-bones!",
+    "incisions_needed": 1,
+    "steps": [
+      "Use Surgical Anesthetic",
+      "Use Surgical Splint",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Pins",
+      "Close incisions with Surgical Stitches",
+      "Use Surgical Splint"
+    ]
+  },
+  {
+    "diagnostic": "Fatty-Liver",
+    "scan_text": "fatty-liver!",
+    "incisions_needed": 3,
+    "steps": [
+      "Use Surgical Lab Kit",
+      "Use Surgical Antibiotics",
+      "Use Surgical Sponge",
+      "Use Surgical Antiseptic",
+      "Use Surgical Anesthetic",
+      "Use Surgical Scalpel",
+      "Fix it",
+      "Use Surgical Stitches"
+    ]
+  }
+]
