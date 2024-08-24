@@ -11,7 +11,7 @@
   {
     "diagnostic": "Broken Leg",
     "scan_text": "Patient broke his leg.",
-    "patient_fixed": true,
+    "patient_fixed": false,
     "bleeding": 1,
     "broken": 1,
     "shattered": 1,

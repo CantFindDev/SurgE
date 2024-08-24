@@ -344,8 +344,8 @@ class Patient:
         return skillfail_occurred
     
     def UpdatePatientUI(self):
-        if self.SiteDirtyness >= 10: self.SiteText = TextManager.ErrorText("You can't see what you are doing!")
-        elif self.SiteDirtyness >= 4: self.SiteText = TextManager.WarningText("It is becoming hard to see your work.")
+        if self.SiteDirtyness >= 10: self.DirtynessText = TextManager.ErrorText("You can't see what you are doing!")
+        elif self.SiteDirtyness >= 4: self.DirtynessText = TextManager.WarningText("It is becoming hard to see your work.")
         else: self.SiteText = ""
         if self.BleedingLevel > 0:
             text = "Patient is "
@@ -384,8 +384,8 @@ class Patient:
         shatter = str(self.ShatteredBoneCount)
         if (self.BrokenBoneCount > 0 or self.ShatteredBoneCount > 0) and self.IsUltrasoundUsed == True:
             txt = "Bones: "
-            if self.BrokenBoneCount > 0: txt += TextManager.ErrorText(broken + " broken ") if self.BrokenBoneCount > 1 else TextManager.WarningText(broken + " broken ")
-            if self.ShatteredBoneCount > 0: txt +=TextManager.ErrorText(shatter + " shattered") if self.ShatteredBoneCount > 1 else TextManager.WarningText(shatter + " shattered")
+            if self.BrokenBoneCount > 0: txt += TextManager.ErrorText(broken + " broken") if self.BrokenBoneCount > 1 else TextManager.WarningText(broken + " broken ")
+            if self.ShatteredBoneCount > 0: txt +=TextManager.ErrorText("," + shatter + " shattered") if self.ShatteredBoneCount > 1 else TextManager.WarningText(shatter + " shattered")
             self.BoneText = txt
         else: self.BoneText = ""
         
@@ -394,7 +394,7 @@ class Patient:
 
         if self.HeartDamage > 0: self.PatientStatus = PatientStatus.GetPatientState(PatientState.HeartStopped)
         elif self.SleepLevel == 0: self.PatientStatus = PatientStatus.GetPatientState(PatientState.Awake)
-        elif self.SleepLevel < 3: self.PatientStatus = PatientStatus.GetPatientState(PatientState.ComingTo)
+        elif self.SleepLevel < 3 and self.SleepLevel > 0: self.PatientStatus = PatientStatus.GetPatientState(PatientState.ComingTo)
         else: self.PatientStatus = PatientStatus.GetPatientState(PatientState.Unconscious)
         
         if self.HeartDamage > 0:
@@ -404,23 +404,38 @@ class Patient:
         #Train-E
         if self.TrainE:
             self.TrainEText = ""
+            #Heart Stopped
+            if self.HeartDamage > 0: 
+                self.TrainEText += TextManager.ErrorText("Heart Stopped") + f" - You need to {TextManager.WarningText("Revive")} your patient with a {TextManager.PurpieText("Defiblirator")}!"
+                return
+            #Stitch
+            if self.Incisions > 0 and self.IsPatientFixed: self.TrainEText += TextManager.PositiveText("Stitch it Up!") + f" - The issue is fixed! It's time to close it up with {TextManager.PurpieText("Stitches")}.\n"
             #FixIt
-            if self.IsFixable: self.TrainEText += TextManager.PositiveText("Fix It!") + " - You have found the issue and can now **Fix it**."
+            if self.IsFixable: self.TrainEText += TextManager.PositiveText("Fix It!") + f" - You have found the issue and can now {TextManager.PurpieText("Fix It")}.\n"
             #Cleanless
-            if self.Site < 1: self.TrainEText += TextManager.PositiveText("Clean the Area") + " - Clean the area with **Antiseptic**."
+            if self.Site < 1: self.TrainEText += TextManager.PositiveText("Clean the Area") + f" - Clean the area with {TextManager.PurpieText("Antiseptic")}.\n"
             #PrepPatient
-            if self.SleepLevel == 0 and self.IsUltrasoundUsed: self.TrainEText += TextManager.PositiveText("Prep Patient") + " - Applt **Anesthetic** to put the patient to sleep."
+            if self.SleepLevel == 0 and self.IsUltrasoundUsed and self.IncisionsNeeded > 0: self.TrainEText += TextManager.PositiveText("Prep Patient") + f" - Apply {TextManager.PurpieText("Anesthetic")} to put the patient to sleep.\n"
             #Incision
-            if not self.IsFixable and self.SleepLevel == 0: self.TrainEText += TextManager.PositiveText("Make an Incision!") + " - Use **Scalpel** to make an incision."
+            if not self.IsFixable and not self.IsPatientFixed and self.SleepLevel > 0: self.TrainEText += TextManager.PositiveText("Make an Incision!") + f" - Use {TextManager.PurpieText("Scalpel")} to make an incision.\n"
             #Visibility
-            if self.SiteDirtyness >= 4: self.TrainEText += TextManager.WarningText("Poor Visibility") + " - Apply a **Sponge**. Poor visibility increases the chance of a **Skill Failure**."
+            if self.SiteDirtyness >= 4: self.TrainEText += TextManager.WarningText("Poor Visibility") + f" - Apply a {TextManager.PurpieText("Sponge")}. Poor visibility increases the chance of a {TextManager.WarningText("Skill Failure")}.\n"
             #Diagnosis
-            if not self.IsUltrasoundUsed or not self.IsLabKitUsed: self.TrainEText += TextManager.WarningText("Diagnosis") + f"- You can use the **Ultrasound** {"or **Lab Kit**" if not self.IsLabKitUsed else ""} to diagnose the illness"
+            if not self.IsUltrasoundUsed or (not self.IsLabKitUsed and not self.IsUltrasoundUsed): self.TrainEText += TextManager.WarningText("Diagnosis") + f" - You can use the {TextManager.PurpieText("Ultrasound")} {f"or {TextManager.PurpieText("Lab Kit")}" if not self.IsLabKitUsed else ""} to diagnose the illness\n"
+            #Losing Blood
+            if self.BleedingLevel > 0: self.TrainEText += TextManager.WarningText("Losing Blood") + f" - Apply {f"{TextManager.PurpieText("Clamps")} to reduce {TextManager.WarningText("Bleeding")} during surgery." if self.Incisions > 0 else f"{TextManager.PurpieText("Stitches")} to reduce {TextManager.WarningText("Bleeding")}."}\n"
+            #Shattered Bone
+            if self.ShatteredBoneCount > 0 and self.IsUltrasoundUsed: self.TrainEText += TextManager.WarningText("Shattered Bone") + f" - Apply {TextManager.PurpieText("Pins")}.You must put the patient to sleep with {TextManager.PurpieText("Anesthetic")} and {f"make an insicion with a {"" if self.IsFixable or self.IsPatientFixed else TextManager.PurpieText("Scalpel")} before you can apply pins."}\n"
+            #Broken Bone
+            if self.BrokenBoneCount > 0 and self.IsUltrasoundUsed: self.TrainEText += TextManager.WarningText("Broken Bone") + f" - Apply a {TextManager.PurpieText("Splint")}.\n"
+            #Fever
+            if self.Fever > 0: self.TrainEText += TextManager.WarningText("Fever") + f" - {"Apply" if self.IsLabKitUsed else f"Diagnose the {TextManager.WarningText("Infection")} With a {TextManager.PurpieText("Lab Kit")} then apply"} {TextManager.PurpieText("Antibiotics")} to bring down {TextManager.WarningText("Temp")}\n"
+            #Antibiotics 
+            if self.Temp > 98.8 and self.Fever > 0 and self.IsLabKitUsed: self.TrainEText += TextManager.PositiveText("Antibiotics") + f" - Apply {TextManager.PurpieText("Antibiotics")} to prevent any infection. If all else fails, give antibiotics.\n"
             #Pulse
-            if self.Pulse < 11: self.TrainEText += TextManager.ErrorText("Extremely Weak")
-            elif self.Pulse < 21: self.TrainEText += TextManager.WarningText("Weak")
-            elif self.Pulse < 31: self.TrainEText += TextManager.SoftText("Steady")
-
+            #if self.Pulse < 11: self.TrainEText += TextManager.ErrorText("Extremely Weak")
+            #Coming To
+            if self.SleepLevel < 3 and self.SleepLevel > 0 and self.Incisions > 0: self.TrainEText += TextManager.WarningText("Coming To") + f" - Your patient is about to wake up but you still have some {TextManager.WarningText("Infections")}. Use {TextManager.PurpieText("Anesthetic")} to keep them unconscious until you have closed to wound.\n"
     def UpdatePatientValues(self, toolType : Enum):
         self.SiteDirtyness += self.BleedingLevel + self.Incisions
 
@@ -472,6 +487,7 @@ class Patient:
 
     def SetCurrentPatientEmbed(self, embed : discord.Embed) -> str:
         if self.IsSurgeryEnded:
+            embed.title = f"{"Train-E" if self.TrainE else "Surg-E"}"
             embed.description = f"## {self.EndText}\n\n"
             embed.add_field(name=f"Malady: ", value=f"{self.CurrentDisease["diagnostic"]}", inline=True)
             if self.SpecialConditionText != "" and self.SpecialConditionVisibility: embed.add_field(name="Special Condition:",value=self.SpecialCondition, inline=True)
@@ -480,23 +496,23 @@ class Patient:
             embed.add_field(name="Tools Used:", value=f"{self.GetAllToolsUsed()}", inline=False)
         else:
             embed.title = f"Surgery Simulator| Skill Level: {self.SkillLevel}\n\n" 
-            embed.description = f"{TextManager.ansistart+ TextManager.WarningText(self.SpecialConditionText)+TextManager.ansiend+"\n" if self.SpecialCondition != "None" and self.SpecialConditionVisibility else "\n"}" + TextManager.ansistart+ f"{TextManager.BoldText(self.ScanText)}"+TextManager.ansiend
-            embed.add_field(name="", value=TextManager.ansistart+f"Pulse: {self.PulseText}"+TextManager.ansiend, inline=True)
-            embed.add_field(name="", value=TextManager.ansistart+f"Status: {self.PatientStatus}"+TextManager.ansiend, inline=True)
-            embed.add_field(name="", value="", inline=True)
-            embed.add_field(name="", value=TextManager.ansistart+f"Temp: {self.TempText}"+TextManager.ansiend, inline=True)
-            embed.add_field(name="", value=TextManager.ansistart+f"Operation site: {self.SiteText}"+TextManager.ansiend, inline=True)
-            embed.add_field(name="", value="", inline=True)
-            if self.DirtynessText != "": embed.add_field(name="", value=TextManager.ansistart+f"{self.DirtynessText}"+TextManager.ansiend, inline=False)
-            embed.add_field(name="", value=TextManager.ansistart+f"Incisions: {self.IncisionText}"+TextManager.ansiend, inline=True)
-            if self.BoneText != "": embed.add_field(name="", value=TextManager.ansistart+f"{self.BoneText}"+TextManager.ansiend, inline=True)
-            if self.PatientText != "": embed.add_field(name="", value=TextManager.ansistart+f"{self.PatientText}"+TextManager.ansiend, inline=False)
-            if self.BleedingText != "": embed.add_field(name="", value=TextManager.ansistart+f"{self.BleedingText}"+TextManager.ansiend, inline=False)
-            if self.FeverText != "": embed.add_field(name="", value=TextManager.ansistart+f"{self.FeverText}"+TextManager.ansiend, inline=False)
-            if self.ToolText != "": embed.add_field(name="", value=TextManager.ansistart+f"{TextManager.SoftText(self.ToolText)}"+TextManager.ansiend, inline=False)
-            if self.HeartText != "": embed.add_field(name="", value=TextManager.ansistart+f"{self.HeartText}"+TextManager.ansiend, inline=False)
-            if self.TrainE == True: embed.add_field(name="", value=TextManager.ansistart+f"Bot Tips:\n{self.TrainEText}"+TextManager.ansiend, inline=False)
-           
+            embed.description = ""
+            embed.description += TextManager.ansistart
+            embed.description += f"{TextManager.WarningText(self.SpecialConditionText)+"\n" if self.SpecialCondition != "None" and self.SpecialConditionVisibility else "\n"}" + f"{TextManager.BoldText(self.ScanText)}\n"
+            embed.description += TextManager.AddFeild(value=f"Pulse: {self.PulseText}", inline=True)
+            embed.description += TextManager.AddFeild(value=f"Status: {self.PatientStatus}", inline=True)
+            embed.description += TextManager.AddFeild(value=f"Temp: {self.TempText}", inline=True)
+            embed.description += TextManager.AddFeild(value=f"Operation site: {self.SiteText}", inline=True)
+            if self.DirtynessText != "":embed.description +=  TextManager.AddFeild(value=f"{self.DirtynessText}", inline=False)
+            embed.description += TextManager.AddFeild( value=f"Incisions: {self.IncisionText}", inline=True)
+            if self.BoneText != "": embed.description += TextManager.AddFeild(value=f"{self.BoneText}", inline=True)
+            if self.PatientText != "": embed.description += TextManager.AddFeild(value=f"{self.PatientText}", inline=False)
+            if self.BleedingText != "": embed.description += TextManager.AddFeild(value=f"{self.BleedingText}", inline=False)
+            if self.FeverText != "": embed.description += TextManager.AddFeild(value=f"{self.FeverText}", inline=False)
+            if self.ToolText != "": embed.description += TextManager.AddFeild(value=f"{TextManager.SoftText(self.ToolText)}", inline=False)
+            if self.HeartText != "": embed.description += TextManager.AddFeild(value=f"{self.HeartText}", inline=False)
+            if self.TrainE == True: embed.description += TextManager.AddFeild(value=f"Bot Tips:\n{self.TrainEText}", inline=False)
+            embed.description += TextManager.ansiend   
             
 class PatientState(Enum):
     HeartStopped = 0
@@ -668,11 +684,13 @@ class TextManager:
     ansistart = ""
     ansiend = ""
     ColoredUI = False
+    FeildCount = 0
     @staticmethod
     def setTextManager(ColoredUI : bool):
         TextManager.ColoredUI = ColoredUI
         TextManager.ansistart = "```ansi\n" if ColoredUI else ""
         TextManager.ansiend = "```" if ColoredUI else ""
+        TextManager.FeildCount = 0
     @staticmethod
     def ErrorText(text: str):
         txt = ""
@@ -683,19 +701,25 @@ class TextManager:
     def WarningText(text : str):
         txt = ""
         if (TextManager.ColoredUI): txt = f"\x1B[2;31m\x1B[2;32m\x1B[2;33m{text}\x1B[0m\x1B[2;32m\x1B[0m\x1B[2;31m\x1B[0m\x1B[2;31m\x1B[0m"
-        else: txt = f"*[{text}](https://discord.gg/d9puKpHWjn)*"
+        else: txt = f"**_{text}_**"
         return txt
     @staticmethod
     def PositiveText(text : str):
         txt = ""
         if (TextManager.ColoredUI): txt = f"\x1B[2;31m\x1B[2;32m{text}\x1B[0m\x1B[2;31m\x1B[0m\x1B[2;31m\x1B[0m"
-        else: txt = f"**_{text}_**"
+        else: txt = f"*[{text}](https://discord.gg/d9puKpHWjn)*"
         return txt
     @staticmethod
     def SoftText(text : str):
         txt = ""
         if (TextManager.ColoredUI): txt = f"\x1B[2;34m{text}\x1B[0m"
         else: txt = f"_{text}_"
+        return txt   
+    @staticmethod
+    def PurpieText(text : str):
+        txt = ""
+        if (TextManager.ColoredUI): txt = f"\x1B[2;35m\x1B[2;35m{text}\x1B[0m\x1B[2;35m\x1B[0m"
+        else: txt = f"[{text}](https://discord.gg/d9puKpHWjn)"
         return txt
     @staticmethod
     def BoldText(text :str):
@@ -704,10 +728,28 @@ class TextManager:
         else: txt = f"**{text}**"
         return txt
     @staticmethod
+    def AddFeild(value : str, inline : bool = False) -> str:
+        txt = ""
+        if inline:
+            if TextManager.FeildCount == 0:
+                txt = "\n"
+            txt += value
+            if TextManager.FeildCount == 1:
+                TextManager.FeildCount = 0
+            else:
+                txt += TextManager.AddSpace(2)
+                TextManager.FeildCount +=1
+        else:
+            if TextManager.FeildCount > 0:
+                txt += "\n"
+                TextManager.FeildCount = 0
+            txt += "\n" + value
+        return txt
+    @staticmethod
     def AddSpace(SpaceCount : int) -> str:
         txt = ""
         for number in range(SpaceCount):
-            txt += "\u1CBC"
+            txt += " ‍ "
         return txt
 class Surgery:
     def __init__(self, patient, user):
@@ -742,7 +784,7 @@ class SurgeryCog(commands.Cog):
     @app_commands.command(name="surgery", description="Start a surgery simulation.")
     @app_commands.describe(coloredui="Make the ui colored (Might not work on mobile)",hidden="Hide the surgery UI from other people", malady="Select a specific malady to surg", specialcondition="Select a special condition", skilllevel="Set the skill level (default is 100)", trainemode="I'm not Train-E but I can try to act like it :)")
     @app_commands.autocomplete(malady=AutoCompleteMalady,specialcondition=AutoCompleteCondition)
-    async def surgery(self ,interaction: discord.Interaction,coloredui: Optional[bool] = False, hidden: Optional[bool] = False, malady: Optional[str] = None, specialcondition: Optional[str] = None, skilllevel: Optional[int] = 100, trainemode: Optional[bool] = False):
+    async def surgery(self ,interaction: discord.Interaction,coloredui: Optional[bool] = True, hidden: Optional[bool] = False, malady: Optional[str] = None, specialcondition: Optional[str] = None, skilllevel: Optional[int] = 100, trainemode: Optional[bool] = False):
         await interaction.response.defer(ephemeral=hidden)
         Maladies.SetMaladies()
         SpecialConditions.SetSpecialConditions()
