@@ -9,6 +9,15 @@ import typing
 import math
 import json
 
+
+#        GNU AFFERO GENERAL PUBLIC LICENSE
+#           Version 3, 19 November 2007
+#           SOURCE IS CODED BY CANTFIND
+#
+# Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
+# Everyone is permitted to copy and distribute verbatim copies
+# of this license document, but changing it is not allowed. 
+
 class Patient:
     def __init__(self, SkillLevel: int = 100, malady: Optional[str] = None, specialcondition: Optional[str] = None,TrainEMode: Optional[bool] = False):
         self.SleepLevel = 0
