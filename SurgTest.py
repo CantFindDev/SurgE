@@ -795,7 +795,7 @@ class SurgeryCog(commands.Cog):
     @app_commands.command(name="surgery", description="Start a surgery simulation.")
     @app_commands.describe(coloredui="Make the ui colored (Might not work on mobile)",hidden="Hide the surgery UI from other people", malady="Select a specific malady to surg", specialcondition="Select a special condition", skilllevel="Set the skill level (default is 100)", trainemode="I'm not Train-E but I can try to act like it :)")
     @app_commands.autocomplete(malady=AutoCompleteMalady,specialcondition=AutoCompleteCondition)
-    async def surgery(self ,interaction: discord.Interaction,coloredui: Optional[bool] = True, hidden: Optional[bool] = False, malady: Optional[str] = None, specialcondition: Optional[str] = None, skilllevel: Optional[int] = 100, trainemode: Optional[bool] = False):
+    async def surgery(self ,interaction: discord.Interaction,coloredui: Optional[bool] = False, hidden: Optional[bool] = False, malady: Optional[str] = None, specialcondition: Optional[str] = None, skilllevel: Optional[int] = 100, trainemode: Optional[bool] = False):
         await interaction.response.defer(ephemeral=hidden)
         Maladies.SetMaladies()
         SpecialConditions.SetSpecialConditions()

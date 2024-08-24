@@ -1,15 +1,15 @@
-
 ![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
-
 
 # Surg-E Discord Bot
 
 This Discord bot is designed to simulate Growtopia's surgery system, providing an interactive way to learn and practice surgery without the need for in-game tools, world locks, or waiting hours for malpractice. The bot features two distinct modes:
 
 ## SurgE Mode
+
 SurgE Mode offers a casual environment where you can practice and reinforce your existing knowledge of surgery techniques. It's a great way to familiarize yourself with the surgery system at your own pace.
 
 ## TrainE Mode
+
 SurgE Mode offers a casual environment where you can practice and reinforce your existing knowledge of surgery techniques. It's a great way to familiarize yourself with the surgery system at your own pace.# How to Use
 
 To get started with the bot, use the following commands to simulate the Growtopia surgery system:
@@ -17,6 +17,7 @@ To get started with the bot, use the following commands to simulate the Growtopi
 ## Generate a Random Malady
 
 Generate a random malady with a special condition and set the skill level to 100:
+
 ```
 /surgery
 ```
@@ -24,49 +25,61 @@ Generate a random malady with a special condition and set the skill level to 100
 ## Enable Surgery UI with Colors
 
 Activate a surgery UI that mimics the Growtopia surgery simulator with colors:
+
 ```
 /surgery coloredui:True
 ```
-![Surgery UI](https://i.imgur.com/q0oDU7V.png)
+
+![Surgery UI](https://i.imgur.com/akzcGqL.png)
 
 ## Select a Specific Malady
 
 Choose from a list of available maladies to practice with:
+
 ```
 /surgery malady:[MALADY_NAME]
 ```
-![Malady Selection](https://i.imgur.com/DuI6Hzq.png)
+
+![Malady Selection](https://i.imgur.com/Bzdj4lD.png)
 
 ## Activate TrainE Mode
 
 Enable TrainE mode to receive tips and suggestions based on your situation:
+
 ```
 /surgery trainemode:True
 ```
-![TrainE Mode](https://i.imgur.com/PNVKYhX.png)
+
+![TrainE Mode](https://i.imgur.com/OSBbYS3.png)
 
 ## Enable Ephemeral Embeds
 
 Configure the bot to send ephemeral embedded messages:
+
 ```
 /surgery hidden:True
 ```
-![Ephemeral Embeds](https://i.imgur.com/T0PqwGK.png)
+
+![Ephemeral Embeds](https://i.imgur.com/HQ00W8a.png)
 
 ## Set Special Condition
 
 Customize the special condition of the patient:
+
 ```
 /surgery specialcondition:[CONDITION_NAME]
 ```
-![Special Condition](https://i.imgur.com/psWrpON.png)
+
+![Special Condition](https://i.imgur.com/KGozUAO.png)
 
 ## Adjust Skill Level
 
 Set your skill level to any value between 0 and 100:
+
 ```
 /surgery skilllevel:[SKILL_LEVEL]
 ```
+
 ## How to Use the Source Code
 
 ### Prerequisites
@@ -103,15 +116,32 @@ The following files are essential once you open the project:
 
    ![Configure Application](https://i.imgur.com/M7o2OrD.png)
 
-4. Go to the "Bot" section:
+4. Go to the "Emojis" tab:
+
+   ![Emojis Tab](https://i.imgur.com/n1RBQD9.png)
+
+   Click on "Upload Emojis" and navigate to the project directory to add emojis:
+
+   ![Upload Emojis](https://i.imgur.com/CDcSILN.png)
+
+   Next, open `surgtest.py` in Visual Studio Code and locate the `ToolIcons` class:
+
+   ![ToolIcons Class](https://i.imgur.com/5XOc5uo.png)
+
+   Copy each emoji ID and paste them into the emoji ID section as shown below:
+
+   ![Emoji IDs](https://i.imgur.com/Wh5JesV.png)
+   ![Emoji IDs](https://i.imgur.com/w6jjT9x.png)
+
+5. Go back to the "Bot" section:
 
    ![Bot Section](https://i.imgur.com/VhUUk8V.png)
 
-5. Scroll down and enable all **Privileged Gateway Intents**:
+6. Scroll down and enable all **Privileged Gateway Intents**:
 
    ![Privileged Gateway Intents](https://i.imgur.com/PN8FVGs.gif)
 
-6. At the top of the page, click "Reset Token" to copy your bot token (ensure you keep this token confidential):
+7. At the top of the page, click "Reset Token" to copy your bot token (ensure you keep this token confidential):
 
    ![Copy Token](https://i.imgur.com/CaCziMe.png)
 
@@ -161,20 +191,12 @@ The following files are essential once you open the project:
 ---
 
 Enjoy using your bot! Remember to continue coding and stay curious. If you have any questions or run into issues, feel free to reach out.
+
 # My Socials
 
 <div align="left">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="30" alt="python logo"  />
   <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" height="30" alt="csharp logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" height="30" alt="cplusplus logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" height="30" alt="java logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unrealengine/unrealengine-original.svg" height="30" alt="unrealengine logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unity/unity-original.svg" height="30" alt="unity logo"  />
 </div>
 
 <div align="left">
@@ -186,6 +208,5 @@ Enjoy using your bot! Remember to continue coding and stay curious. If you have 
   </a>
 </div>
 
-[![MIT License](https://img.shields.io/badge/CantFind-SurgE-red
-)](https://choosealicense.com/licenses/mit/)
+[![MIT License](https://img.shields.io/badge/CantFind-SurgE-red)](https://choosealicense.com/licenses/mit/)
 [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
