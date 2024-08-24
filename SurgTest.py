@@ -24,6 +24,7 @@ import json
  #
  # You should have received a copy of the GNU Affero General Public License
  # along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 class Patient:
     def __init__(self, SkillLevel: int = 100, malady: Optional[str] = None, specialcondition: Optional[str] = None,TrainEMode: Optional[bool] = False):
         self.SleepLevel = 0
@@ -505,6 +506,9 @@ class Patient:
             if self.SkillFailCount > 0: embed.add_field(name="Skill Fails:", value=f"{self.SkillFailCount}", inline=True)
             embed.add_field(name="Skill Level:", value=f"{self.SkillLevel}", inline=True)
             embed.add_field(name="Tools Used:", value=f"{self.GetAllToolsUsed()}", inline=False)
+            item = Drops.GetDrop()
+            embed.add_field(name=item["ItemName"],value="",inline=False)
+            embed.set_image(url=item["ItemIcon"])
         else:
             embed.title = f"Surgery Simulator| Skill Level: {self.SkillLevel}\n\n" 
             embed.description = ""
@@ -523,7 +527,9 @@ class Patient:
             if self.ToolText != "": embed.description += TextManager.AddFeild(value=f"{TextManager.SoftText(self.ToolText)}", inline=False)
             if self.HeartText != "": embed.description += TextManager.AddFeild(value=f"{self.HeartText}", inline=False)
             if self.TrainE == True: embed.description += TextManager.AddFeild(value=f"Bot Tips:\n{self.TrainEText}", inline=False)
-            embed.description += TextManager.ansiend   
+            embed.description += TextManager.ansiend
+            item = Drops.GetDrop()
+            embed.set_image(url=item["ItemIcon"])
             
 class PatientState(Enum):
     HeartStopped = 0
@@ -570,6 +576,24 @@ class Maladies:
     def SetMaladies():
         with open("Maladies.json", "r+") as file:
             Maladies.Maladies = json.load(file)
+class Drops:
+    Items = [
+        {"ItemName":"Thingamabob","ItemIcon":"https://i.imgur.com/QV9eaBS.png"},
+        {"ItemName":"Thingamabob2","ItemIcon":"https://github.com/CantFindDev/SurgE/blob/main/Images/EmptySurgeryTray.png"}
+    ]
+    @staticmethod
+    def GetSpesificItem(ItemName : str):
+        for Item in Drops.Items:
+            if Item['ItemName'].lower() == ItemName.lower():
+                return Item
+            
+    @staticmethod
+    def GetDrop():
+        #Random = math.floor(random.random()* 1001)
+        Random = 1
+        if Random == 1: return Drops.GetSpesificItem("Thingamabob2")
+
+
 class ToolType(Enum):
     SurgicalAntibiotics = "SurgicalAntibiotics"
     SurgicalAntiseptic = "SurgicalAntiseptic"
@@ -660,7 +684,7 @@ class SurgeryView(View):
         self.clear_items()
         embed = discord.Embed(
             title= "Surgery Aborted",
-            description=f"You have chosen to abandon the surgery. Remember, doctors need courage and precision—today just wasn't your day. Maybe next time you'll become the hero of the operating room! Until then, thanks for trying, [Dr.{interaction.user.display_name}](https://discord.gg/d9puKpHWjn). Brave efforts are also part of the journey!",
+            description=f"You have chosen to abandon the surgery. Remember, doctors need courage and precision—today just wasn't your day. Maybe next time you'll become the hero of the operating room! Until then, thanks for trying, [Dr.{interaction.user.display_name}](https://github.com/CantFindDev/SurgE). Brave efforts are also part of the journey!",
             color=discord.Color.red()
         )
         self.patient.IsSurgeryEnded = True
@@ -706,7 +730,7 @@ class TextManager:
     def ErrorText(text: str):
         txt = ""
         if (TextManager.ColoredUI): txt = f"\x1B[2;31m{text}\x1B[0m\x1B[2;31m\x1B[0m" 
-        else: txt = f"**[{text}](https://discord.gg/d9puKpHWjn)**"
+        else: txt = f"**[{text}](https://github.com/CantFindDev/SurgE)**"
         return txt
     @staticmethod
     def WarningText(text : str):
@@ -718,7 +742,7 @@ class TextManager:
     def PositiveText(text : str):
         txt = ""
         if (TextManager.ColoredUI): txt = f"\x1B[2;31m\x1B[2;32m{text}\x1B[0m\x1B[2;31m\x1B[0m\x1B[2;31m\x1B[0m"
-        else: txt = f"*[{text}](https://discord.gg/d9puKpHWjn)*"
+        else: txt = f"*[{text}](https://github.com/CantFindDev/SurgE)*"
         return txt
     @staticmethod
     def SoftText(text : str):
@@ -730,7 +754,7 @@ class TextManager:
     def PurpieText(text : str):
         txt = ""
         if (TextManager.ColoredUI): txt = f"\x1B[2;35m\x1B[2;35m{text}\x1B[0m\x1B[2;35m\x1B[0m"
-        else: txt = f"[{text}](https://discord.gg/d9puKpHWjn)"
+        else: txt = f"[{text}](https://github.com/CantFindDev/SurgE)"
         return txt
     @staticmethod
     def BoldText(text :str):
