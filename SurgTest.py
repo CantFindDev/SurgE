@@ -502,15 +502,15 @@ class Patient:
         if self.IsSurgeryEnded:
             embed.title = f"{"Train-E" if self.TrainE else "Surg-E"}"
             embed.description = f"## {self.EndText}\n\n"
-            embed.add_field(name=f"Malady: ", value=f"{self.CurrentDisease["diagnostic"]}", inline=True)
-            if self.SpecialConditionText != "" and self.SpecialConditionVisibility: embed.add_field(name="Special Condition:",value=self.SpecialCondition, inline=True)
-            if self.SkillFailCount > 0: embed.add_field(name="Skill Fails:", value=f"{self.SkillFailCount}", inline=True)
-            embed.add_field(name="Skill Level:", value=f"{self.SkillLevel}", inline=True)
-            embed.add_field(name="Tools Used:", value=f"{self.GetAllToolsUsed()}", inline=False)
+            embed.description += TextManager.AddFeild(value=f"**Malady:**\n{self.CurrentDisease["diagnostic"]}\n", inline=False)
+            if self.SpecialConditionText != "" and self.SpecialConditionVisibility: embed.description += TextManager.AddFeild(value=f"**Special Condition:**\n{self.SpecialCondition}\n", inline=False)
+            if self.SkillFailCount > 0: embed.description += TextManager.AddFeild(value=f"**Skill Fails:**\n{self.SkillFailCount}\n", inline=False)
+            embed.description += TextManager.AddFeild(value=f"**Skill Level:**\n{self.SkillLevel}\n", inline=False)
+            embed.description += TextManager.AddFeild(value=f"**Tools Used:**\n{self.GetAllToolsUsed()}", inline=False)
             item = Drops.GetDrop()
-            embed.add_field(name=item["ItemName"],value="",inline=False)
             if self.EndText == "The surgery was a success!\n":
-                embed.set_image(url=Drops.GetItemImageByName(item["ItemName"]),height=100, width=100)
+                embed.description += TextManager.AddFeild(value=f"**{item["ItemName"]}**",inline=False)
+                embed.set_image(url=Drops.GetItemImageByName(item["ItemName"]))
         else:
             embed.title = f"Surgery Simulator| Skill Level: {self.SkillLevel}\n\n" 
             embed.description = ""
@@ -530,8 +530,6 @@ class Patient:
             if self.HeartText != "": embed.description += TextManager.AddFeild(value=f"{self.HeartText}", inline=False)
             if self.TrainE == True: embed.description += TextManager.AddFeild(value=f"Bot Tips:\n{self.TrainEText}", inline=False)
             embed.description += TextManager.ansiend
-            item = Drops.GetDrop()
-            embed.set_image(url=Drops.GetItemImageByName(item["ItemName"]))
             
 class PatientState(Enum):
     HeartStopped = 0
@@ -595,8 +593,7 @@ class Drops:
             
     @staticmethod
     def GetDrop():
-        #Random = math.floor(random.random()* 1001)
-        Random = 1
+        Random = math.floor(random.random()* 1001)
         for Item in Drops.Items:
             if Random < Item['ItemChance']:
                 return Item
