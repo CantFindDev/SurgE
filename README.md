@@ -21,7 +21,7 @@ To get started with the bot, use the following commands to simulate the Growtopi
 Generate a random malady with a special condition and set the skill level to 100:
 
 ```
-/surgery
+/surg
 ```
 
 ## Enable Surgery UI with Colors
@@ -29,7 +29,7 @@ Generate a random malady with a special condition and set the skill level to 100
 Activate a surgery UI that mimics the Growtopia surgery simulator with colors:
 
 ```
-/surgery coloredui:True
+/surg colored_ui:True
 ```
 
 ![Surgery UI](https://i.imgur.com/akzcGqL.png)
@@ -39,7 +39,7 @@ Activate a surgery UI that mimics the Growtopia surgery simulator with colors:
 Choose from a list of available maladies to practice with:
 
 ```
-/surgery malady:[MALADY_NAME]
+/surg malady:[MALADY_NAME]
 ```
 
 ![Malady Selection](https://i.imgur.com/Bzdj4lD.png)
@@ -49,7 +49,7 @@ Choose from a list of available maladies to practice with:
 Enable TrainE mode to receive tips and suggestions based on your situation:
 
 ```
-/surgery trainemode:True
+/surg traine_mode:True
 ```
 
 ![TrainE Mode](https://i.imgur.com/OSBbYS3.png)
@@ -59,7 +59,7 @@ Enable TrainE mode to receive tips and suggestions based on your situation:
 Configure the bot to send ephemeral embedded messages:
 
 ```
-/surgery hidden:True
+/surg hidden_embed:True
 ```
 
 ![Ephemeral Embeds](https://i.imgur.com/HQ00W8a.png)
@@ -69,7 +69,7 @@ Configure the bot to send ephemeral embedded messages:
 Customize the special condition of the patient:
 
 ```
-/surgery specialcondition:[CONDITION_NAME]
+/surg special_condition:[CONDITION_NAME]
 ```
 
 ![Special Condition](https://i.imgur.com/KGozUAO.png)
@@ -79,7 +79,7 @@ Customize the special condition of the patient:
 Set your skill level to any value between 0 and 100:
 
 ```
-/surgery skilllevel:[SKILL_LEVEL]
+/surg skill_level:[SKILL_LEVEL]
 ```
 
 ## How to Use the Source Code
