@@ -585,7 +585,7 @@ class Drops:
     @staticmethod
     def GetItemImageByName(Filename : str):
       url = "https://github.com/CantFindDev/SurgE/blob/main/Images/Items/"
-      url += urllib.parse.quote(Filename, safe='') + ".png?raw=true"+""
+      url += urllib.parse.quote(Filename, safe='') + ".png?raw=true"
       return url
     @staticmethod
     def GetSpesificItem(ItemName : str):
