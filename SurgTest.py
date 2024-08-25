@@ -26,6 +26,7 @@ import urllib.parse
  # You should have received a copy of the GNU Affero General Public License
  # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+
 class Patient:
     def __init__(self, SkillLevel: int = 100, malady: Optional[str] = None, specialcondition: Optional[str] = None,TrainEMode: Optional[bool] = False):
         self.SleepLevel = 0
