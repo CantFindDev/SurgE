@@ -473,7 +473,7 @@ class Patient:
             self.Temp = 98.6 
         self.Antibs = False   
         # Managing status, heart stopping
-        if (((self.SleepLevel > 0) and (random.random() > 0.8 and toolType != ToolType.SurgicalDefib)) or (self.HeartDamage > 0)):
+        if (((self.SleepLevel > 0) and (random.random() > 0.9 and toolType != ToolType.SurgicalDefib)) or (self.HeartDamage > 0)):
              self.HeartDamage +=1
         else:
             self.SleepLevel = max(self.SleepLevel - 1, 0)
