@@ -12,7 +12,9 @@ SurgE Mode offers a casual environment where you can practice and reinforce your
 
 ## TrainE Mode
 
-SurgE Mode offers a casual environment where you can practice and reinforce your existing knowledge of surgery techniques. It's a great way to familiarize yourself with the surgery system at your own pace.# How to Use
+TrainE Mode is more structured and educational. In this mode, the bot will provide suggestions based on the specific situation you are in. This helps you understand and learn the appropriate actions for various surgical scenarios, enhancing your overall skillset.
+
+# How to Use
 
 To get started with the bot, use the following commands to simulate the Growtopia surgery system:
 
