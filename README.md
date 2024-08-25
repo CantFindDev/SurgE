@@ -1,4 +1,4 @@
-![Logo]([https://i.imgur.com/xwWa7zq.png](https://i.imgur.com/c6vwoIH.png))
+![Logo](https://i.imgur.com/c6vwoIH.png)
 #
 This Discord bot is designed to simulate Growtopia's surgery system, providing an interactive way to learn and practice surgery without the need for in-game tools, world locks, or waiting hours for malpractice. The bot features two distinct modes:
 
