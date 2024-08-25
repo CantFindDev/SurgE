@@ -8,6 +8,7 @@ from typing import Optional
 import typing
 import math
 import json
+import urllib.parse
 
  # SurgE Growtopia surgery simulator discord bot
  # Copyright (C) 2024 CantFind
@@ -508,7 +509,8 @@ class Patient:
             embed.add_field(name="Tools Used:", value=f"{self.GetAllToolsUsed()}", inline=False)
             item = Drops.GetDrop()
             embed.add_field(name=item["ItemName"],value="",inline=False)
-            embed.set_image(url=item["ItemIcon"])
+            if self.EndText == "The surgery was a success!\n":
+                embed.set_image(url=Drops.GetItemImageByName(item["ItemName"]),height=100, width=100)
         else:
             embed.title = f"Surgery Simulator| Skill Level: {self.SkillLevel}\n\n" 
             embed.description = ""
@@ -529,7 +531,7 @@ class Patient:
             if self.TrainE == True: embed.description += TextManager.AddFeild(value=f"Bot Tips:\n{self.TrainEText}", inline=False)
             embed.description += TextManager.ansiend
             item = Drops.GetDrop()
-            embed.set_image(url=item["ItemIcon"])
+            embed.set_image(url=Drops.GetItemImageByName(item["ItemName"]))
             
 class PatientState(Enum):
     HeartStopped = 0
@@ -549,38 +551,42 @@ class PatientStatus:
                 return f"{TextManager.WarningText("Coming To")}"
             case 3:
                 return f"{TextManager.PositiveText("Unconscious")}"
+class FileManager:
+    @staticmethod
+    def WriteToJson(FilePath:str,ListToRead:list):
+        with open(FilePath, "w+") as file:
+            json.dump(ListToRead, file, indent=4)
+
+    @staticmethod
+    def ReadFromJson(FilePath:str):
+        with open(FilePath, "r+") as file:
+            return json.load(file)
+
 class SpecialConditions:
-    Conditions = []
+
+    Conditions = FileManager.ReadFromJson("SpecialConditions.json")
+
     @staticmethod
     def GetAllSpecialConditions():
         return [cond["condition_name"] for cond in SpecialConditions.Conditions]
-    @staticmethod
-    def WriteSpecialConditions():
-        with open("SpecialConditions.json", "w+") as file:
-            json.dump(SpecialConditions.Conditions, file, indent=4)
-    @staticmethod
-    def SetSpecialConditions():
-        with open("SpecialConditions.json", "r+") as file:
-            SpecialConditions.Conditions = json.load(file)
     
 class Maladies:
-    Maladies = []
+
+    Maladies = FileManager.ReadFromJson("Maladies.json")
+
     @staticmethod
     def GetAllMaladieNames():
         return [disease["diagnostic"] for disease in Maladies.Maladies]
-    @staticmethod
-    def WriteMaladies():
-        with open("Maladies.json", "w+") as file:
-            json.dump(Maladies.Maladies, file, indent=4)
-    @staticmethod
-    def SetMaladies():
-        with open("Maladies.json", "r+") as file:
-            Maladies.Maladies = json.load(file)
+
 class Drops:
-    Items = [
-        {"ItemName":"Thingamabob","ItemIcon":"https://i.imgur.com/QV9eaBS.png"},
-        {"ItemName":"Thingamabob2","ItemIcon":"https://github.com/CantFindDev/SurgE/blob/main/Images/EmptySurgeryTray.png"}
-    ]
+
+    Items = FileManager.ReadFromJson("Items.json")
+
+    @staticmethod
+    def GetItemImageByName(Filename : str):
+      url = "https://github.com/CantFindDev/SurgE/blob/main/Images/Items/"
+      url += urllib.parse.quote(Filename, safe='') + ".png?raw=true"+""
+      return url
     @staticmethod
     def GetSpesificItem(ItemName : str):
         for Item in Drops.Items:
@@ -591,7 +597,9 @@ class Drops:
     def GetDrop():
         #Random = math.floor(random.random()* 1001)
         Random = 1
-        if Random == 1: return Drops.GetSpesificItem("Thingamabob2")
+        for Item in Drops.Items:
+            if Random < Item['ItemChance']:
+                return Item
 
 
 class ToolType(Enum):
@@ -814,15 +822,13 @@ class SurgeryCog(commands.Cog):
             CondMatch.append(app_commands.Choice(name=condition, value=condition))
         if len(CondMatch) >= 25:
            break
-     return CondMatch   
+     return CondMatch
     
     @app_commands.command(name="surgery", description="Start a surgery simulation.")
     @app_commands.describe(coloredui="Make the ui colored (Might not work on mobile)",hidden="Hide the surgery UI from other people", malady="Select a specific malady to surg", specialcondition="Select a special condition", skilllevel="Set the skill level (default is 100)", trainemode="I'm not Train-E but I can try to act like it :)")
     @app_commands.autocomplete(malady=AutoCompleteMalady,specialcondition=AutoCompleteCondition)
     async def surgery(self ,interaction: discord.Interaction,coloredui: Optional[bool] = False, hidden: Optional[bool] = False, malady: Optional[str] = None, specialcondition: Optional[str] = None, skilllevel: Optional[int] = 100, trainemode: Optional[bool] = False):
         await interaction.response.defer(ephemeral=hidden)
-        Maladies.SetMaladies()
-        SpecialConditions.SetSpecialConditions()
 
         if malady is not None and malady not in Maladies.GetAllMaladieNames():
             return await interaction.followup.send(
