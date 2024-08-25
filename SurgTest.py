@@ -821,26 +821,26 @@ class SurgeryCog(commands.Cog):
            break
      return CondMatch
     
-    @app_commands.command(name="surgery", description="Start a surgery simulation.")
-    @app_commands.describe(coloredui="Make the ui colored (Might not work on mobile)",hidden="Hide the surgery UI from other people", malady="Select a specific malady to surg", specialcondition="Select a special condition", skilllevel="Set the skill level (default is 100)", trainemode="I'm not Train-E but I can try to act like it :)")
-    @app_commands.autocomplete(malady=AutoCompleteMalady,specialcondition=AutoCompleteCondition)
-    async def surgery(self ,interaction: discord.Interaction,coloredui: Optional[bool] = False, hidden: Optional[bool] = False, malady: Optional[str] = None, specialcondition: Optional[str] = None, skilllevel: Optional[int] = 100, trainemode: Optional[bool] = False):
-        await interaction.response.defer(ephemeral=hidden)
+    @app_commands.command(name="surg", description="Start a surgery simulation.")
+    @app_commands.describe(colored_ui="Make the ui colored (Might not work on mobile)",hidden_embed="Hide the surgery UI from other people", traine_mode="I'm not Train-E but I can try to act like it :)", malady="Select a specific malady to surg", special_condition="Select a special condition", skill_level="Set the skill level (default is 100)")
+    @app_commands.autocomplete(malady=AutoCompleteMalady,special_condition=AutoCompleteCondition)
+    async def surg(self ,interaction: discord.Interaction,colored_ui: Optional[bool] = False, hidden_embed: Optional[bool] = False, traine_mode: Optional[bool] = False, malady: Optional[str] = None, special_condition: Optional[str] = None, skill_level: Optional[int] = 100):
+        await interaction.response.defer(ephemeral=hidden_embed)
 
         if malady is not None and malady not in Maladies.GetAllMaladieNames():
             return await interaction.followup.send(
                 embed=discord.Embed( title="Invalid malady!",description="**Please choose from the following:**\n" + "\n".join(Maladies.GetAllMaladieNames()), color=discord.Color.red())
             )
 
-        if specialcondition is not None and specialcondition not in SpecialConditions.GetAllSpecialConditions():
+        if special_condition is not None and special_condition not in SpecialConditions.GetAllSpecialConditions():
             return await interaction.followup.send(
                 embed=discord.Embed( title="Invalid Condition!",description="**Please choose from the following:**\n" + "\n".join(SpecialConditions.GetAllSpecialConditions()), color=discord.Color.red())
             )
         
-        patient = Patient(SkillLevel=100 if skilllevel > 100 else 0 if skilllevel < 0 else skilllevel, malady=malady, specialcondition=specialcondition,TrainEMode=trainemode)
+        patient = Patient(SkillLevel=100 if skill_level > 100 else 0 if skill_level < 0 else skill_level, malady=malady, specialcondition=special_condition,TrainEMode=traine_mode)
         surgery = Surgery(patient=patient, user=interaction.user)
         view = SurgeryView(surgery,interaction.user)
-        TextManager.setTextManager(coloredui)
+        TextManager.setTextManager(colored_ui)
         embed = discord.Embed(
             title= "",
             description="",
