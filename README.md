@@ -150,13 +150,17 @@ The following files are essential once you open the project:
    ![Copy Token](https://i.imgur.com/CaCziMe.png)
 
 ### Configuring the Bot
-
 1. Return to your local project directory.
-2. Rename the `EMPTY_.env` file to `.env`:
+2. Open cmd and type
+   ```
+   pip install python-dotenv
+   py -3 -m pip install -U discord.py
+   ```
+3. Rename the `EMPTY_.env` file to `.env`:
 
    ![Rename .env File](https://i.imgur.com/FuHFt5Z.png)
 
-3. Paste your bot token into the `.env` file as shown below:
+4. Paste your bot token into the `.env` file as shown below:
 
    ![Edit .env File](https://i.imgur.com/vKy02mE.png)
 
