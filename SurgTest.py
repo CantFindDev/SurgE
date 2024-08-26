@@ -593,7 +593,7 @@ class Drops:
             
     @staticmethod
     def GetDrop():
-        Random = math.floor(random.random()* 1001)
+        Random = math.floor(random.random()* 1000)
         for Item in Drops.Items:
             if Random < Item['ItemChance']:
                 return Item
