@@ -186,10 +186,9 @@ class Patient:
             if self.TransfusionCount > 0:
                 tooltext += ToolIcon.SurgicalTransfusion.value + " Transfusions: " + str(self.TransfusionCount) + "\n"
             return tooltext
-    
 
     def UseTool(self, toolType: Enum) -> bool:
-        SkillFailRate = (35 - self.SkillLevel / 3)
+        SkillFailRate = round(35 - self.SkillLevel / 3)
         success = random.random() * 100 > SkillFailRate
         skillfail_occurred = not success
         match toolType:
