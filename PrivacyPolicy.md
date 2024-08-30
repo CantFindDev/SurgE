@@ -1,29 +1,25 @@
-# Surg-E Discord Bot Privacy Policy
+# Surg-E Privacy Policy
 
 ## 1. Data Collection
 
-Surg-E does not collect, store, or share any personal data from its users. All interactions are processed within Discord, and no user information is retained by the bot.
+Surg-E does not collect, store, or share any personal data. All interactions occur within Discord, and no user data is retained by the bot.
 
-## 2. User-Generated Content
+## 2. User Privacy
 
-Any content generated using Surg-E, such as commands or interactions, is temporarily processed within the bot's functionality. Surg-E does not store this content, and it remains the property of the user.
+Surg-E operates in compliance with Discord’s Developer Policy. The bot does not access, use, or disclose any private user information beyond what is necessary for its functionality. The bot only uses data temporarily for interaction purposes and does not retain any user-specific information.
 
 ## 3. Data Security
 
-Since Surg-E does not store any personal data, there are no specific data security measures related to data storage. All interactions occur within the Discord environment, which is subject to Discord's own security protocols.
+Surg-E prioritizes the security of user interactions. The bot does not transmit any sensitive data outside of Discord and employs measures to ensure the protection of user interactions during the session.
 
-## 4. Third-Party Services
+## 4. Compliance with Discord’s Policies
 
-Surg-E does not share any user data with third-party services. The bot operates independently within Discord without any external data processing.
+Surg-E adheres to Discord’s Terms of Service and Developer Policy. The bot will not be used for any purpose that violates these policies. It is designed to operate within the bounds of Discord’s platform and respects the guidelines set forth by Discord.
 
-## 5. Compliance with Discord's Privacy Policy
+## 5. Changes to the Policy
 
-By using Surg-E, you also agree to comply with Discord's [Privacy Policy](https://discord.com/privacy). In the event of any issues or disputes arising from the use of Surg-E, Discord's privacy rules and terms will take precedence.
+This Privacy Policy may be updated periodically to reflect changes in the bot’s operations or legal requirements. Continued use of the bot after such updates will indicate acceptance of the revised policy.
 
-## 6. Updates to the Policy
+## 6. Contact Information
 
-This Privacy Policy may be updated from time to time. Continued use of the bot after changes are made will constitute your acceptance of the new policy.
-
-## 7. Contact Information
-
-If you have any questions or concerns about this Privacy Policy, please contact the developer at [Cantfinddev@gmail.com](mailto:Cantfinddev@gmail.com).
+For questions or concerns about this Privacy Policy, please contact the developer at [Cantfinddev@gmail.com](mailto:Cantfinddev@gmail.com).
