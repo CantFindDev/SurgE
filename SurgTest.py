@@ -189,7 +189,7 @@ class Patient:
     
 
     def UseTool(self, toolType: Enum) -> bool:
-        success = random.random() * 100 > (self.Site - 30 - self.SkillLevel / 4)
+        success = random.random() * 100 > (30 - self.SkillLevel / 4)
         skillfail_occurred = not success
         match toolType:
             case ToolType.SurgicalAntiseptic:
@@ -199,7 +199,7 @@ class Patient:
                     self.ToolText = "You disinfected the operating site."
                 else:
                     self.SkillFailCount += 1
-                    self.ToolText = f"{TextManager.ErrorText("[Skill Fail]: ")}" + "You spilled antiseptic on your shoes. They are very clean now."
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {round(30-self.SkillLevel / 4)}%]: ")}" + TextManager.WarningText("You spilled antiseptic on your shoes. They are very clean now.")
 
             case ToolType.SurgicalDefib:
                 self.DefibCount += 1
@@ -209,7 +209,7 @@ class Patient:
                 else:
                     self.SkillFailCount += 1
                     self.SiteDirtyness += 1
-                    self.ToolText = f"{TextManager.ErrorText("[Skill Fail]: ")}" + "You electrocuted yourself!"    
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {round(30-self.SkillLevel / 4)}%]: ")}" + TextManager.WarningText("You electrocuted yourself!")    
     
             case ToolType.SurgicalSponge:
                 self.SpongeCount += 1
@@ -221,7 +221,7 @@ class Patient:
                         self.ToolText = "You mopped up the operation site."
                 else:
                     self.SkillFailCount += 1
-                    self.ToolText = f"{TextManager.ErrorText("[Skill Fail]: ")}" + "You somehow managed to eat the sponge."
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {round(30-self.SkillLevel / 4)}%]: ")}" + TextManager.WarningText("You somehow managed to eat the sponge.")
     
             case ToolType.SurgicalScalpel:
                 self.ScalpCount += 1
@@ -239,7 +239,7 @@ class Patient:
                         else: 
                             self.SkillFailCount += 1
                             self.BleedingLevel += self.BleedSensitivity
-                            self.ToolText = f"{TextManager.ErrorText("[Skill Fail]: ")}" + "This will leave a nasty scar, but you managed to cut the right place."
+                            self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {round(30-self.SkillLevel / 4)}%]: ")}" + TextManager.WarningText("This will leave a nasty scar, but you managed to cut the right place.")
                 else: self.ScalpCount -= 1
 
             case ToolType.SurgicalStitches:
@@ -258,7 +258,7 @@ class Patient:
                         self.BleedingLevel -= 1
                 else:
                     self.SkillFailCount += 1
-                    self.ToolText = f"{TextManager.ErrorText("[Skill Fail]: ")}" + "You somehow tied yourself up in stitches!"
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {round(30-self.SkillLevel / 4)}%]: ")}" + TextManager.WarningText("You somehow tied yourself up in stitches!")
     
             case ToolType.SurgicalUltrasound:
                 self.UltraSoundCount += 1
@@ -269,7 +269,7 @@ class Patient:
                     self.ToolText = f"You scanned the patient with ultrasound, discovering they are suffering from {self.CurrentDisease["scan_text"]} {("You Found" + self.BoneStatus) if self.BoneStatus != "" else ""}"
                 else:
                     self.SkillFailCount += 1
-                    self.ToolText =  f"{TextManager.ErrorText("[Skill Fail]: ")}" + "You scanned the nurse with your ultrasound!"
+                    self.ToolText =  f"{TextManager.ErrorText(f"[Skill Fail {round(30-self.SkillLevel / 4)}%]: ")}" + TextManager.WarningText("You scanned the nurse with your ultrasound!")
     
             case ToolType.SurgicalLabKit:
                 self.LabKitCount += 1
@@ -279,7 +279,7 @@ class Patient:
                     self.ToolText = "You performed lab work on the patient, and have antibiotics at the ready."
                 else:
                     self.SkillFailCount += 1
-                    self.ToolText = f"{TextManager.ErrorText("[Skill Fail]: ")}" + "You contaminated the sample."
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {round(30-self.SkillLevel / 4)}%]: ")}" + TextManager.WarningText("You contaminated the sample.")
 
             case ToolType.SurgicalAntibiotics:
                 self.AntibioticCount += 1
@@ -292,7 +292,7 @@ class Patient:
                 else:
                     self.SkillFailCount += 1
                     self.Fever += 1
-                    self.ToolText = f"{TextManager.ErrorText("[Skill Fail]: ")}" + 'This is the wrong medication! The bacteria like it.'
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {round(30-self.SkillLevel / 4)}%]: ")}" + TextManager.WarningText("This is the wrong medication! The bacteria like it.")
     
             case ToolType.SurgicalSplint:
                 self.SplintCount += 1
@@ -302,7 +302,7 @@ class Patient:
                 else:
                     self.SkillFailCount += 1
                     self.BleedingLevel += self.BleedSensitivity
-                    self.ToolText = f"{TextManager.ErrorText("[Skill Fail]: ")}" + "You somehow cut the patient."
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {round(30-self.SkillLevel / 4)}%]: ")}" + TextManager.WarningText("You somehow cut the patient.")
     
             case ToolType.SurgicalPins:
                 self.PinCount += 1
@@ -313,7 +313,7 @@ class Patient:
                 else:
                     self.SkillFailCount += 1
                     self.BleedingLevel += self.BleedSensitivity
-                    self.ToolText = f"{TextManager.ErrorText("[Skill Fail]: ")}" + "You jabbed the pin through the artery!"
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {round(30-self.SkillLevel / 4)}%]: ")}" + TextManager.WarningText("You jabbed the pin through the artery!")
     
             case ToolType.SurgicalAnesthetic:
                 self.AnestCount += 1
@@ -332,7 +332,7 @@ class Patient:
                 else:
                     self.SkillFailCount += 1
                     self.SiteDirtyness += 1
-                    self.ToolText = f"{TextManager.ErrorText("[Skill Fail]: ")}" + "You end up inhaling all the anesthetic yourself. You feel woozy."
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {round(30-self.SkillLevel / 4)}%]: ")}" + TextManager.WarningText("You end up inhaling all the anesthetic yourself. You feel woozy.")
 
             case ToolType.SurgicalTransfusion:
                 self.TransfusionCount += 1
@@ -342,7 +342,7 @@ class Patient:
                 else:
                     self.SkillFailCount += 1
                     self.SiteDirtyness += 1
-                    self.ToolText = f"{TextManager.ErrorText("[Skill Fail]: ")}" + "You spilled blood everywhere!"
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {round(30-self.SkillLevel / 4)}%]: ")}" + TextManager.WarningText("You spilled blood everywhere!")
 
             case ToolType.SurgicalClamp:
                 self.ClampCount += 1
@@ -351,7 +351,7 @@ class Patient:
                     self.ToolText = "You clamped up some blood vessels"
                 else:
                     self.SkillFailCount += 1
-                    self.ToolText = f"{TextManager.ErrorText("[Skill Fail]: ")}" + "The clamp fell out of your hand, oh well."     
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {round(30-self.SkillLevel / 4)}%]: ")}" + TextManager.WarningText("The clamp fell out of your hand, oh well.")     
                       
             case ToolType.FixIt:
                 if success and self.IsFixable and not self.IsPatientFixed:
@@ -360,7 +360,7 @@ class Patient:
                     self.IsFixable = False #It should not be fixable after being fixed...
                 else:
                     self.SkillFailCount += 1
-                    self.ToolText = f"{TextManager.ErrorText("[Skill Fail]: ")}" + "You screwed it up! Try again."
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {round(30-self.SkillLevel / 4)}%]: ")}" + TextManager.WarningText("You screwed it up! Try again.")
                 
         self.UpdatePatientValues(toolType)
         self.UpdatePatientUI()
