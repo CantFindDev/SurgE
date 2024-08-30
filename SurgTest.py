@@ -542,7 +542,7 @@ class Patient:
         else:
             embed.title = f"Surgery Simulator| Skill Level: {self.SkillLevel}\n\n" 
             embed.description = ""
-            embed.description += TextManager.ansistart
+            embed.description += TextManager.ansistart + "\n"
             embed.description += f"{TextManager.WarningText(self.SpecialConditionText)+"\n" if self.SpecialCondition != "None" and self.SpecialConditionVisibility else "\n"}" + f"{TextManager.BoldText(self.ScanText)}\n"
             embed.description += TextManager.AddFeild(value=f"Pulse: {self.PulseText}", inline=True)
             embed.description += TextManager.AddFeild(value=f"Status: {self.PatientStatus}", inline=True)
@@ -557,7 +557,7 @@ class Patient:
             if self.ToolText != "": embed.description += TextManager.AddFeild(value=f"{TextManager.SoftText(self.ToolText)}", inline=False)
             if self.HeartText != "": embed.description += TextManager.AddFeild(value=f"{self.HeartText}", inline=False)
             if self.TrainE == True: embed.description += TextManager.AddFeild(value=f"Bot Tips:\n{self.TrainEText}", inline=False)
-            embed.description += TextManager.ansiend
+            embed.description += "\n" + TextManager.ansiend
             
 class PatientState(Enum):
     HeartStopped = 0
