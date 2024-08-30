@@ -9,6 +9,7 @@ import typing
 import math
 import json
 import urllib.parse
+import time
 
  # SurgE Growtopia surgery simulator discord bot
  # Copyright (C) 2024 CantFind
@@ -91,6 +92,8 @@ class Patient:
         self.DirtSensitivity = 0
         self.AnestSensitivity = 10
         self.BleedSensitivity = 1
+
+        self.StartTime = 0
 
         if malady: self.SetSpesificDisease(malady)  
         else: self.SetRandomDisease()  
@@ -478,7 +481,7 @@ class Patient:
                 self.Fever = (self.Fever - 3) / 2
         elif ((self.Site <= 2) and (self.BleedingLevel > 0) or (self.Site <= 4) and (self.Incisions > 0)):
             self.Fever += 0.06
-        self.Temp += round(self.Fever)
+        self.Temp += self.Fever
         self.Temp = round(self.Temp * 100 / 100)
         if self.Temp < 98.6:
             self.Temp = 98.6 
@@ -512,7 +515,7 @@ class Patient:
 
     def SetCurrentPatientEmbed(self, embed : discord.Embed) -> str:
         if self.IsSurgeryEnded:
-            embed.title = f"{"Train-E" if self.TrainE else "Surg-E"}"
+            embed.title = f"{"Train-E" if self.TrainE else "Surg-E"} | Time Elapsed: {round(time.time() - self.StartTime)} Seconds"
             embed.description = f"## {self.EndText}\n\n"
             embed.description += TextManager.AddFeild(value=f"**Malady:**\n{self.CurrentDisease["diagnostic"]}\n", inline=False)
             if self.SpecialConditionText != "" and self.SpecialConditionVisibility: embed.description += TextManager.AddFeild(value=f"**Special Condition:**\n{self.SpecialCondition}\n", inline=False)
@@ -860,11 +863,12 @@ class SurgeryCog(commands.Cog):
             title= "",
             description="",
             color=discord.Color.blue()
-        )
+        ) 
         patient.UpdatePatientUI()
         patient.SetCurrentPatientEmbed(embed)
         embed.set_footer(text="Surg system is being developed by CantFind")
         await interaction.followup.send(embed=embed, view=view)
+        patient.StartTime = time.time()
 
 async def setup(bot):
     await bot.add_cog(SurgeryCog(bot))
