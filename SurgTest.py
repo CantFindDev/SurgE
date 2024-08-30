@@ -231,7 +231,7 @@ class Patient:
                 elif self.Incisions >= self.IncisionsNeeded:
                     self.ToolText = TextManager.ErrorText("You stabbed the patient in a vital organ!")
                     self.BleedingLevel += self.BleedSensitivity
-                elif self.PatientStatus == PatientStatus.GetPatientState(PatientState.Unconscious) and self.Incisions >= 0:
+                elif self.Incisions >= 0:
                     self.Incisions += self.ScalpSensivity
                     if self.Incisions < self.IncisionsNeeded:
                         if success:
