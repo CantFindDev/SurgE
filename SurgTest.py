@@ -75,7 +75,7 @@ class Patient:
         self.TempText = ""
         self.BoneText = ""
         self.IncisionText = ""
-        self.ScanText = "The patient has not been diagnosed."
+        self.ScanText = TextManager.ErrorText("The patient has not been diagnosed.")
         self.EndText = ""
         self.PatientStatus = PatientStatus.GetPatientState(PatientState.Awake)
         self.BleedingText = ""
@@ -119,8 +119,10 @@ class Patient:
                 break
                 
     def SetRandomSpecialCondition(self):
-        cond = random.choice(SpecialConditions.Conditions)
-        self.ApplyCondition(cond)
+        Random = math.floor(random.random()* 10)
+        for cond in SpecialConditions.Conditions:
+            if Random < cond['condition_chance']:
+                self.ApplyCondition(cond)
 
     def ApplyCondition(self,cond):
         self.SpecialCondition = cond["condition_name"]
@@ -139,7 +141,8 @@ class Patient:
         self.Fever = disease.get("fever", 0.0)
         self.SiteDirtyness = disease.get("dirt", 0)
         self.IsPatientFixed = disease.get("patient_fixed", False)
-        self.treatment_steps = disease["steps"]
+        self.IsUltrasoundUsed = disease.get("ultrasound_used",False)
+        self.Pulse = disease.get("pulse", 40)
 
     def ApplySpecialConditionValues(self):
         match self.SpecialCondition:
@@ -238,6 +241,7 @@ class Patient:
                             self.BleedingLevel += self.BleedSensitivity
                             self.ToolText = f"{TextManager.ErrorText("[Skill Fail]: ")}" + "This will leave a nasty scar, but you managed to cut the right place."
                 else: self.ScalpCount -= 1
+
             case ToolType.SurgicalStitches:
                 self.StitCount += 1
                 if success:
@@ -363,9 +367,13 @@ class Patient:
         return skillfail_occurred
     
     def UpdatePatientUI(self):
+        if self.IsFixable: self.ScanText = self.CurrentDisease["fix_text"]
+        elif self.IsPatientFixed: self.ScanText = self.CurrentDisease["post_fix_text"]
+
         if self.SiteDirtyness >= 10: self.DirtynessText = TextManager.ErrorText("You can't see what you are doing!")
         elif self.SiteDirtyness >= 4: self.DirtynessText = TextManager.WarningText("It is becoming hard to see your work.")
-        else: self.SiteText = ""
+        else: self.DirtynessText = ""
+
         if self.BleedingLevel > 0:
             text = "Patient is "
             if self.BleedingLevel >= 4: text += f"loosing blood {TextManager.ErrorText("very quickly!")}"
@@ -393,11 +401,10 @@ class Patient:
         elif self.Site < 1: self.SiteText = TextManager.SoftText("Not sanitized")
         else: self.SiteText = TextManager.PositiveText("Clean")
 
-        if self.Temp == 98.6: self.TempText = TextManager.PositiveText(self.Temp) 
-        elif self.Temp > 98.8: self.TempText = TextManager.SoftText(self.Temp)
-        elif self.Temp > 104: self.TempText = TextManager.WarningText(self.Temp) 
-        elif self.Temp > 106: self.TempText = TextManager.ErrorText(self.Temp) 
-        else: self.TempText = ""
+        if self.Temp < 100: self.TempText = TextManager.PositiveText(self.Temp) 
+        elif self.Temp < 104: self.TempText = TextManager.SoftText(self.Temp)
+        elif self.Temp < 106: self.TempText = TextManager.WarningText(self.Temp) 
+        else: self.TempText = TextManager.ErrorText(self.Temp)
 
         broken = str(self.BrokenBoneCount)
         shatter = str(self.ShatteredBoneCount)
@@ -420,6 +427,7 @@ class Patient:
             self.HeartText = TextManager.ErrorText("Patient\'s heart has stopped!")
         else:
             self.HeartText = ""
+        
         #Train-E
         if self.TrainE:
             self.TrainEText = ""
@@ -482,11 +490,12 @@ class Patient:
             if self.Fever > -0.06:
                 self.Fever = 0
             elif self.Antibs:
-                self.Fever = (self.Fever - 3) / 2
+                self.Fever = (self.Fever - self.AntibSensivity) / 2
         elif ((self.Site <= 2) and (self.BleedingLevel > 0) or (self.Site <= 4) and (self.Incisions > 0)):
             self.Fever += 0.06
         self.Temp += self.Fever
-        self.Temp = round(self.Temp * 100 / 100)
+        self.Temp = round(self.Temp * 100,2) / 100
+        
         if self.Temp < 98.6:
             self.Temp = 98.6 
         self.Antibs = False   
