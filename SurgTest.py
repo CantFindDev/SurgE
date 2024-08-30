@@ -75,9 +75,9 @@ class Patient:
         self.TempText = ""
         self.BoneText = ""
         self.IncisionText = ""
-        self.ScanText = TextManager.ErrorText("The patient has not been diagnosed.")
+        self.ScanText = ""
         self.EndText = ""
-        self.PatientStatus = PatientStatus.GetPatientState(PatientState.Awake)
+        self.PatientStatus = ""
         self.BleedingText = ""
         self.FeverText = ""
         self.SpecialCondition = None
@@ -872,6 +872,8 @@ class SurgeryCog(commands.Cog):
         surgery = Surgery(patient=patient, user=interaction.user)
         view = SurgeryView(surgery,interaction.user)
         TextManager.setTextManager(colored_ui)
+        patient.PatientStatus = PatientStatus.GetPatientState(PatientState.Awake)
+        patient.ScanText = TextManager.ErrorText("The patient has not been diagnosed.")
         embed = discord.Embed(
             title= "",
             description="",
