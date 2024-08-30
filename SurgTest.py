@@ -234,11 +234,6 @@ class Patient:
                             self.SkillFailCount += 1
                             self.BleedingLevel += self.BleedSensitivity
                             self.ToolText = f"{TextManager.ErrorText("[Skill Fail]: ")}" + "This will leave a nasty scar, but you managed to cut the right place."
-                    if self.Incisions >= self.IncisionsNeeded and not self.IsPatientFixed:
-                        if  self.IsUltrasoundUsed: self.IsFixable = True
-                        self.Incisions = self.IncisionsNeeded
-                    else:
-                        self.IsFixable = False
                 else: self.ScalpCount -= 1
             case ToolType.SurgicalStitches:
                 self.StitCount += 1
@@ -462,6 +457,15 @@ class Patient:
             if self.SleepLevel < 3 and self.SleepLevel > 0 and self.Incisions > 0: self.TrainEText += TextManager.WarningText("Coming To") + f" - Your patient is about to wake up but you still have some {TextManager.WarningText("Incisions")}. Use {TextManager.PurpieText("Anesthetic")} to keep them unconscious until you have closed to wound.\n"
     
     def UpdatePatientValues(self, toolType : Enum):
+
+        if self.Incisions >= self.IncisionsNeeded and not self.IsPatientFixed:
+            if  self.IsUltrasoundUsed:
+                self.IsFixable = True
+                self.Incisions = self.IncisionsNeeded
+            else:
+                self.IsFixable = False
+            
+
         self.SiteDirtyness += self.BleedingLevel + self.Incisions
 
         #Pulse
