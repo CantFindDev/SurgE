@@ -873,7 +873,7 @@ class SurgeryCog(commands.Cog):
         view = SurgeryView(surgery,interaction.user)
         TextManager.setTextManager(colored_ui)
         patient.PatientStatus = PatientStatus.GetPatientState(PatientState.Awake)
-        patient.ScanText = TextManager.ErrorText("The patient has not been diagnosed.")
+        if patient.ScanText == "": patient.ScanText = TextManager.ErrorText("The patient has not been diagnosed.")
         embed = discord.Embed(
             title= "",
             description="",
