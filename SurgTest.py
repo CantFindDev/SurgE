@@ -315,10 +315,9 @@ class Patient:
                         if self.TrainE and self.PatientStatus == PatientStatus.GetPatientState(PatientState.Unconscious):
                             self.PatientStatus = PatientStatus.GetPatientState(PatientState.NearComa)
                             self.ToolText = "The patient falls into a deep sleep."
-                            return
-                        
-                        self.EndText = "You put your patient to sleep. Permanently!"
-                        self.IsSurgeryEnded = True
+                        else:
+                            self.EndText = "You put your patient to sleep. Permanently!"
+                            self.IsSurgeryEnded = True
                     else:
                         self.PatientStatus = PatientStatus.GetPatientState(PatientState.Unconscious)
                         self.SleepLevel = self.AnestSensitivity
@@ -426,7 +425,7 @@ class Patient:
                 self.TrainEText += TextManager.ErrorText("Heart Stopped") + f" - You need to {TextManager.WarningText("Revive")} your patient with a {TextManager.PurpieText("Defiblirator")}!"
                 return
             #Awake
-            if self.SleepLevel == 0 and self.SleepLevel > 0 and self.Incisions > 0: self.TrainEText += TextManager.ErrorText("Awake") + f" - Your patient is {TextManager.WarningText("Awake")}. Use {TextManager.PurpieText("Anesthetic")} to put them to sleep until you have closed the wound.\n"
+            if self.SleepLevel == 0 and self.Incisions > 0: self.TrainEText += TextManager.ErrorText("Awake") + f" - Your patient is {TextManager.WarningText("Awake")}. Use {TextManager.PurpieText("Anesthetic")} to put them to sleep until you have closed the wound.\n"
             #Stitch
             if self.Incisions > 0 and self.IsPatientFixed: self.TrainEText += TextManager.PositiveText("Stitch it Up!") + f" - The issue is fixed! It's time to close it up with {TextManager.PurpieText("Stitches")}.\n"
             #FixIt
