@@ -208,6 +208,8 @@ class Patient:
             case ToolType.SurgicalSponge:
                 self.SpongeCount += 1
                 if success: 
+                    if self.SiteDirtyness == 0:
+                        self.ToolText = f"{TextManager.WarningText("Everything was already clean, you wasted a sponge!")}"
                     self.SiteDirtyness = 0
                     self.ToolText = "You mopped up the operation site."
                 else:
@@ -220,7 +222,7 @@ class Patient:
                     self.EndText = "You cut the patient while they were awake!"
                     self.IsSurgeryEnded = True
                 elif self.Incisions > self.IncisionsNeeded:
-                    self.ToolText = "You stabbed the patient in a vital organ!"
+                    self.ToolText = TextManager.ErrorText("You stabbed the patient in a vital organ!")
                     self.BleedingLevel += self.BleedSensitivity
                 elif self.PatientStatus == PatientStatus.GetPatientState(PatientState.Unconscious) and self.Incisions >= 0:
                     self.Incisions += self.ScalpSensivity
@@ -236,6 +238,7 @@ class Patient:
                         self.Incisions = self.IncisionsNeeded
                     else:
                         self.IsFixable = False
+                else: self.ScalpCount -= 1
             case ToolType.SurgicalStitches:
                 self.StitCount += 1
                 if success:
@@ -312,7 +315,12 @@ class Patient:
             case ToolType.SurgicalAnesthetic:
                 self.AnestCount += 1
                 if success:
-                    if self.PatientStatus == PatientStatus.GetPatientState(PatientState.Unconscious):
+                    if self.PatientStatus == PatientStatus.GetPatientState(PatientState.Unconscious) or self.PatientStatus == PatientStatus.GetPatientState(PatientState.NearComa):
+                        if self.TrainE and self.PatientStatus == PatientStatus.GetPatientState(PatientState.Unconscious):
+                            self.PatientStatus = PatientStatus.GetPatientState(PatientState.NearComa)
+                            self.ToolText = "The patient falls into a deep sleep."
+                            return
+                        
                         self.EndText = "You put your patient to sleep. Permanently!"
                         self.IsSurgeryEnded = True
                     else:
@@ -362,7 +370,7 @@ class Patient:
         else: self.SiteText = ""
         if self.BleedingLevel > 0:
             text = "Patient is "
-            if self.BleedingLevel >= 4: text += f"loosing blood {TextManager.ErrorText("fast!")}"
+            if self.BleedingLevel >= 4: text += f"loosing blood {TextManager.ErrorText("very quickly!")}"
             elif self.BleedingLevel == 1: text += f"losing blood {TextManager.SoftText("slowly.")}"
             else: text += f"{TextManager.WarningText("losing blood!")}"
             self.BleedingText = text + "\n"
@@ -402,7 +410,7 @@ class Patient:
             self.BoneText = txt
         else: self.BoneText = ""
         
-        if self.IsFixable: self.IncisionText = TextManager.PositiveText(self.Incisions)
+        if self.Incisions == self.IncisionsNeeded: self.IncisionText = TextManager.PositiveText(self.Incisions)
         else: self.IncisionText = self.Incisions
 
         if self.HeartDamage > 0: self.PatientStatus = PatientStatus.GetPatientState(PatientState.HeartStopped)
@@ -421,6 +429,8 @@ class Patient:
             if self.HeartDamage > 0: 
                 self.TrainEText += TextManager.ErrorText("Heart Stopped") + f" - You need to {TextManager.WarningText("Revive")} your patient with a {TextManager.PurpieText("Defiblirator")}!"
                 return
+            #Awake
+            if self.SleepLevel == 0 and self.SleepLevel > 0 and self.Incisions > 0: self.TrainEText += TextManager.ErrorText("Awake") + f" - Your patient is {TextManager.WarningText("Awake")}. Use {TextManager.PurpieText("Anesthetic")} to put them to sleep until you have closed the wound.\n"
             #Stitch
             if self.Incisions > 0 and self.IsPatientFixed: self.TrainEText += TextManager.PositiveText("Stitch it Up!") + f" - The issue is fixed! It's time to close it up with {TextManager.PurpieText("Stitches")}.\n"
             #FixIt
@@ -430,25 +440,26 @@ class Patient:
             #PrepPatient
             if self.SleepLevel == 0 and self.IsUltrasoundUsed and self.IncisionsNeeded > 0: self.TrainEText += TextManager.PositiveText("Prep Patient") + f" - Apply {TextManager.PurpieText("Anesthetic")} to put the patient to sleep.\n"
             #Incision
-            if not self.IsFixable and not self.IsPatientFixed and self.SleepLevel > 0: self.TrainEText += TextManager.PositiveText("Make an Incision!") + f" - Use {TextManager.PurpieText("Scalpel")} to make an incision.\n"
+            if not self.IsFixable and not self.IsPatientFixed and self.SleepLevel > 0 and self.IsUltrasoundUsed: self.TrainEText += TextManager.PositiveText("Make an Incision!") + f" - Use {TextManager.PurpieText("Scalpel")} to make an incision.\n"
             #Visibility
             if self.SiteDirtyness >= 4: self.TrainEText += TextManager.WarningText("Poor Visibility") + f" - Apply a {TextManager.PurpieText("Sponge")}. Poor visibility increases the chance of a {TextManager.WarningText("Skill Failure")}.\n"
             #Diagnosis
             if not self.IsUltrasoundUsed or (not self.IsLabKitUsed and not self.IsUltrasoundUsed): self.TrainEText += TextManager.WarningText("Diagnosis") + f" - You can use the {TextManager.PurpieText("Ultrasound")} {f"or {TextManager.PurpieText("Lab Kit")}" if not self.IsLabKitUsed else ""} to diagnose the illness\n"
             #Losing Blood
-            if self.BleedingLevel > 0: self.TrainEText += TextManager.WarningText("Losing Blood") + f" - Apply {f"{TextManager.PurpieText("Clamps")} to reduce {TextManager.WarningText("Bleeding")} during surgery." if self.Incisions > 0 else f"{TextManager.PurpieText("Stitches")} to reduce {TextManager.WarningText("Bleeding")}."}\n"
+            if self.BleedingLevel > 0: self.TrainEText += TextManager.WarningText("Losing Blood") if self.BleedingLevel < 4 else (TextManager.ErrorText("Losing Blood very quickly")) + f" - Apply {f"{TextManager.PurpieText("Clamps")} to reduce {TextManager.WarningText("Bleeding")} during surgery." if self.Incisions > 0 else f"{TextManager.PurpieText("Stitches")} to reduce {TextManager.WarningText("Bleeding")}."}\n"
             #Shattered Bone
             if self.ShatteredBoneCount > 0 and self.IsUltrasoundUsed: self.TrainEText += TextManager.WarningText("Shattered Bone") + f" - Apply {TextManager.PurpieText("Pins")}.You must put the patient to sleep with {TextManager.PurpieText("Anesthetic")} and {f"make an insicion with a {"" if self.IsFixable or self.IsPatientFixed else TextManager.PurpieText("Scalpel")} before you can apply pins."}\n"
             #Broken Bone
             if self.BrokenBoneCount > 0 and self.IsUltrasoundUsed: self.TrainEText += TextManager.WarningText("Broken Bone") + f" - Apply a {TextManager.PurpieText("Splint")}.\n"
             #Fever
-            if self.Fever > 0: self.TrainEText += TextManager.WarningText("Fever") + f" - {"Apply" if self.IsLabKitUsed else f"Diagnose the {TextManager.WarningText("Infection")} With a {TextManager.PurpieText("Lab Kit")} then apply"} {TextManager.PurpieText("Antibiotics")} to bring down {TextManager.WarningText("Temp")}\n"
+            if self.Fever > 0: self.TrainEText += TextManager.WarningText("Fever") if self.Fever < 0.5 else (TextManager.ErrorText("High Fever")) + f" - {"Apply" if self.IsLabKitUsed else f"Diagnose the {TextManager.WarningText("Infection")} With a {TextManager.PurpieText("Lab Kit")} then apply"} {TextManager.PurpieText("Antibiotics")} to bring down {TextManager.WarningText("Temp")}\n"
             #Antibiotics 
             if self.Temp > 98.8 and self.Fever > 0 and self.IsLabKitUsed: self.TrainEText += TextManager.PositiveText("Antibiotics") + f" - Apply {TextManager.PurpieText("Antibiotics")} to prevent any infection. If all else fails, give antibiotics.\n"
             #Pulse
-            #if self.Pulse < 11: self.TrainEText += TextManager.ErrorText("Extremely Weak")
+            if self.Pulse < 11: self.TrainEText += TextManager.ErrorText("Extremely Weak Pulse") + f" - You can increase the {TextManager.WarningText("Pulse")} with a {TextManager.PurpieText("Blood Transfusion")}."
             #Coming To
-            if self.SleepLevel < 3 and self.SleepLevel > 0 and self.Incisions > 0: self.TrainEText += TextManager.WarningText("Coming To") + f" - Your patient is about to wake up but you still have some {TextManager.WarningText("Infections")}. Use {TextManager.PurpieText("Anesthetic")} to keep them unconscious until you have closed to wound.\n"
+            if self.SleepLevel < 3 and self.SleepLevel > 0 and self.Incisions > 0: self.TrainEText += TextManager.WarningText("Coming To") + f" - Your patient is about to wake up but you still have some {TextManager.WarningText("Incisions")}. Use {TextManager.PurpieText("Anesthetic")} to keep them unconscious until you have closed to wound.\n"
+    
     def UpdatePatientValues(self, toolType : Enum):
         self.SiteDirtyness += self.BleedingLevel + self.Incisions
 
@@ -485,6 +496,7 @@ class Patient:
         if self.Incisions > 0 and self.PatientStatus == PatientStatus.GetPatientState(PatientState.Awake):
             self.BleedingLevel += self.BleedSensitivity
             self.PatientText = TextManager.ErrorText("The patient screams and flails!")
+        else: self.PatientText = ""
         
         self.Site -= math.floor(self.SiteDirtyness / 3) + self.DirtSensitivity
         if self.Site < -25:
@@ -536,6 +548,7 @@ class PatientState(Enum):
     Awake = 1
     ComingTo = 2
     Unconscious = 3
+    NearComa = 4
 
 class PatientStatus:
     @staticmethod
@@ -549,6 +562,8 @@ class PatientStatus:
                 return f"{TextManager.WarningText("Coming To")}"
             case 3:
                 return f"{TextManager.PositiveText("Unconscious")}"
+            case 4:
+                return f"{TextManager.ErrorText("Near Coma")}" #Traine-E Exclusive
 class FileManager:
     @staticmethod
     def WriteToJson(FilePath:str,ListToRead:list):
