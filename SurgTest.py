@@ -452,7 +452,7 @@ class Patient:
             #Broken Bone
             if self.BrokenBoneCount > 0 and self.IsUltrasoundUsed: self.TrainEText += TextManager.WarningText("Broken Bone") + f" - Apply a {TextManager.PurpieText("Splint")}.\n"
             #Fever
-            if self.Fever > 0: self.TrainEText += TextManager.WarningText("Fever") if self.Fever < 0.5 else (TextManager.ErrorText("High Fever")) + f" - {"Apply" if self.IsLabKitUsed else f"Diagnose the {TextManager.WarningText("Infection")} With a {TextManager.PurpieText("Lab Kit")} then apply"} {TextManager.PurpieText("Antibiotics")} to bring down {TextManager.WarningText("Temp")}\n"
+            if self.Fever > 0: self.TrainEText += (TextManager.WarningText("Fever") if self.Fever < 0.5 else TextManager.ErrorText("High Fever")) + f" - {"Apply" if self.IsLabKitUsed else f"Diagnose the {TextManager.WarningText("Infection")} With a {TextManager.PurpieText("Lab Kit")} then apply"} {TextManager.PurpieText("Antibiotics")} to bring down {TextManager.WarningText("Temp")}\n"
             #Antibiotics 
             if self.Temp > 98.8 and self.Fever > 0 and self.IsLabKitUsed: self.TrainEText += TextManager.PositiveText("Antibiotics") + f" - Apply {TextManager.PurpieText("Antibiotics")} to prevent any infection. If all else fails, give antibiotics.\n"
             #Pulse
