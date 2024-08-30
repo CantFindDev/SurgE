@@ -543,7 +543,7 @@ class Patient:
             embed.title = f"Surgery Simulator| Skill Level: {self.SkillLevel}\n\n" 
             embed.description = ""
             embed.description += TextManager.ansistart + "\n"
-            embed.description += f"{TextManager.WarningText(self.SpecialConditionText)+"\n" if self.SpecialCondition != "None" and self.SpecialConditionVisibility else "\n"}" + f"{TextManager.BoldText(self.ScanText)}\n"
+            embed.description += f"{TextManager.WarningText(self.SpecialConditionText)+"\n" if self.SpecialCondition != "None" and self.SpecialConditionVisibility else ""}" + f"{TextManager.BoldText(self.ScanText)}\n"
             embed.description += TextManager.AddFeild(value=f"Pulse: {self.PulseText}", inline=True)
             embed.description += TextManager.AddFeild(value=f"Status: {self.PatientStatus}", inline=True)
             embed.description += TextManager.AddFeild(value=f"Temp: {self.TempText}", inline=True)
@@ -757,10 +757,10 @@ class TextManager:
     ColoredUI = False
     FeildCount = 0
     @staticmethod
-    def setTextManager(ColoredUI : bool):
-        TextManager.ColoredUI = ColoredUI
-        TextManager.ansistart = "```ansi\n" if ColoredUI else ""
-        TextManager.ansiend = "```" if ColoredUI else ""
+    def setTextManager(Colored_UI : bool):
+        TextManager.ColoredUI = Colored_UI
+        TextManager.ansistart = "```ansi\n" if Colored_UI else ""
+        TextManager.ansiend = "```" if Colored_UI else ""
         TextManager.FeildCount = 0
     @staticmethod
     def ErrorText(text: str):
