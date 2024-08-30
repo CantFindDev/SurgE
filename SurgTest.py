@@ -227,8 +227,8 @@ class Patient:
                 self.ScalpCount += 1
                 if self.PatientStatus == PatientStatus.GetPatientState(PatientState.Awake):
                     self.EndText = "You cut the patient while they were awake!"
-                    self.IsSurgeryEnded = True
-                elif self.Incisions > self.IncisionsNeeded:
+                    self.IsSurgeryEnded = True                 
+                elif self.Incisions >= self.IncisionsNeeded:
                     self.ToolText = TextManager.ErrorText("You stabbed the patient in a vital organ!")
                     self.BleedingLevel += self.BleedSensitivity
                 elif self.PatientStatus == PatientStatus.GetPatientState(PatientState.Unconscious) and self.Incisions >= 0:
