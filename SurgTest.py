@@ -210,6 +210,8 @@ class Patient:
                 if success: 
                     if self.SiteDirtyness == 0:
                         self.ToolText = f"{TextManager.WarningText("Everything was already clean, you wasted a sponge!")}"
+                        return
+                    
                     self.SiteDirtyness = 0
                     self.ToolText = "You mopped up the operation site."
                 else:
