@@ -367,8 +367,8 @@ class Patient:
         return skillfail_occurred
     
     def UpdatePatientUI(self):
-        if self.IsFixable: self.ScanText = self.CurrentDisease["fix_text"]
-        elif self.IsPatientFixed: self.ScanText = self.CurrentDisease["post_fix_text"]
+        if self.IsFixable: self.ScanText = self.CurrentDisease.get("fix_text",self.CurrentDisease["scan_text"])
+        elif self.IsPatientFixed: self.ScanText = self.CurrentDisease.get("post_fix_text",self.CurrentDisease["scan_text"])
 
         if self.SiteDirtyness >= 10: self.DirtynessText = TextManager.ErrorText("You can't see what you are doing!")
         elif self.SiteDirtyness >= 4: self.DirtynessText = TextManager.WarningText("It is becoming hard to see your work.")
