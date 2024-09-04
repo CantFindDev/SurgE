@@ -194,7 +194,7 @@ class Patient:
             return tooltext
 
     def UseTool(self, toolType: Enum) -> bool:
-        SkillFailRate = round(35 - self.SkillLevel / 3)
+        SkillFailRate = round(30 - self.SkillLevel / 4)
         success = random.random() * 100 > SkillFailRate
         skillfail_occurred = not success
         match toolType:
