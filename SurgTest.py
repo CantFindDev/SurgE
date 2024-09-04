@@ -152,14 +152,14 @@ class Patient:
             case "Antibiotic-Resistant Infection":
                 self.AntibSensivity /= 2
                 return
+            case "Hemophiliac":
+                self.BleedSensitivity = 2
+                return
             case "Filthy":
                 self.DirtSensitivity = 10
                 return
             case "Hyperactive":
                 self.AnestSensitivity /= 2
-                return
-            case "Hemophiliac":
-                self.BleedSensitivity = 2
                 return
 
     def GetAllToolsUsed(self) -> str:
@@ -270,7 +270,6 @@ class Patient:
                 if success:
                     self.IsUltrasoundUsed = True
                     self.SpecialConditionVisibility = True
-                    self.ScanText = self.CurrentDisease["scan_text"]
                     self.ToolText = f"You scanned the patient with ultrasound, discovering they are suffering from {self.CurrentDisease["scan_text"]} {("You Found" + self.BoneStatus) if self.BoneStatus != "" else ""}"
                 else:
                     self.SkillFailCount += 1
@@ -372,8 +371,10 @@ class Patient:
         return skillfail_occurred
     
     def UpdatePatientUI(self):
+
         if self.IsFixable: self.ScanText = self.CurrentDisease.get("fix_text",self.CurrentDisease["scan_text"])
         elif self.IsPatientFixed: self.ScanText = self.CurrentDisease.get("post_fix_text",self.CurrentDisease["scan_text"])
+        if self.IsUltrasoundUsed: self.ScanText = self.CurrentDisease["scan_text"]
 
         if self.SiteDirtyness >= 10: self.DirtynessText = TextManager.ErrorText("You can't see what you are doing!")
         elif self.SiteDirtyness >= 4: self.DirtynessText = TextManager.WarningText("It is becoming hard to see your work.")
@@ -415,9 +416,9 @@ class Patient:
         shatter = self.ShatteredBoneCount
         if (broken > 0 or shatter > 0) and self.IsUltrasoundUsed == True:
             txt = "Bones: "
-            if broken > 0: txt += TextManager.ErrorText(broken + " broken") if self.BrokenBoneCount > 1 else TextManager.WarningText(broken + " broken ")
-            if broken >0 and shatter >0: txt += TextManager.ErrorText(",")
-            if shatter > 0: txt +=TextManager.ErrorText(shatter + " shattered") if self.ShatteredBoneCount > 1 else TextManager.WarningText(shatter + " shattered")
+            if broken > 0: txt += TextManager.ErrorText(str(broken) + " broken") if self.BrokenBoneCount > 1 else TextManager.WarningText(str(broken) + " broken ")
+            if broken >0 and shatter >0: txt += ","
+            if shatter > 0: txt +=TextManager.ErrorText(str(shatter) + " shattered") if self.ShatteredBoneCount > 1 else TextManager.WarningText(str(shatter) + " shattered")
             self.BoneText = txt
         else: self.BoneText = ""
         
@@ -492,11 +493,13 @@ class Patient:
             self.IsSurgeryEnded = True
         
         #Fever
+        if self.Fever > 4:
+            self.Fever = 4
         if self.Fever < 0:
             if self.Fever > -0.06:
                 self.Fever = 0
             elif self.Antibs:
-                self.Fever = (self.Fever - self.AntibSensivity) / 2
+                self.Fever = (self.Fever - self.AntibSensivity) / 2        
         elif ((self.Site <= 2) and (self.BleedingLevel > 0) or (self.Site <= 4) and (self.Incisions > 0)):
             self.Fever += 0.06
         self.Temp += self.Fever
