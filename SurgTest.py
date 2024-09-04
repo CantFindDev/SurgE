@@ -148,14 +148,19 @@ class Patient:
         match self.SpecialCondition:
             case "Tough Skin":
                 self.IncisionsNeeded += 1
+                return
             case "Antibiotic-Resistant Infection":
                 self.AntibSensivity /= 2
+                return
             case "Filthy":
                 self.DirtSensitivity = 10
+                return
             case "Hyperactive":
                 self.AnestSensitivity /= 2
+                return
             case "Hemophiliac":
                 self.BleedSensitivity = 2
+                return
 
     def GetAllToolsUsed(self) -> str:
             tooltext = ""
@@ -357,7 +362,7 @@ class Patient:
                 if success and self.IsFixable and not self.IsPatientFixed:
                     self.ToolText = "You fixed the issue!"
                     self.IsPatientFixed = True
-                    self.IsFixable = False #It should not be fixable after being fixed...
+                    self.IsFixable = False
                 else:
                     self.SkillFailCount += 1
                     self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You screwed it up! Try again.")
@@ -406,12 +411,13 @@ class Patient:
         elif self.Temp < 106: self.TempText = TextManager.WarningText(self.Temp) 
         else: self.TempText = TextManager.ErrorText(self.Temp)
 
-        broken = str(self.BrokenBoneCount)
-        shatter = str(self.ShatteredBoneCount)
-        if (self.BrokenBoneCount > 0 or self.ShatteredBoneCount > 0) and self.IsUltrasoundUsed == True:
+        broken = self.BrokenBoneCount
+        shatter = self.ShatteredBoneCount
+        if (broken > 0 or shatter > 0) and self.IsUltrasoundUsed == True:
             txt = "Bones: "
-            if self.BrokenBoneCount > 0: txt += TextManager.ErrorText(broken + " broken") if self.BrokenBoneCount > 1 else TextManager.WarningText(broken + " broken ")
-            if self.ShatteredBoneCount > 0: txt +=TextManager.ErrorText("," + shatter + " shattered") if self.ShatteredBoneCount > 1 else TextManager.WarningText(shatter + " shattered")
+            if broken > 0: txt += TextManager.ErrorText(broken + " broken") if self.BrokenBoneCount > 1 else TextManager.WarningText(broken + " broken ")
+            if broken >0 and shatter >0: txt += TextManager.ErrorText(",")
+            if shatter > 0: txt +=TextManager.ErrorText(shatter + " shattered") if self.ShatteredBoneCount > 1 else TextManager.WarningText(shatter + " shattered")
             self.BoneText = txt
         else: self.BoneText = ""
         
