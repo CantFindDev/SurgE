@@ -29,7 +29,7 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Game(name="Growtopia Surgery Simulator"))
-    await bot.load_extension("SurgTest")
+    await bot.load_extension("Surgery")
     try:
         synced = await bot.tree.sync()
         print(f"Synced {len(synced)} command(s)")

@@ -123,6 +123,7 @@ class Patient:
         for cond in SpecialConditions.Conditions:
             if Random < cond['condition_chance']:
                 self.ApplyCondition(cond)
+                break
 
     def ApplyCondition(self,cond):
         self.SpecialCondition = cond["condition_name"]
