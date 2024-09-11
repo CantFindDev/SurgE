@@ -1,0 +1,18 @@
+[
+    {
+        "ModifierName": "Stethoscope",
+        "ModifierType": "Calming"
+    },
+    {
+        "ModifierName": "Nano Nurse Bot",
+        "ModifierType": "Nursing"
+    },
+    {
+        "ModifierName": "Exquisite Bone Saw",
+        "ModifierType": "Calming"
+    },
+    {
+        "ModifierName": "Tea",
+        "ModifierType": "Calming"
+    }
+]
