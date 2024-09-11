@@ -1,3 +1,4 @@
+import asyncio
 from enum import Enum
 import discord
 import random
@@ -448,9 +449,10 @@ class Patient:
     
     def UpdatePatientUI(self):
 
-        if self.IsFixable: self.ScanText = self.CurrentDisease.get("fix_text",self.CurrentDisease["scan_text"])
-        elif self.IsPatientFixed: self.ScanText = self.CurrentDisease.get("post_fix_text",self.CurrentDisease["scan_text"])
-        if self.IsUltrasoundUsed: self.ScanText = self.CurrentDisease["scan_text"]
+        if self.IsUltrasoundUsed:
+            if self.IsFixable: self.ScanText = self.CurrentDisease.get("fix_text",self.CurrentDisease["scan_text"])
+            elif self.IsPatientFixed: self.ScanText = self.CurrentDisease.get("post_fix_text",self.CurrentDisease["scan_text"])
+            else: self.ScanText = self.CurrentDisease["scan_text"]
 
         if self.SiteDirtyness >= 10: self.DirtynessText = TextManager.ErrorText("You can't see what you are doing!")
         elif self.SiteDirtyness >= 4: self.DirtynessText = TextManager.WarningText("It is becoming hard to see your work.")
@@ -646,7 +648,11 @@ class Patient:
             if self.HeartText != "": embed.description += TextManager.AddFeild(value=f"{self.HeartText}", inline=False)
             if self.TrainE == True: embed.description += TextManager.AddFeild(value=f"Bot Tips:\n{self.TrainEText}", inline=False)
             embed.description += "\n" + TextManager.ansiend
-            
+    
+    async def timer(self,minutes: Optional[int] = 2):
+        self.StartTime = time.time()
+        await asyncio.sleep(minutes * 60)
+        
 class PatientState(Enum):
     HeartStopped = 0
     Awake = 1
@@ -864,7 +870,7 @@ class SurgeryView(View):
             await interaction.response.edit_message(embed=embed, view=self)
 
         return callback
-    
+
 class TextManager:
     ansistart = ""
     ansiend = ""
@@ -1007,7 +1013,16 @@ class SurgeryCog(commands.Cog):
         patient.SetCurrentPatientEmbed(embed)
         embed.set_footer(text="Surg system is being developed by CantFind")
         await interaction.followup.send(embed=embed, view=view)
-        patient.StartTime = time.time()
+        await patient.timer(2)
+        view.clear_items()
+        embed = discord.Embed(
+            title= "Surgery Abandoned",
+            description=f"[Dr.{interaction.user.display_name}](https://github.com/CantFindDev/SurgE) has abandoned the patient and left the room",
+            color=discord.Color.red()
+        )
+        patient.IsSurgeryEnded = True
+        await interaction.followup.send(embed=embed, view=view)
+        
 
 async def setup(bot):
     await bot.add_cog(SurgeryCog(bot))
