@@ -619,6 +619,7 @@ class Patient:
             embed.description += TextManager.AddFeild(value=f"**Malady:**\n{self.CurrentDisease["diagnostic"]}\n", inline=False)
             if self.SpecialConditionText != "" and self.SpecialConditionVisibility: embed.description += TextManager.AddFeild(value=f"**Special Condition:**\n{self.SpecialCondition}\n", inline=False)
             if self.SkillFailCount > 0: embed.description += TextManager.AddFeild(value=f"**Skill Fails:**\n{self.SkillFailCount}\n", inline=False)
+            if self.ModifierItem != None: embed.description += TextManager.AddFeild(value=f"**Modifier:**\n{self.ModifierItem}\n", inline=False)
             embed.description += TextManager.AddFeild(value=f"**Skill Level:**\n{self.SkillLevel}\n", inline=False)
             embed.description += TextManager.AddFeild(value=f"**Tools Used:**\n{self.GetAllToolsUsed()}", inline=False)
             item = Drops.GetDrop()

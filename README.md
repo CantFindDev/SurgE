@@ -38,6 +38,14 @@ Activate a surgery UI that mimics the Growtopia surgery simulator with colors:
 
 ![Surgery UI](https://i.imgur.com/akzcGqL.png)
 
+## Select a Specific Modifier
+
+Choose from a list of available modifiers to make surgery easier:
+
+```
+/surg modifier:[MODIFIER_NAME]
+```
+![Modifier](https://i.imgur.com/guvFOEU.png)
 ## Select a Specific Malady
 
 Choose from a list of available maladies to practice with:
@@ -213,7 +221,7 @@ Enjoy using your bot! Remember to continue coding and stay curious. If you have 
   <a href="https://www.youtube.com/@TheRealCantFind" target="_blank">
     <img src="https://img.shields.io/static/v1?message=Youtube&logo=youtube&label=&color=FF0000&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="youtube logo"  />
   </a>
-  <a href="CantFind" target="https://discord.gg/kBzFR6Gw2N">
+  <a href="https://discord.gg/kBzFR6Gw2N" target="_blank">
     <img src="https://img.shields.io/static/v1?message=Discord&logo=discord&label=&color=7289DA&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="discord logo"  />
   </a>
 </div>
