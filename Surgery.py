@@ -1014,6 +1014,7 @@ class SurgeryCog(commands.Cog):
         embed.set_footer(text="Surg system is being developed by CantFind")
         await interaction.followup.send(embed=embed, view=view)
         await patient.timer(2)
+        if patient.IsSurgeryEnded: return
         view.clear_items()
         embed = discord.Embed(
             title= "Surgery Abandoned",
