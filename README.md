@@ -114,17 +114,21 @@ Clone the source code repository to your local machine using the following comma
 ```bash
 git clone https://github.com/CantFindDev/SurgE.git
 ```
+![Project Files](https://i.imgur.com/hbpQ6Dp.png)
+
+or you can use in built visual studio code import from git option
+
+![Visual Studio Code Interface](https://i.imgur.com/SB6O6E6.png)
+
+![vscodegit](https://i.imgur.com/0FjbyZl.png)
 
 ### Opening the Project
 
 Open the source code in [Visual Studio Code](https://code.visualstudio.com):
 
-![Visual Studio Code Interface](https://i.imgur.com/OWmwUcP.png)
-
 The following files are essential once you open the project:
 
-![Project Files](https://i.imgur.com/hbpQ6Dp.png)
-![Project Structure](https://i.imgur.com/remA2hO.png)
+![Project Structure](https://i.imgur.com/FcwE9U8.png)
 
 ### Creating a Discord Bot
 
@@ -173,13 +177,16 @@ The following files are essential once you open the project:
    pip install python-dotenv
    py -3 -m pip install -U discord.py
    ```
+   
+   ![terminal](https://i.imgur.com/UI1EXwF.png)
+   
 3. Rename the `EMPTY_.env` file to `.env`:
 
-   ![Rename .env File](https://i.imgur.com/FuHFt5Z.png)
+   ![Rename .env File](https://i.imgur.com/8eHyCho.png)
 
 4. Paste your bot token into the `.env` file as shown below:
 
-   ![Edit .env File](https://i.imgur.com/vKy02mE.png)
+   ![Edit .env File](https://i.imgur.com/rAn5f3Z.png)
 
 ### Running the Bot
 
