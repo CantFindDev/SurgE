@@ -20,12 +20,27 @@ TrainE Mode is more structured and educational. In this mode, the bot will provi
 
 To get started with the bot, use the following commands to simulate the Growtopia surgery system:
 
-## Generate a Random Malady
+## Start a surgery
 
-Generate a random malady with a special condition and set the skill level to 100:
+Generates a random malady with a special condition and set the skill level to 100:
 
 ```
 /surg
+```
+## Repeat last command
+
+Repeates the last surgery command with parameters
+
+```
+/repeat
+```
+
+## Adjust Skill Level
+
+Set your skill level to any value between 0 and 100:
+
+```
+/surg skill_level:[SKILL_LEVEL]
 ```
 
 ## Enable Surgery UI with Colors
@@ -36,7 +51,7 @@ Activate a surgery UI that mimics the Growtopia surgery simulator with colors:
 /surg colored_ui:True
 ```
 
-![Surgery UI](https://i.imgur.com/akzcGqL.png)
+![Surgery UI](https://i.imgur.com/HBqCved.png)
 
 ## Select a Specific Modifier
 
@@ -54,7 +69,7 @@ Choose from a list of available maladies to practice with:
 /surg malady:[MALADY_NAME]
 ```
 
-![Malady Selection](https://i.imgur.com/Bzdj4lD.png)
+![Malady Selection](https://i.imgur.com/AUiMurf.png)
 
 ## Activate TrainE Mode
 
@@ -64,7 +79,7 @@ Enable TrainE mode to receive tips and suggestions based on your situation:
 /surg traine_mode:True
 ```
 
-![TrainE Mode](https://i.imgur.com/OSBbYS3.png)
+![TrainE Mode](https://i.imgur.com/2UnqmsA.png)
 
 ## Enable Ephemeral Embeds
 
@@ -74,7 +89,7 @@ Configure the bot to send ephemeral embedded messages:
 /surg hidden_embed:True
 ```
 
-![Ephemeral Embeds](https://i.imgur.com/HQ00W8a.png)
+![Ephemeral Embeds](https://i.imgur.com/JZc7AQM.png)
 
 ## Set Special Condition
 
@@ -84,15 +99,7 @@ Customize the special condition of the patient:
 /surg special_condition:[CONDITION_NAME]
 ```
 
-![Special Condition](https://i.imgur.com/KGozUAO.png)
-
-## Adjust Skill Level
-
-Set your skill level to any value between 0 and 100:
-
-```
-/surg skill_level:[SKILL_LEVEL]
-```
+![Special Condition](https://i.imgur.com/Gop9wXV.png)
 
 ## How to Use the Source Code
 
