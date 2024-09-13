@@ -982,49 +982,161 @@ class SurgeryCog(commands.Cog):
            break
      return CondMatch
     
-    @app_commands.command(name="surg", description="Start a surgery simulation.")
-    @app_commands.describe(modifier="Select a modifier that can improve your surgery", malady="Select a specific malady to surg", special_condition="Select a special condition", skill_level="Set the skill level (default is 100)", colored_ui="Make the ui colored (Might not work on mobile)",hidden_embed="Hide the surgery UI from other people", traine_mode="I'm not Train-E but I can try to act like it :)")
-    @app_commands.autocomplete(malady=AutoCompleteMalady,special_condition=AutoCompleteCondition, modifier=AutoCompleteModifier)
-    async def surg(self ,interaction: discord.Interaction, modifier: Optional[str] = None ,malady: Optional[str] = None, special_condition: Optional[str] = None, skill_level: Optional[int] = 100, colored_ui: Optional[bool] = False, hidden_embed: Optional[bool] = False, traine_mode: Optional[bool] = False):
-        await interaction.response.defer(ephemeral=hidden_embed)
-        
-        if malady is not None and malady not in Maladies.GetAllMaladieNames():
+    LastExecutionByUser = {}
+    @app_commands.command(name="repeat", description="Repeat the last surgery.")
+    async def repeat(self, interaction: discord.Interaction):
+        await interaction.response.defer()
+
+        if interaction.user.id not in self.LastExecutionByUser:
             return await interaction.followup.send(
-                embed=discord.Embed( title="Invalid malady!",description="**Please choose from the following:**\n" + "\n".join(Maladies.GetAllMaladieNames()), color=discord.Color.red())
+                embed=discord.Embed(
+                    title="No Past Surgeries Found",
+                    description="You have not started a surgery yet.",
+                    color=discord.Color.red()
+                ),
+                ephemeral=True  # Make it ephemeral to the user
+            )
+        
+        # Retrieve the stored surgery arguments
+        surgery_data = self.LastExecutionByUser[interaction.user.id]
+
+        # Call the helper function to perform the surgery
+        await self.start_surgery(
+            interaction,
+            modifier=surgery_data.get('modifier'),
+            malady=surgery_data.get('malady'),
+            special_condition=surgery_data.get('special_condition'),
+            skill_level=surgery_data.get('skill_level'),
+            colored_ui=surgery_data.get('colored_ui'),
+            hidden_embed=surgery_data.get('hidden_embed'),
+            traine_mode=surgery_data.get('traine_mode')
+        )
+
+    @app_commands.command(
+        name="surg",
+        description="Start a surgery simulation."
+    )
+    @app_commands.describe(
+        modifier="Select a modifier that can improve your surgery",
+        malady="Select a specific malady to surg",
+        special_condition="Select a special condition",
+        skill_level="Set the skill level (default is 100)",
+        colored_ui="Make the UI colored (Might not work on mobile)",
+        hidden_embed="Hide the surgery UI from other people",
+        traine_mode="I'm not Train-E but I can try to act like it :)"
+    )
+    @app_commands.autocomplete(
+        malady=AutoCompleteMalady,
+        special_condition=AutoCompleteCondition,
+        modifier=AutoCompleteModifier
+    )
+    async def surg(self, interaction: discord.Interaction, modifier: Optional[str] = None, malady: Optional[str] = None, 
+                   special_condition: Optional[str] = None, skill_level: Optional[int] = 100, 
+                   colored_ui: Optional[bool] = False, hidden_embed: Optional[bool] = False, 
+                   traine_mode: Optional[bool] = False):
+                   
+        # Defer the response, using ephemeral=hidden_embed to control visibility
+        await interaction.response.defer(ephemeral=hidden_embed)
+
+        # Store the surgery data for repeat use
+        self.LastExecutionByUser[interaction.user.id] = {
+            'modifier': modifier,
+            'malady': malady,
+            'special_condition': special_condition,
+            'skill_level': skill_level,
+            'colored_ui': colored_ui,
+            'hidden_embed': hidden_embed,
+            'traine_mode': traine_mode
+        }
+
+        # Call the helper function to perform the surgery
+        await self.start_surgery(
+            interaction,
+            modifier=modifier,
+            malady=malady,
+            special_condition=special_condition,
+            skill_level=skill_level,
+            colored_ui=colored_ui,
+            hidden_embed=hidden_embed,
+            traine_mode=traine_mode
+        )
+
+    async def start_surgery(self, interaction: discord.Interaction, modifier: Optional[str], malady: Optional[str], 
+                            special_condition: Optional[str], skill_level: Optional[int], 
+                            colored_ui: Optional[bool], hidden_embed: Optional[bool], 
+                            traine_mode: Optional[bool]):
+
+        # Ensure skill level is within bounds
+        skill_level = max(0, min(100, skill_level))
+        
+        # Check for invalid maladies
+        if malady and malady not in Maladies.GetAllMaladieNames():
+            return await interaction.followup.send(
+                embed=discord.Embed(
+                    title="Invalid Malady!",
+                    description="**Please choose from the following:**\n" + "\n".join(Maladies.GetAllMaladieNames()),
+                    color=discord.Color.red()
+                ),
+                ephemeral=hidden_embed  # Ephemeral flag based on user's choice
             )
 
-        if special_condition is not None and special_condition not in SpecialConditions.GetAllSpecialConditions():
+        # Check for invalid special conditions
+        if special_condition and special_condition not in SpecialConditions.GetAllSpecialConditions():
             return await interaction.followup.send(
-                embed=discord.Embed( title="Invalid Condition!",description="**Please choose from the following:**\n" + "\n".join(SpecialConditions.GetAllSpecialConditions()), color=discord.Color.red())
+                embed=discord.Embed(
+                    title="Invalid Condition!",
+                    description="**Please choose from the following:**\n" + "\n".join(SpecialConditions.GetAllSpecialConditions()),
+                    color=discord.Color.red()
+                ),
+                ephemeral=hidden_embed  # Ephemeral flag based on user's choice
             )
-        
-        patient = Patient(SkillLevel=100 if skill_level > 100 else 0 if skill_level < 0 else skill_level, malady=malady, specialcondition=special_condition,modifier=modifier,TrainEMode=traine_mode)
+
+        # Create the patient and surgery
+        patient = Patient(
+            SkillLevel=skill_level,
+            malady=malady,
+            specialcondition=special_condition,
+            modifier=modifier,
+            TrainEMode=traine_mode
+        )
         surgery = Surgery(patient=patient, user=interaction.user)
-        view = SurgeryView(surgery,interaction.user)
+
+        view = SurgeryView(surgery, interaction.user)
         TextManager.setTextManager(colored_ui)
         patient.PatientStatus = PatientStatus.GetPatientState(PatientState.Awake)
-        if patient.ScanText == "": patient.ScanText = TextManager.ErrorText("The patient has not been diagnosed.")
+        if not patient.ScanText:
+            patient.ScanText = TextManager.ErrorText("The patient has not been diagnosed.")
+
+        # Create an embed for the surgery
         embed = discord.Embed(
-            title= "",
+            title="Surgery",
             description="",
             color=discord.Color.blue()
-        ) 
+        )
         patient.UpdatePatientUI()
         patient.SetCurrentPatientEmbed(embed)
         embed.set_footer(text="Surg system is being developed by CantFind")
-        await interaction.followup.send(embed=embed, view=view)
+
+        # Send the surgery UI, with ephemeral flag based on hidden_embed
+        await interaction.followup.send(embed=embed, view=view, ephemeral=hidden_embed)
+
         await patient.timer(2)
-        if patient.IsSurgeryEnded: return
+        
+        if patient.IsSurgeryEnded:
+            return
+
+        # If surgery is abandoned, clear the items and notify
         view.clear_items()
         embed = discord.Embed(
-            title= "Surgery Abandoned",
+            title="Surgery Abandoned",
             description=f"[Dr.{interaction.user.display_name}](https://github.com/CantFindDev/SurgE) has abandoned the patient and left the room",
             color=discord.Color.red()
         )
         patient.IsSurgeryEnded = True
-        await interaction.followup.send(embed=embed, view=view)
-        
+        await interaction.followup.send(embed=embed, view=view, ephemeral=hidden_embed)
 
+
+# Setup the cog
 async def setup(bot):
     await bot.add_cog(SurgeryCog(bot))
     
