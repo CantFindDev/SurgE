@@ -131,14 +131,14 @@ Open the source code in [Visual Studio Code](https://code.visualstudio.com):
 
 The following files are essential once you open the project:
 
-<img src="https://i.imgur.com/FcwE9U8.png" width=50% height=50%>
+<img src="https://i.imgur.com/FcwE9U8.png" width=25% height=25%>
 
 ### Creating a Discord Bot
 
 1. Navigate to the [Discord Developer Portal](https://discord.com/developers/applications).
 2. Click on "Create Application":
 
-   <img src="https://i.imgur.com/BOQkEv9.png" width=50% height=50%>
+   <img src="https://i.imgur.com/BOQkEv9.png" width=25% height=25%>
 
 3. Configure your application:
 
@@ -184,7 +184,7 @@ The following files are essential once you open the project:
    
 3. Rename the `EMPTY_.env` file to `.env`:
    
-   <img src="https://i.imgur.com/8eHyCho.png" width=50% height=50%>
+   <img src="https://i.imgur.com/8eHyCho.png" width=25% height=25%>
 
 5. Paste your bot token into the `.env` file as shown below:
 
@@ -211,7 +211,7 @@ The following files are essential once you open the project:
 
 1. Go back to the Discord Developer Portal and navigate to the "OAuth2" section:
 
-   <img src="https://i.imgur.com/SxPutnw.png" width=50% height=50%>
+   <img src="https://i.imgur.com/SxPutnw.png" width=25% height=25%>
 
 1. Enable `applications.commands` and select the `Administrator` scope. Scroll down and copy the bot invite link:
 
