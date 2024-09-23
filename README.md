@@ -20,12 +20,27 @@ TrainE Mode is more structured and educational. In this mode, the bot will provi
 
 To get started with the bot, use the following commands to simulate the Growtopia surgery system:
 
-## Generate a Random Malady
+## Start a surgery
 
-Generate a random malady with a special condition and set the skill level to 100:
+Generates a random malady with a special condition and set the skill level to 100:
 
 ```
 /surg
+```
+## Repeat last command
+
+Repeates the last surgery command with parameters
+
+```
+/repeat
+```
+
+## Adjust Skill Level
+
+Set your skill level to any value between 0 and 100:
+
+```
+/surg skill_level:[SKILL_LEVEL]
 ```
 
 ## Enable Surgery UI with Colors
@@ -36,7 +51,7 @@ Activate a surgery UI that mimics the Growtopia surgery simulator with colors:
 /surg colored_ui:True
 ```
 
-![Surgery UI](https://i.imgur.com/akzcGqL.png)
+<img src="https://i.imgur.com/HBqCved.png" width=50% height=50%>
 
 ## Select a Specific Modifier
 
@@ -45,7 +60,9 @@ Choose from a list of available modifiers to make surgery easier:
 ```
 /surg modifier:[MODIFIER_NAME]
 ```
-![Modifier](https://i.imgur.com/guvFOEU.png)
+
+<img src="https://i.imgur.com/guvFOEU.png" width=50% height=50%>
+
 ## Select a Specific Malady
 
 Choose from a list of available maladies to practice with:
@@ -54,7 +71,7 @@ Choose from a list of available maladies to practice with:
 /surg malady:[MALADY_NAME]
 ```
 
-![Malady Selection](https://i.imgur.com/Bzdj4lD.png)
+<img src="ttps://i.imgur.com/AUiMurf.png" width=50% height=50%>
 
 ## Activate TrainE Mode
 
@@ -64,7 +81,7 @@ Enable TrainE mode to receive tips and suggestions based on your situation:
 /surg traine_mode:True
 ```
 
-![TrainE Mode](https://i.imgur.com/OSBbYS3.png)
+<img src="https://i.imgur.com/2UnqmsA.png" width=50% height=50%>
 
 ## Enable Ephemeral Embeds
 
@@ -74,7 +91,7 @@ Configure the bot to send ephemeral embedded messages:
 /surg hidden_embed:True
 ```
 
-![Ephemeral Embeds](https://i.imgur.com/HQ00W8a.png)
+<img src="https://i.imgur.com/JZc7AQM.png" width=50% height=50%>
 
 ## Set Special Condition
 
@@ -84,15 +101,7 @@ Customize the special condition of the patient:
 /surg special_condition:[CONDITION_NAME]
 ```
 
-![Special Condition](https://i.imgur.com/KGozUAO.png)
-
-## Adjust Skill Level
-
-Set your skill level to any value between 0 and 100:
-
-```
-/surg skill_level:[SKILL_LEVEL]
-```
+<img src="https://i.imgur.com/Gop9wXV.png" width=50% height=50%>
 
 ## How to Use the Source Code
 
@@ -108,56 +117,61 @@ Clone the source code repository to your local machine using the following comma
 git clone https://github.com/CantFindDev/SurgE.git
 ```
 
+<img src="https://i.imgur.com/hbpQ6Dp.png" width=50% height=50%>
+
+or you can use in built visual studio code import from git option
+
+<img src="https://i.imgur.com/SB6O6E6.png" width=50% height=50%>
+
+<img src="https://i.imgur.com/0FjbyZl.png" width=50% height=50%>
+
 ### Opening the Project
 
 Open the source code in [Visual Studio Code](https://code.visualstudio.com):
 
-![Visual Studio Code Interface](https://i.imgur.com/OWmwUcP.png)
-
 The following files are essential once you open the project:
 
-![Project Files](https://i.imgur.com/hbpQ6Dp.png)
-![Project Structure](https://i.imgur.com/remA2hO.png)
+<img src="https://i.imgur.com/FcwE9U8.png" width=25% height=25%>
 
 ### Creating a Discord Bot
 
 1. Navigate to the [Discord Developer Portal](https://discord.com/developers/applications).
 2. Click on "Create Application":
 
-   ![Create Application](https://i.imgur.com/BOQkEv9.png)
+   <img src="https://i.imgur.com/BOQkEv9.png" width=25% height=25%>
 
 3. Configure your application:
 
-   ![Configure Application](https://i.imgur.com/M7o2OrD.png)
+   <img src="https://i.imgur.com/M7o2OrD.png" width=50% height=50%>
 
 4. Go to the "Emojis" tab:
 
-   ![Emojis Tab](https://i.imgur.com/n1RBQD9.png)
+   <img src="https://i.imgur.com/n1RBQD9.png" width=50% height=50%>
 
    Click on "Upload Emojis" and navigate to the project directory to add emojis:
 
-   ![Upload Emojis](https://i.imgur.com/CDcSILN.png)
+   <img src="https://i.imgur.com/CDcSILN.png" width=50% height=50%>
 
    Next, open `surg.py` in Visual Studio Code and locate the `ToolIcons` class:
 
-   ![ToolIcons Class](https://i.imgur.com/5XOc5uo.png)
+   <img src="https://i.imgur.com/5XOc5uo.png" width=50% height=50%>
 
    Copy each emoji ID and paste them into the emoji ID section as shown below:
 
-   ![Emoji IDs](https://i.imgur.com/Wh5JesV.png)
-   ![Emoji IDs](https://i.imgur.com/w6jjT9x.png)
+   <img src="https://i.imgur.com/Wh5JesV.png" width=50% height=50%>
+   <img src="https://i.imgur.com/w6jjT9x.png" width=50% height=50%>
 
 5. Go back to the "Bot" section:
 
-   ![Bot Section](https://i.imgur.com/VhUUk8V.png)
+   <img src="https://i.imgur.com/VhUUk8V.png" width=50% height=50%>
 
 6. Scroll down and enable all **Privileged Gateway Intents**:
 
-   ![Privileged Gateway Intents](https://i.imgur.com/PN8FVGs.gif)
+   <img src="https://i.imgur.com/PN8FVGs.gif" width=50% height=50%>
 
 7. At the top of the page, click "Reset Token" to copy your bot token (ensure you keep this token confidential):
 
-   ![Copy Token](https://i.imgur.com/CaCziMe.png)
+   <img src="https://i.imgur.com/CaCziMe.png" width=50% height=50%>
 
 ### Configuring the Bot
 1. Return to your local project directory.
@@ -166,45 +180,46 @@ The following files are essential once you open the project:
    pip install python-dotenv
    py -3 -m pip install -U discord.py
    ```
+   <img src="https://i.imgur.com/UI1EXwF.png" width=50% height=50%>
+   
 3. Rename the `EMPTY_.env` file to `.env`:
+   
+   <img src="https://i.imgur.com/8eHyCho.png" width=25% height=25%>
 
-   ![Rename .env File](https://i.imgur.com/FuHFt5Z.png)
+5. Paste your bot token into the `.env` file as shown below:
 
-4. Paste your bot token into the `.env` file as shown below:
-
-   ![Edit .env File](https://i.imgur.com/vKy02mE.png)
+   <img src="https://i.imgur.com/rAn5f3Z.png" width=50% height=50%>
 
 ### Running the Bot
 
 1. Open a new terminal in Visual Studio Code:
 
-   ![Open Terminal](https://i.imgur.com/uQcK0uF.png)
+   <img src="https://i.imgur.com/uQcK0uF.png" width=50% height=50%>
 
-2. Execute the following command:
+1. Execute the following command:
 
    ```bash
    python Bot.py
    ```
+   <img src="https://i.imgur.com/aB1lgyu.png" width=50% height=50%>
 
-   ![Run Bot](https://i.imgur.com/aB1lgyu.png)
+2. Wait for the "synced commands" message:
 
-3. Wait for the "synced commands" message:
-
-   ![Synced Commands](https://i.imgur.com/G0cLw1A.png)
+   <img src="https://i.imgur.com/G0cLw1A.png" width=50% height=50%>
 
 ### Adding the Bot to Your Server
 
 1. Go back to the Discord Developer Portal and navigate to the "OAuth2" section:
 
-   ![OAuth2](https://i.imgur.com/SxPutnw.png)
+   <img src="https://i.imgur.com/SxPutnw.png" width=25% height=25%>
 
-2. Enable `applications.commands` and select the `Administrator` scope. Scroll down and copy the bot invite link:
+1. Enable `applications.commands` and select the `Administrator` scope. Scroll down and copy the bot invite link:
 
-   ![Invite Link](https://i.imgur.com/pElJf4A.gif)
+   <img src="https://i.imgur.com/pElJf4A.gif" width=50% height=50%>
 
-3. Open the invite link in your browser to add the bot to your server:
+2. Open the invite link in your browser to add the bot to your server:
 
-   ![Add Bot to Server](https://i.imgur.com/ygClVmj.png)
+   <img src="https://i.imgur.com/ygClVmj.png" width=50% height=50%>
 
 ---
 
