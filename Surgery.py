@@ -97,7 +97,7 @@ class Patient:
         self.BleedSensitivity = 1
 
         self.StartTime = 0
-
+        self.TimerEnded = False
         if malady: self.SetSpesificDisease(malady)  
         else: self.SetRandomDisease()  
         if specialcondition: self.SetSpesificSpecialCondition(specialcondition)
@@ -615,6 +615,10 @@ class Patient:
             self.IsSurgeryEnded = True
 
     def SetCurrentPatientEmbed(self, embed : discord.Embed) -> str:
+        # if self.TimerEnded:
+        #     embed.title = "Surgery Abandoned"
+        #     embed.description = "[Dr.{interaction.user.display_name}](https://github.com/CantFindDev/SurgE) has abandoned the patient and left the room"
+        #     embed.color = discord.Color.red()
         if self.IsSurgeryEnded:
             embed.title = f"{"Train-E" if self.TrainE else "Surg-E"} | Time Elapsed: {round(time.time() - self.StartTime)} Seconds"
             embed.description = f"## {self.EndText}\n\n"
@@ -1118,7 +1122,7 @@ class SurgeryCog(commands.Cog):
         embed.set_footer(text="Surg system is being developed by CantFind")
 
         # Send the surgery UI, with ephemeral flag based on hidden_embed
-        await interaction.followup.send(embed=embed, view=view, ephemeral=hidden_embed)
+        message = await interaction.followup.send(embed=embed, view=view, ephemeral=hidden_embed)
 
         await patient.timer(2)
         
@@ -1132,9 +1136,9 @@ class SurgeryCog(commands.Cog):
             description=f"[Dr.{interaction.user.display_name}](https://github.com/CantFindDev/SurgE) has abandoned the patient and left the room",
             color=discord.Color.red()
         )
+       
+        await message.edit(embed=embed, view=view)
         patient.IsSurgeryEnded = True
-        await interaction.followup.send(embed=embed, view=view, ephemeral=hidden_embed)
-
 
 # Setup the cog
 async def setup(bot):
