@@ -1133,7 +1133,7 @@ class SurgeryCog(commands.Cog):
         view.clear_items()
         embed = discord.Embed(
             title="Surgery Abandoned",
-            description=f"[Dr.{interaction.user.display_name}](https://github.com/CantFindDev/SurgE) has abandoned the patient and left the room",
+            description=f"[Dr.{interaction.user.display_name}](https://github.com/CantFindDev/SurgE) has left the room and abandoned the patient. Leaving them to their death!",
             color=discord.Color.red()
         )
        
