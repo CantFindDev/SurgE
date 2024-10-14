@@ -104,36 +104,19 @@ class Patient:
         else: self.SetRandomSpecialCondition()
         self.ModifierItem = modifier
 
-    def SetRandomDisease(self):
+    def SetRandomDisease(self): #The function to set a random disease
         disease = random.choice(Maladies.Maladies)
         self.ApplyDisease(disease)
 
-    def SetSpesificDisease(self, MaladyName: str):
+    def SetSpesificDisease(self, MaladyName: str): #The function tp set a spesific disease
         for disease in Maladies.Maladies:
             if disease['diagnostic'].lower() == MaladyName.lower():
                 self.ApplyDisease(disease)
                 break
 
-    def SetSpesificSpecialCondition(self, ConditionName: str):
-        for cond in SpecialConditions.Conditions:
-            if cond['condition_name'].lower() == ConditionName.lower():
-                self.ApplyCondition(cond)
-                break
-                
-    def SetRandomSpecialCondition(self):
-        Random = math.floor(random.random()* 10)
-        for cond in SpecialConditions.Conditions:
-            if Random < cond['condition_chance']:
-                self.ApplyCondition(cond)
-                break
 
-    def ApplyCondition(self,cond):
-        self.SpecialCondition = cond["condition_name"]
-        self.SpecialConditionVisibility = cond["condition_visibility"]
-        self.SpecialConditionText = cond["condition_text"]
-        self.ApplySpecialConditionValues()
 
-    def ApplyDisease(self, disease):
+    def ApplyDisease(self, disease): #Apply the selected/random disease
         self.CurrentDisease = disease
         self.diagnostic = disease["diagnostic"]
         self.BleedingLevel = disease.get("bleeding", 0)
@@ -147,7 +130,24 @@ class Patient:
         self.IsUltrasoundUsed = disease.get("ultrasound_used",False)
         self.Pulse = disease.get("pulse", 40)
 
-    def ApplySpecialConditionValues(self):
+    def SetRandomSpecialCondition(self): #The function to set a random special condition
+        Random = math.floor(random.random()* 10)
+        for cond in SpecialConditions.Conditions:
+            if Random < cond['condition_chance']:
+                self.ApplyCondition(cond)
+                break
+    def SetSpesificSpecialCondition(self, ConditionName: str): #The function to set a spesific special condition
+        for cond in SpecialConditions.Conditions:
+            if cond['condition_name'].lower() == ConditionName.lower():
+                self.ApplyCondition(cond)
+                break
+
+    def ApplyCondition(self,cond): #Applies the special/random condition
+        self.SpecialCondition = cond["condition_name"]
+        self.SpecialConditionVisibility = cond["condition_visibility"]
+        self.SpecialConditionText = cond["condition_text"]
+        self.ApplySpecialConditionValues()
+    def ApplySpecialConditionValues(self): #Applies the special/random conditions values
         match self.SpecialCondition:
             case "Tough Skin":
                 self.IncisionsNeeded += 1
@@ -165,7 +165,7 @@ class Patient:
                 self.AnestSensitivity /= 2
                 return
 
-    def GetAllToolsUsed(self) -> str:
+    def GetAllToolsUsed(self) -> str: #The item used list at the end of the surgery
             tooltext = ""
             if self.SpongeCount > 0:
                  tooltext +=  ToolIcon.SurgicalSponge.value + " Sponges: "  + str(self.SpongeCount) + "\n"
@@ -195,21 +195,25 @@ class Patient:
                 tooltext += ToolIcon.SurgicalTransfusion.value + " Transfusions: " + str(self.TransfusionCount) + "\n"
             return tooltext
 
-    def UseTool(self, toolType: Enum) -> bool:
-        SkillFailRate = round(30 - self.SkillLevel / 4)
-
+    def UseTool(self, toolType: Enum) -> bool: #Use the selected tool based on the tool type
+        
+        #Modifiers
         if self.ModifierItem == "Stethoscope":
-           SkillFailRate = round((30 - self.SkillLevel / 4)/ 2)
+           SkillFailRate = round((30 - self.SkillLevel / 4)/ 2) #Calculate skill fail if the stethoscope is equiped
         elif self.ModifierItem != None:
-           SkillFailRate = round(35 - self.SkillLevel / 3)
+           SkillFailRate = round(35 - self.SkillLevel / 3)  #Calculate skill fail if there are any modifiers active
+        else:
+           SkillFailRate = round(30 - self.SkillLevel / 4) #Calculate basic skill fail if there is no modifiers
+            
+        #Modifier nurse chance (Nano Nurse Bot) 
         NurseChance = False
         if Modifiers.GetModifierType(self.ModifierItem) == "Nursing":
             NurseChance = Modifiers.GetNurseChance()
 
         success = random.random() * 100 > SkillFailRate
         skillfail_occurred = not success
-        match toolType:
-            case ToolType.SurgicalAntiseptic:
+        match toolType: 
+            case ToolType.SurgicalAntiseptic: #Antiseptic Script
                 if NurseChance:
                     self.NurseText = f"{TextManager.PositiveText(f"[Nano Nurse Bot]: ")}" + TextManager.SoftText("Nano nurse bot prevented you from losing one " + TextManager.PurpieText("antiseptic"))
                 else:
@@ -223,7 +227,7 @@ class Patient:
                     self.SkillFailCount += 1
                     self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You spilled antiseptic on your shoes. They are very clean now.")
 
-            case ToolType.SurgicalDefib:
+            case ToolType.SurgicalDefib: #Defiblirator Script
                 if NurseChance:
                     self.NurseText = f"{TextManager.PositiveText(f"[Nano Nurse Bot]: ")}" + TextManager.SoftText("Nano nurse bot prevented you from losing one " + TextManager.PurpieText("defiblirator"))
                 else:
@@ -238,7 +242,7 @@ class Patient:
                     self.SiteDirtyness += 1
                     self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You electrocuted yourself!")    
     
-            case ToolType.SurgicalSponge:
+            case ToolType.SurgicalSponge: #Sponge Script
                 if NurseChance:
                     self.NurseText = f"{TextManager.PositiveText(f"[Nano Nurse Bot]: ")}" + TextManager.SoftText("Nano nurse bot prevented you from losing one " + TextManager.PurpieText("sponge"))
                 else:
@@ -255,7 +259,7 @@ class Patient:
                     self.SkillFailCount += 1
                     self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You somehow managed to eat the sponge.")
     
-            case ToolType.SurgicalScalpel:
+            case ToolType.SurgicalScalpel: #Scalpel script
                 if NurseChance:
                     self.NurseText = f"{TextManager.PositiveText(f"[Nano Nurse Bot]: ")}" + TextManager.SoftText("Nano nurse bot prevented you from losing one " + TextManager.PurpieText("scalpel"))
                 else:
@@ -279,7 +283,7 @@ class Patient:
                             self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("This will leave a nasty scar, but you managed to cut the right place.")
                 else: self.ScalpCount -= 1
 
-            case ToolType.SurgicalStitches:
+            case ToolType.SurgicalStitches: #Stitch Script
                 if NurseChance:
                     self.NurseText = f"{TextManager.PositiveText(f"[Nano Nurse Bot]: ")}" + TextManager.SoftText("Nano nurse bot prevented you from losing a " + TextManager.PurpieText("stitch"))
                 else:
@@ -302,7 +306,7 @@ class Patient:
                     self.SkillFailCount += 1
                     self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You somehow tied yourself up in stitches!")
     
-            case ToolType.SurgicalUltrasound:
+            case ToolType.SurgicalUltrasound: #Ultrasound Script
                 if NurseChance:
                     self.NurseText = f"{TextManager.PositiveText(f"[Nano Nurse Bot]: ")}" + TextManager.SoftText("Nano nurse bot prevented you from losing a " + TextManager.PurpieText("ultrasound"))
                 else:
@@ -317,7 +321,7 @@ class Patient:
                     self.SkillFailCount += 1
                     self.ToolText =  f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You scanned the nurse with your ultrasound!")
     
-            case ToolType.SurgicalLabKit:
+            case ToolType.SurgicalLabKit: #LabKit Script
                 if NurseChance:
                     self.NurseText = f"{TextManager.PositiveText(f"[Nano Nurse Bot]: ")}" + TextManager.SoftText("Nano nurse bot prevented you from losing a " + TextManager.PurpieText("Lab Kit"))
                 else:
@@ -332,7 +336,7 @@ class Patient:
                     self.SkillFailCount += 1
                     self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You contaminated the sample.")
 
-            case ToolType.SurgicalAntibiotics:
+            case ToolType.SurgicalAntibiotics: #Antibiotic Script
                 if NurseChance:
                     self.NurseText = f"{TextManager.PositiveText(f"[Nano Nurse Bot]: ")}" + TextManager.SoftText("Nano nurse bot prevented you from losing a " + TextManager.PurpieText("Antibiotics"))
                 else:
@@ -350,7 +354,7 @@ class Patient:
                     self.Fever += 1
                     self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("This is the wrong medication! The bacteria like it.")
     
-            case ToolType.SurgicalSplint:
+            case ToolType.SurgicalSplint: #Splint Script
                 if NurseChance:
                     self.NurseText = f"{TextManager.PositiveText(f"[Nano Nurse Bot]: ")}" + TextManager.SoftText("Nano nurse bot prevented you from losing a " + TextManager.PurpieText("Splint"))
                 else:
@@ -365,7 +369,7 @@ class Patient:
                     self.BleedingLevel += self.BleedSensitivity
                     self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You somehow cut the patient.")
     
-            case ToolType.SurgicalPins:
+            case ToolType.SurgicalPins: #Pin Script
                 if NurseChance:
                     self.NurseText = f"{TextManager.PositiveText(f"[Nano Nurse Bot]: ")}" + TextManager.SoftText("Nano nurse bot prevented you from losing a " + TextManager.PurpieText("Pins"))
                 else:
@@ -381,7 +385,7 @@ class Patient:
                     self.BleedingLevel += self.BleedSensitivity
                     self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You jabbed the pin through the artery!")
     
-            case ToolType.SurgicalAnesthetic:
+            case ToolType.SurgicalAnesthetic: #Anesthetic Script
                 if NurseChance:
                     self.NurseText = f"{TextManager.PositiveText(f"[Nano Nurse Bot]: ")}" + TextManager.SoftText("Nano nurse bot prevented you from losing a " + TextManager.PurpieText("Anesthetic"))
                 else:
@@ -405,7 +409,7 @@ class Patient:
                     self.SiteDirtyness += 1
                     self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You end up inhaling all the anesthetic yourself. You feel woozy.")
 
-            case ToolType.SurgicalTransfusion:
+            case ToolType.SurgicalTransfusion: #Transfusion Script
                 if NurseChance:
                     self.NurseText = f"{TextManager.PositiveText(f"[Nano Nurse Bot]: ")}" + TextManager.SoftText("Nano nurse bot prevented you from losing a " + TextManager.PurpieText("Transfusion"))
                 else:
@@ -420,7 +424,7 @@ class Patient:
                     self.SiteDirtyness += 1
                     self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You spilled blood everywhere!")
 
-            case ToolType.SurgicalClamp:
+            case ToolType.SurgicalClamp: #Clamp Script
                 if NurseChance:
                     self.NurseText = f"{TextManager.PositiveText(f"[Nano Nurse Bot]: ")}" + TextManager.SoftText("Nano nurse bot prevented you from losing a " + TextManager.PurpieText("Clamp"))
                 else:
@@ -434,7 +438,7 @@ class Patient:
                     self.SkillFailCount += 1
                     self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("The clamp fell out of your hand, oh well.")     
                       
-            case ToolType.FixIt:
+            case ToolType.FixIt: #FixIt Script
                 if success and self.IsFixable and not self.IsPatientFixed:
                     self.ToolText = "You fixed the issue!"
                     self.IsPatientFixed = True
@@ -443,21 +447,87 @@ class Patient:
                     self.SkillFailCount += 1
                     self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You screwed it up! Try again.")
         
-        self.UpdatePatientValues(toolType)
-        self.UpdatePatientUI()
-        return skillfail_occurred
-    
-    def UpdatePatientUI(self):
+        self.UpdatePatientValues(toolType) # Calculate patient values
+        self.UpdatePatientUITexts() # Generate text based on the calculated values
+        return skillfail_occurred # Return if any skill fails happened or not
 
-        if self.IsUltrasoundUsed:
+    def UpdatePatientValues(self, toolType : Enum): # The current state values of the patient
+
+        if self.Incisions >= self.IncisionsNeeded and not self.IsPatientFixed:
+            if  self.IsUltrasoundUsed:
+                self.IsFixable = True
+                self.Incisions = self.IncisionsNeeded
+            # else:
+            #     self.IsFixable = False
+            # Removed because the actual growtopia does not have this system but In my opinion it is better to have it
+
+
+        self.SiteDirtyness += self.BleedingLevel + self.Incisions
+
+        #Pulse Values
+        self.Pulse -= self.BleedingLevel + min(self.Incisions, 1)
+
+        if self.Pulse < 1 and self.EndText == "":
+            self.EndText = "The patient bled out!"
+            self.IsSurgeryEnded = True
+
+        #Fever Values
+        if self.Fever > 4:
+            self.Fever = 4
+        if self.Fever < 0:
+            if self.Fever > -0.06:
+                self.Fever = 0
+            elif self.Antibs:
+                self.Fever = (self.Fever - self.AntibSensivity) / 2
+        elif ((self.Site <= 2) and (self.BleedingLevel > 0) or (self.Site <= 4) and (self.Incisions > 0)):
+            self.Fever += 0.06
+        self.Temp += self.Fever
+        self.Temp = round(self.Temp * 100,2) / 100
+
+        if self.Temp < 98.6:
+            self.Temp = 98.6
+        self.Antibs = False
+        
+        # Managing status, heart stopping
+        if (((self.SleepLevel > 0) and (random.random() > 0.9 and toolType != ToolType.SurgicalDefib)) or (self.HeartDamage > 0)):
+            self.HeartDamage +=1
+        else:
+            self.SleepLevel = max(self.SleepLevel - 1, 0)
+
+        if self.HeartDamage == 3:
+            self.IsSurgeryEnded = True
+            self.EndText="You failed to resucicate your patient in time!"
+
+        if self.Incisions > 0 and self.PatientStatus == PatientStatus.GetPatientState(PatientState.Awake):
+            self.BleedingLevel += self.BleedSensitivity
+            self.PatientText = TextManager.ErrorText("The patient screams and flails!")
+        else: self.PatientText = ""
+
+        self.Site -= math.floor(self.SiteDirtyness / 3) + self.DirtSensitivity
+        if self.Site < -25:
+            self.Site = -25
+
+        if  self.Temp >= 111:
+            self.EndText = "Your patient succumbed to infection!"
+            self.IsSurgeryEnded = True
+
+        if  self.IsPatientFixed and self.BleedingLevel == 0 and self.Incisions == 0 and self.Temp < 101 and self.ShatteredBoneCount == 0 and self.BrokenBoneCount == 0 and self.HeartDamage == 0 and self.EndText == "":
+            self.EndText = "The surgery was a success!\n"
+            self.IsSurgeryEnded = True
+    
+    def UpdatePatientUITexts(self): #The function that sets UI elements texts
+
+        if self.IsUltrasoundUsed: #Diagnose Text
             if self.IsFixable: self.ScanText = self.CurrentDisease.get("fix_text",self.CurrentDisease["scan_text"])
             elif self.IsPatientFixed: self.ScanText = self.CurrentDisease.get("post_fix_text",self.CurrentDisease["scan_text"])
             else: self.ScanText = self.CurrentDisease["scan_text"]
 
+        #Site dirtyness Text
         if self.SiteDirtyness >= 10: self.DirtynessText = TextManager.ErrorText("You can't see what you are doing!")
         elif self.SiteDirtyness >= 4: self.DirtynessText = TextManager.WarningText("It is becoming hard to see your work.")
         else: self.DirtynessText = ""
 
+        #Bleeding level Text
         if self.BleedingLevel > 0:
             text = "Patient is "
             if self.BleedingLevel >= 4: text += f"loosing blood {TextManager.ErrorText("very quickly!")}"
@@ -467,11 +537,13 @@ class Patient:
         else:
            self.BleedingText = ""
 
+        #Pulse Text
         if self.Pulse < 11: self.PulseText = TextManager.ErrorText("Extremely Weak")
         elif self.Pulse < 21: self.PulseText = TextManager.WarningText("Weak")
         elif self.Pulse < 31: self.PulseText = TextManager.SoftText("Steady")
         else: self.PulseText = TextManager.PositiveText("Strong")
 
+        #Fever Text
         if self.Fever > 0 and self.Temp > 100:
             text = "Patient\'s fever is "
             if self.Fever < 0.5: text += TextManager.SoftText(" slowly rising!")
@@ -480,16 +552,19 @@ class Patient:
             self.FeverText = text + "\n"
         else: self.FeverText = ""
 
+        #Sanity Text
         if self.Site < -3: self.SiteText = TextManager.ErrorText("Unsanitary")
         elif self.Site < -1: self.SiteText = TextManager.WarningText("Unclean")
         elif self.Site < 1: self.SiteText = TextManager.SoftText("Not sanitized")
         else: self.SiteText = TextManager.PositiveText("Clean")
 
+        #Temprature Text
         if self.Temp < 100: self.TempText = TextManager.PositiveText(self.Temp) 
         elif self.Temp < 104: self.TempText = TextManager.SoftText(self.Temp)
         elif self.Temp < 106: self.TempText = TextManager.WarningText(self.Temp) 
         else: self.TempText = TextManager.ErrorText(self.Temp)
 
+        #Bone Text
         broken = self.BrokenBoneCount
         shatter = self.ShatteredBoneCount
         if (broken > 0 or shatter > 0) and self.IsUltrasoundUsed == True:
@@ -499,15 +574,18 @@ class Patient:
             if shatter > 0: txt +=TextManager.ErrorText(str(shatter) + " shattered") if self.ShatteredBoneCount > 1 else TextManager.WarningText(str(shatter) + " shattered")
             self.BoneText = txt
         else: self.BoneText = ""
-        
+
+        #Incision Text
         if self.Incisions == self.IncisionsNeeded: self.IncisionText = TextManager.PositiveText(self.Incisions)
         else: self.IncisionText = self.Incisions
 
+        #Consciousness Text
         if self.HeartDamage > 0: self.PatientStatus = PatientStatus.GetPatientState(PatientState.HeartStopped)
         elif self.SleepLevel == 0: self.PatientStatus = PatientStatus.GetPatientState(PatientState.Awake)
         elif self.SleepLevel < 3 and self.SleepLevel > 0: self.PatientStatus = PatientStatus.GetPatientState(PatientState.ComingTo)
         else: self.PatientStatus = PatientStatus.GetPatientState(PatientState.Unconscious)
-        
+
+        #Hearth stop Text   
         if self.HeartDamage > 0:
             self.HeartText = TextManager.ErrorText("Patient\'s heart has stopped!")
         else:
@@ -550,75 +628,9 @@ class Patient:
             if self.Pulse < 11: self.TrainEText += TextManager.ErrorText("Extremely Weak Pulse") + f" - You can increase the {TextManager.WarningText("Pulse")} with a {TextManager.PurpieText("Blood Transfusion")}."
             #Coming To
             if self.SleepLevel < 3 and self.SleepLevel > 0 and self.Incisions > 0: self.TrainEText += TextManager.WarningText("Coming To") + f" - Your patient is about to wake up but you still have some {TextManager.WarningText("Incisions")}. Use {TextManager.PurpieText("Anesthetic")} to keep them unconscious until you have closed to wound.\n"
-    
-    def UpdatePatientValues(self, toolType : Enum):
 
-        if self.Incisions >= self.IncisionsNeeded and not self.IsPatientFixed:
-            if  self.IsUltrasoundUsed:
-                self.IsFixable = True
-                self.Incisions = self.IncisionsNeeded
-            # else:
-            #     self.IsFixable = False
-            # Removed because the actual growtopia does not have this system but In my opinion it is better to have it
-            
 
-        self.SiteDirtyness += self.BleedingLevel + self.Incisions
-
-        #Pulse
-        self.Pulse -= self.BleedingLevel + min(self.Incisions, 1)
-
-        if self.Pulse < 1 and self.EndText == "":
-            self.EndText = "The patient bled out!"
-            self.IsSurgeryEnded = True
-        
-        #Fever
-        if self.Fever > 4:
-            self.Fever = 4
-        if self.Fever < 0:
-            if self.Fever > -0.06:
-                self.Fever = 0
-            elif self.Antibs:
-                self.Fever = (self.Fever - self.AntibSensivity) / 2        
-        elif ((self.Site <= 2) and (self.BleedingLevel > 0) or (self.Site <= 4) and (self.Incisions > 0)):
-            self.Fever += 0.06
-        self.Temp += self.Fever
-        self.Temp = round(self.Temp * 100,2) / 100
-        
-        if self.Temp < 98.6:
-            self.Temp = 98.6 
-        self.Antibs = False   
-        # Managing status, heart stopping
-        if (((self.SleepLevel > 0) and (random.random() > 0.9 and toolType != ToolType.SurgicalDefib)) or (self.HeartDamage > 0)):
-             self.HeartDamage +=1
-        else:
-            self.SleepLevel = max(self.SleepLevel - 1, 0)
-
-        if self.HeartDamage == 3:
-            self.IsSurgeryEnded = True
-            self.EndText="You failed to resucicate your patient in time!"
-
-        if self.Incisions > 0 and self.PatientStatus == PatientStatus.GetPatientState(PatientState.Awake):
-            self.BleedingLevel += self.BleedSensitivity
-            self.PatientText = TextManager.ErrorText("The patient screams and flails!")
-        else: self.PatientText = ""
-        
-        self.Site -= math.floor(self.SiteDirtyness / 3) + self.DirtSensitivity
-        if self.Site < -25:
-            self.Site = -25
-
-        if  self.Temp >= 111:
-            self.EndText = "Your patient succumbed to infection!"
-            self.IsSurgeryEnded = True
-
-        if  self.IsPatientFixed and self.BleedingLevel == 0 and self.Incisions == 0 and self.Temp < 101 and self.ShatteredBoneCount == 0 and self.BrokenBoneCount == 0 and self.HeartDamage == 0 and self.EndText == "":
-            self.EndText = "The surgery was a success!\n"
-            self.IsSurgeryEnded = True
-
-    def SetCurrentPatientEmbed(self, embed : discord.Embed) -> str:
-        # if self.TimerEnded:
-        #     embed.title = "Surgery Abandoned"
-        #     embed.description = "[Dr.{interaction.user.display_name}](https://github.com/CantFindDev/SurgE) has abandoned the patient and left the room"
-        #     embed.color = discord.Color.red()
+    def SetCurrentPatientEmbed(self, embed : discord.Embed) -> str: #The surgery UI
         if self.IsSurgeryEnded:
             embed.title = f"{"Train-E" if self.TrainE else "Surg-E"} | Time Elapsed: {round(time.time() - self.StartTime)} Seconds"
             embed.description = f"## {self.EndText}\n\n"
@@ -804,7 +816,7 @@ class SurgeryView(View):
         return False
      return True
 
-    def GenerateToolButtons(self):
+    def GenerateToolButtons(self): #Generate player tool buttons
         IsSiteClean = self.patient.SiteDirtyness < 10
         tools = [
             (ToolIcon.SurgicalSponge.value,ToolType.SurgicalSponge, True),
@@ -1117,7 +1129,7 @@ class SurgeryCog(commands.Cog):
             description="",
             color=discord.Color.blue()
         )
-        patient.UpdatePatientUI()
+        patient.UpdatePatientUITexts()
         patient.SetCurrentPatientEmbed(embed)
         embed.set_footer(text="Surg system is being developed by CantFind")
 
