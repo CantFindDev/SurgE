@@ -179,6 +179,7 @@ The following files are essential once you open the project:
    ```
    py -3 -m pip install python-dotenv
    py -3 -m pip install -U discord.py
+   py -3 -m pip install audioop-lts
    ```
    <img src="https://i.imgur.com/UI1EXwF.png" width=50% height=50%>
    
