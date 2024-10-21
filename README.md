@@ -177,7 +177,7 @@ The following files are essential once you open the project:
 1. Return to your local project directory.
 2. Open cmd and type
    ```
-   pip install python-dotenv
+   py -3 -m pip install python-dotenv
    py -3 -m pip install -U discord.py
    ```
    <img src="https://i.imgur.com/UI1EXwF.png" width=50% height=50%>
