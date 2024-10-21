@@ -174,7 +174,7 @@ The following files are essential once you open the project:
    <img src="https://i.imgur.com/CaCziMe.png" width=50% height=50%>
 
 ### Configuring the Bot
-1. Return to your local project directory.
+1. Return to your local project directory. And make sure you have Python3 installed
 2. Open cmd and type
    ```
    py -3 -m pip install python-dotenv
