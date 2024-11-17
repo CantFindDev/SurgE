@@ -24,7 +24,9 @@ load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 BASE_DIR = pathlib.Path(__file__).parent
 
-bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
+
+
+bot = commands.Bot(command_prefix="!", intents=discord.Intents.default())
 
 @bot.event
 async def on_ready():
