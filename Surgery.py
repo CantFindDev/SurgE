@@ -632,8 +632,9 @@ class Patient:
 
     def SetCurrentPatientEmbed(self, embed : discord.Embed) -> str: #The surgery UI
         if self.IsSurgeryEnded:
-            embed.title = f"{"Train-E" if self.TrainE else "Surg-E"} | Time Elapsed: {round(time.time() - self.StartTime)} Seconds"
+            embed.title = f"{"Train-E" if self.TrainE else "Surg-E"}"
             embed.description = f"## {self.EndText}\n\n"
+            embed.description += TextManager.AddFeild(value=f"**Time Elapsed:**\n"+f"{round(time.time() - self.StartTime)} Seconds\n", inline=False)
             embed.description += TextManager.AddFeild(value=f"**Malady:**\n{self.CurrentDisease["diagnostic"]}\n", inline=False)
             if self.SpecialConditionText != "" and self.SpecialConditionVisibility: embed.description += TextManager.AddFeild(value=f"**Special Condition:**\n{self.SpecialCondition}\n", inline=False)
             if self.SkillFailCount > 0: embed.description += TextManager.AddFeild(value=f"**Skill Fails:**\n{self.SkillFailCount}\n", inline=False)
@@ -642,8 +643,10 @@ class Patient:
             embed.description += TextManager.AddFeild(value=f"**Tools Used:**\n{self.GetAllToolsUsed()}", inline=False)
             item = Drops.GetDrop()
             if self.EndText == "The surgery was a success!\n":
-                embed.description += TextManager.AddFeild(value=f"**{item["ItemName"]}**",inline=False)
+                embed.description += TextManager.AddFeild(value="**Reward:**",inline=False)
+                embed.description += TextManager.AddFeild(value=f"{item["ItemName"]}", inline=False)
                 embed.set_image(url=Drops.GetItemImageByName(item["ItemName"]))
+
         else:
             embed.title = f"Surgery Simulator| Skill Level: {self.SkillLevel}\n\n" 
             embed.description = ""
@@ -819,20 +822,20 @@ class SurgeryView(View):
     def GenerateToolButtons(self): #Generate player tool buttons
         IsSiteClean = self.patient.SiteDirtyness < 10
         tools = [
-            (ToolIcon.SurgicalSponge.value,ToolType.SurgicalSponge, True),
-            (ToolIcon.SurgicalScalpel.value,ToolType.SurgicalScalpel, IsSiteClean),
-            (ToolIcon.SurgicalStitches.value,ToolType.SurgicalStitches, IsSiteClean),
-            (ToolIcon.SurgicalAntibiotics.value,ToolType.SurgicalAntibiotics, self.patient.LabWorked and IsSiteClean),
-            (ToolIcon.SurgicalAntiseptic.value,ToolType.SurgicalAntiseptic, IsSiteClean),
-            (ToolIcon.FixIt.value,ToolType.FixIt, (self.patient.IsFixable and (not self.patient.IsPatientFixed or self.patient.IsBrainWorms or self.patient.IncisionsNeeded == self.patient.Incisions)) and IsSiteClean),
-            (ToolIcon.SurgicalUltrasound.value,ToolType.SurgicalUltrasound, not self.patient.IsUltrasoundUsed and IsSiteClean),
-            (ToolIcon.SurgicalLabKit.value,ToolType.SurgicalLabKit, not self.patient.IsLabKitUsed and IsSiteClean),
-            (ToolIcon.SurgicalAnesthetic.value,ToolType.SurgicalAnesthetic, IsSiteClean),
             (ToolIcon.SurgicalDefib.value, ToolType.SurgicalDefib, IsSiteClean and self.patient.HeartDamage > 0),
+            (ToolIcon.SurgicalSponge.value,ToolType.SurgicalSponge, True),
+            (ToolIcon.SurgicalAnesthetic.value, ToolType.SurgicalAnesthetic, IsSiteClean),
+            (ToolIcon.SurgicalStitches.value, ToolType.SurgicalStitches, IsSiteClean),
+            (ToolIcon.SurgicalScalpel.value,ToolType.SurgicalScalpel, IsSiteClean),
+            (ToolIcon.SurgicalUltrasound.value,ToolType.SurgicalUltrasound, not self.patient.IsUltrasoundUsed and IsSiteClean),
+            (ToolIcon.SurgicalAntiseptic.value, ToolType.SurgicalAntiseptic, IsSiteClean),
+            (ToolIcon.FixIt.value, ToolType.FixIt, (self.patient.IsFixable and (not self.patient.IsPatientFixed or self.patient.IsBrainWorms or self.patient.IncisionsNeeded == self.patient.Incisions)) and IsSiteClean),
+            (ToolIcon.SurgicalLabKit.value, ToolType.SurgicalLabKit, not self.patient.IsLabKitUsed and IsSiteClean),
+            (ToolIcon.SurgicalAntibiotics.value,ToolType.SurgicalAntibiotics, self.patient.LabWorked and IsSiteClean),
+            (ToolIcon.SurgicalTransfusion.value, ToolType.SurgicalTransfusion, IsSiteClean),
             (ToolIcon.SurgicalSplint.value, ToolType.SurgicalSplint, IsSiteClean),
             (ToolIcon.SurgicalPins.value, ToolType.SurgicalPins, IsSiteClean and self.patient.Incisions > 0),
             (ToolIcon.SurgicalClamp.value, ToolType.SurgicalClamp, IsSiteClean and self.patient.Incisions > 0),
-            (ToolIcon.SurgicalTransfusion.value,ToolType.SurgicalTransfusion, IsSiteClean),
             (ToolIcon.SurgicalLoveMallet.value, ToolType.SurgicalLoveMallet, False) #Valentines Only
         ]
 
@@ -856,7 +859,7 @@ class SurgeryView(View):
         self.clear_items()
         embed = discord.Embed(
             title= "Surgery Aborted",
-            description=f"You have chosen to abandon the surgery. Remember, doctors need courage and precision—today just wasn't your day. Maybe next time you'll become the hero of the operating room! Until then, thanks for trying, [Dr.{interaction.user.display_name}](https://github.com/CantFindDev/SurgE). Brave efforts are also part of the journey!",
+            description=f"[Dr.{interaction.user.display_name}](https://github.com/CantFindDev/SurgE) was not ready for this surgery and gave up!",
             color=discord.Color.red()
         )
         self.patient.IsSurgeryEnded = True
