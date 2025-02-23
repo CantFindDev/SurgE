@@ -47,7 +47,7 @@ class Patient:
         self.SkillFailCount = 0
 
         self.Pulse = 40
-        self.Site = 0  
+        self.SiteSanitation = 0
         self.SiteDirtyness = 0
         self.BrokenBoneCount = 0
         self.ShatteredBoneCount = 0
@@ -221,7 +221,7 @@ class Patient:
                     self.NurseText = ""
 
                 if success:
-                    self.Site = min(self.Site + 20,20)
+                    self.SiteSanitation = min(self.SiteSanitation + 20, 20)
                     self.ToolText = "You disinfected the operating site."
                 else:
                     self.SkillFailCount += 1
@@ -293,15 +293,13 @@ class Patient:
                 if success:
                     if self.Incisions > 0:
                         self.ToolText = "You stitched up an incision."
+                        self.Incisions -= 1
                     elif self.BleedingLevel > 0:
                         self.ToolText = "You stitched up a bleeding wound."
-                    else:
-                        self.ToolText = "You tried to stitch your patient\'s mouth shut!" 
-    
-                    if self.Incisions > 0:
-                        self.Incisions -= 1
-                    if self.BleedingLevel > 0:
                         self.BleedingLevel -= 1
+                    else:
+                        self.ToolText = "You tried to stitch your patient\'s mouth shut!"
+
                 else:
                     self.SkillFailCount += 1
                     self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You somehow tied yourself up in stitches!")
@@ -479,7 +477,7 @@ class Patient:
                 self.Fever = 0
             elif self.Antibs:
                 self.Fever = (self.Fever - self.AntibSensivity) / 2
-        elif ((self.Site <= 2) and (self.BleedingLevel > 0) or (self.Site <= 4) and (self.Incisions > 0)):
+        elif ((self.SiteSanitation <= 2) and (self.BleedingLevel > 0) or (self.SiteSanitation <= 4) and (self.Incisions > 0)):
             self.Fever += 0.06
         self.Temp += self.Fever
         self.Temp = round(self.Temp * 100,2) / 100
@@ -503,9 +501,9 @@ class Patient:
             self.PatientText = TextManager.ErrorText("The patient screams and flails!")
         else: self.PatientText = ""
 
-        self.Site -= math.floor(self.SiteDirtyness / 3) + self.DirtSensitivity
-        if self.Site < -25:
-            self.Site = -25
+        self.SiteSanitation -= math.floor(self.SiteDirtyness / 3) + self.DirtSensitivity
+        if self.SiteSanitation < -25:
+            self.SiteSanitation = -25
 
         if  self.Temp >= 111:
             self.EndText = "Your patient succumbed to infection!"
@@ -553,9 +551,9 @@ class Patient:
         else: self.FeverText = ""
 
         #Sanity Text
-        if self.Site < -3: self.SiteText = TextManager.ErrorText("Unsanitary")
-        elif self.Site < -1: self.SiteText = TextManager.WarningText("Unclean")
-        elif self.Site < 1: self.SiteText = TextManager.SoftText("Not sanitized")
+        if self.SiteSanitation < -3: self.SiteText = TextManager.ErrorText("Unsanitary")
+        elif self.SiteSanitation < -1: self.SiteText = TextManager.WarningText("Unclean")
+        elif self.SiteSanitation < 1: self.SiteText = TextManager.SoftText("Not sanitized")
         else: self.SiteText = TextManager.PositiveText("Clean")
 
         #Temprature Text
@@ -585,7 +583,7 @@ class Patient:
         elif self.SleepLevel < 3 and self.SleepLevel > 0: self.PatientStatus = PatientStatus.GetPatientState(PatientState.ComingTo)
         else: self.PatientStatus = PatientStatus.GetPatientState(PatientState.Unconscious)
 
-        #Hearth stop Text   
+        #Heart stop Text
         if self.HeartDamage > 0:
             self.HeartText = TextManager.ErrorText("Patient\'s heart has stopped!")
         else:
@@ -605,7 +603,7 @@ class Patient:
             #FixIt
             if self.IsFixable: self.TrainEText += TextManager.PositiveText("Fix It!") + f" - You have found the issue and can now {TextManager.PurpieText("Fix It")}.\n"
             #Cleanless
-            if self.Site < 1: self.TrainEText += TextManager.PositiveText("Clean the Area") + f" - Clean the area with {TextManager.PurpieText("Antiseptic")}.\n"
+            if self.SiteSanitation < 1: self.TrainEText += TextManager.PositiveText("Clean the Area") + f" - Clean the area with {TextManager.PurpieText("Antiseptic")}.\n"
             #PrepPatient
             if self.SleepLevel == 0 and self.IsUltrasoundUsed and self.IncisionsNeeded > 0: self.TrainEText += TextManager.PositiveText("Prep Patient") + f" - Apply {TextManager.PurpieText("Anesthetic")} to put the patient to sleep.\n"
             #Incision

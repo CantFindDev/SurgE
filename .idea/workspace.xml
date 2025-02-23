@@ -60,7 +60,11 @@
       <workItem from="1728889398236" duration="1912000" />
       <workItem from="1739872411540" duration="36000" />
       <workItem from="1739891429805" duration="2203000" />
-      <workItem from="1739980355576" duration="14897000" />
+      <workItem from="1739980355576" duration="15750000" />
+      <workItem from="1740070220104" duration="10126000" />
+      <workItem from="1740154091245" duration="2950000" />
+      <workItem from="1740264872526" duration="4890000" />
+      <workItem from="1740280470954" duration="6367000" />
     </task>
     <servers />
   </component>
@@ -71,5 +75,21 @@
   <component name="VcsManagerConfiguration">
     <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Surgery.py</url>
+          <line>672</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Surgery.py</url>
+          <line>679</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
