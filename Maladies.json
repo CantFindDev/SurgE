@@ -76,6 +76,7 @@
     "fix_text": "You've accessed the liver.",
     "post_fix_text": "You treated the source of the infection!",
     "incisions_needed": 2
+    "temperature": 104.6
   },
   {
     "diagnostic": "Kidney Failure",
