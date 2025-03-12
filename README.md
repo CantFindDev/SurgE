@@ -107,7 +107,7 @@ Customize the special condition of the patient:
 
 ### Prerequisites
 
-Ensure that Python is installed on your device. If not, you can download it from [Python's official website](https://www.python.org/downloads/).
+Ensure that Python 3.12 or later is installed on your device. If not, you can download it from [Python's official website](https://www.python.org/downloads/).
 
 ### Cloning the Repository
 
