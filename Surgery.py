@@ -225,7 +225,7 @@ class Patient:
                     self.ToolText = "You disinfected the operating site."
                 else:
                     self.SkillFailCount += 1
-                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You spilled antiseptic on your shoes. They are very clean now.")
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.SoftText("You spilled antiseptic on your shoes. They are very clean now.")
 
             case ToolType.SurgicalDefib: #Defiblirator Script
                 if NurseChance:
@@ -240,7 +240,7 @@ class Patient:
                 else:
                     self.SkillFailCount += 1
                     self.SiteDirtyness += 1
-                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You electrocuted yourself!")    
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.SoftText("You electrocuted yourself!")    
     
             case ToolType.SurgicalSponge: #Sponge Script
                 if NurseChance:
@@ -257,7 +257,7 @@ class Patient:
                         self.ToolText = "You mopped up the operation site."
                 else:
                     self.SkillFailCount += 1
-                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You somehow managed to eat the sponge.")
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.SoftText("You somehow managed to eat the sponge.")
     
             case ToolType.SurgicalScalpel: #Scalpel script
                 if NurseChance:
@@ -280,7 +280,7 @@ class Patient:
                         else: 
                             self.SkillFailCount += 1
                             self.BleedingLevel += self.BleedSensitivity
-                            self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("This will leave a nasty scar, but you managed to cut the right place.")
+                            self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.SoftText("This will leave a nasty scar, but you managed to cut the right place.")
                 else: self.ScalpCount -= 1
 
             case ToolType.SurgicalStitches: #Stitch Script
@@ -302,7 +302,7 @@ class Patient:
 
                 else:
                     self.SkillFailCount += 1
-                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You somehow tied yourself up in stitches!")
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.SoftText("You somehow tied yourself up in stitches!")
     
             case ToolType.SurgicalUltrasound: #Ultrasound Script
                 if NurseChance:
@@ -317,7 +317,7 @@ class Patient:
                     self.ToolText = f"You scanned the patient with ultrasound, discovering they are suffering from {self.CurrentDisease["scan_text"]} {("You Found" + self.BoneStatus) if self.BoneStatus != "" else ""}"
                 else:
                     self.SkillFailCount += 1
-                    self.ToolText =  f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You scanned the nurse with your ultrasound!")
+                    self.ToolText =  f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.SoftText("You scanned the nurse with your ultrasound!")
     
             case ToolType.SurgicalLabKit: #LabKit Script
                 if NurseChance:
@@ -332,7 +332,7 @@ class Patient:
                     self.ToolText = "You performed lab work on the patient, and have antibiotics at the ready."
                 else:
                     self.SkillFailCount += 1
-                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You contaminated the sample.")
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.SoftText("You contaminated the sample.")
 
             case ToolType.SurgicalAntibiotics: #Antibiotic Script
                 if NurseChance:
@@ -350,7 +350,7 @@ class Patient:
                 else:
                     self.SkillFailCount += 1
                     self.Fever += 1
-                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("This is the wrong medication! The bacteria like it.")
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.SoftText("This is the wrong medication! The bacteria like it.")
     
             case ToolType.SurgicalSplint: #Splint Script
                 if NurseChance:
@@ -365,7 +365,7 @@ class Patient:
                 else:
                     self.SkillFailCount += 1
                     self.BleedingLevel += self.BleedSensitivity
-                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You somehow cut the patient.")
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.SoftText("You somehow cut the patient.")
     
             case ToolType.SurgicalPins: #Pin Script
                 if NurseChance:
@@ -381,7 +381,7 @@ class Patient:
                 else:
                     self.SkillFailCount += 1
                     self.BleedingLevel += self.BleedSensitivity
-                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You jabbed the pin through the artery!")
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.SoftText("You jabbed the pin through the artery!")
     
             case ToolType.SurgicalAnesthetic: #Anesthetic Script
                 if NurseChance:
@@ -405,7 +405,7 @@ class Patient:
                 else:
                     self.SkillFailCount += 1
                     self.SiteDirtyness += 1
-                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You end up inhaling all the anesthetic yourself. You feel woozy.")
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.SoftText("You end up inhaling all the anesthetic yourself. You feel woozy.")
 
             case ToolType.SurgicalTransfusion: #Transfusion Script
                 if NurseChance:
@@ -420,7 +420,7 @@ class Patient:
                 else:
                     self.SkillFailCount += 1
                     self.SiteDirtyness += 1
-                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You spilled blood everywhere!")
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.SoftText("You spilled blood everywhere!")
 
             case ToolType.SurgicalClamp: #Clamp Script
                 if NurseChance:
@@ -434,7 +434,7 @@ class Patient:
                     self.ToolText = "You clamped up some blood vessels"
                 else:
                     self.SkillFailCount += 1
-                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("The clamp fell out of your hand, oh well.")     
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.SoftText("The clamp fell out of your hand, oh well.")     
                       
             case ToolType.FixIt: #FixIt Script
                 if success and self.IsFixable and not self.IsPatientFixed:
@@ -443,7 +443,7 @@ class Patient:
                     self.IsFixable = False
                 else:
                     self.SkillFailCount += 1
-                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.WarningText("You screwed it up! Try again.")
+                    self.ToolText = f"{TextManager.ErrorText(f"[Skill Fail {SkillFailRate}%]: ")}" + TextManager.SoftText("You screwed it up! Try again.")
         
         self.UpdatePatientValues(toolType) # Calculate patient values
         self.UpdatePatientUITexts() # Generate text based on the calculated values
@@ -656,13 +656,13 @@ class Patient:
             embed.description += TextManager.AddFeild(value=f"Operation site: {self.SiteText}", inline=True)
             if self.DirtynessText != "":embed.description +=  TextManager.AddFeild(value=f"{self.DirtynessText}", inline=False)
             embed.description += TextManager.AddFeild( value=f"Incisions: {self.IncisionText}", inline=True)
-            if self.BoneText != "": embed.description += TextManager.AddFeild(value=f"{self.BoneText}", inline=True)
-            if self.PatientText != "": embed.description += TextManager.AddFeild(value=f"{self.PatientText}", inline=False)
-            if self.BleedingText != "": embed.description += TextManager.AddFeild(value=f"{self.BleedingText}", inline=False)
-            if self.FeverText != "": embed.description += TextManager.AddFeild(value=f"{self.FeverText}", inline=False)
-            if self.ToolText != "": embed.description += TextManager.AddFeild(value=f"{TextManager.SoftText(self.ToolText)}", inline=False)
+            if self.BoneText != "": embed.description += TextManager.AddFeild(value=self.BoneText, inline=True)
+            if self.PatientText != "": embed.description += TextManager.AddFeild(value=self.PatientText, inline=False)
+            if self.BleedingText != "": embed.description += TextManager.AddFeild(value=self.BleedingText, inline=False)
+            if self.FeverText != "": embed.description += TextManager.AddFeild(value=self.FeverText, inline=False)
+            if self.ToolText != "": embed.description += TextManager.AddFeild(value=self.ToolText, inline=False)
             if self.NurseText != "": embed.description += TextManager.AddFeild(value=self.NurseText,inline=False)
-            if self.HeartText != "": embed.description += TextManager.AddFeild(value=f"{self.HeartText}", inline=False)
+            if self.HeartText != "": embed.description += TextManager.AddFeild(value=self.HeartText, inline=False)
             if self.TrainE == True: embed.description += TextManager.AddFeild(value=f"Bot Tips:\n{self.TrainEText}", inline=False)
             embed.description += "\n" + TextManager.ansiend
     
