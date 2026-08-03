@@ -1,0 +1,261 @@
+[
+  {
+    "diagnostic": "Broken Arm",
+    "scan_text": "Patient broke his arm.",
+    "patient_fixed": true,
+    "bleeding": 1,
+    "broken": 1
+  },
+  {
+    "diagnostic": "Broken Leg",
+    "scan_text": "Patient broke his leg.",
+    "patient_fixed": true,
+    "bleeding": 1,
+    "broken": 1,
+    "shattered": 1,
+    "incisions_needed": 1
+  },
+  {
+    "diagnostic": "Bird Flu",
+    "scan_text": "Patient is showing signs of the bird flu.",
+    "patient_fixed": true,
+    "flu": true,
+    "temperature": 104.6,
+    "fever": 2.5,
+    "dirt": 6
+  },
+  {
+    "diagnostic": "Turtle Flu",
+    "scan_text": "Patient is showing signs of the turtle flu.",
+    "patient_fixed": true,
+    "flu": true,
+    "temperature": 101.6,
+    "fever": 3.6,
+    "dirt": 6
+  },
+  {
+    "diagnostic": "Monkey Flu",
+    "scan_text": "Patient is showing signs of the monkey flu.",
+    "patient_fixed": true,
+    "flu": true,
+    "temperature": 107.6,
+    "fever": 2.4
+  },
+  {
+    "diagnostic": "Nose Job",
+    "ultrasound_used": true,
+    "scan_text": "Patient wants a nose job.",
+    "post_fix_text": "You have cut into nasal area.",
+    "fix_text": "You rearranged their face!",
+    "incisions_needed": 1
+  },
+  {
+    "diagnostic": "Lung Tumor",
+    "scan_text": "Patient has a tumor in their lung.",
+    "fix_text": "The lungs are now exposed.",
+    "post_fix_text": "You excised the tumor!",
+    "incisions_needed": 1
+  },
+  {
+    "diagnostic": "Heart Attack",
+    "scan_text": "Patient had a heart attack.",
+    "fix_text": "The heart is now exposed for operating.",
+    "post_fix_text": "You grafted in some nice new arteries!",
+    "incisions_needed": 2
+  },
+  {
+    "diagnostic": "Brain Tumor",
+    "scan_text": "Patient has a brain tumor, deep inside.",
+    "fix_text": "You've finally found the tumor!",
+    "post_fix_text": "You excised the tumor!",
+    "incisions_needed": 5
+  },
+  {
+    "diagnostic": "Liver Infection",
+    "scan_text": "Patient has a liver infection.",
+    "fix_text": "You've accessed the liver.",
+    "post_fix_text": "You treated the source of the infection!",
+    "incisions_needed": 2,
+    "temperature": 104.6
+  },
+  {
+    "diagnostic": "Kidney Failure",
+    "scan_text": "Patient suffers from kidney failure.",
+    "fix_text": "You now have access to the bad kidney.",
+    "post_fix_text": "You popped in a fresh new kidney!",
+    "temperature": 101.6,
+    "fever": 1.2,
+    "incisions_needed": 2
+  },
+  {
+    "diagnostic": "Appendicitis",
+    "scan_text": "Patient suffers from appendicitis.",
+    "fix_text": "You now have access to the appendix.",
+    "post_fix_text": "You yanked out the appendix!",
+    "temperature": 104.6,
+    "fever": 1.2,
+    "pulse": 30,
+    "incisions_needed": 3
+  },
+  {
+    "diagnostic": "Swallowed a World Lock",
+    "scan_text": "Patient has swallowed a world lock.",
+    "fix_text": "You've opened the stomach.",
+    "post_fix_text": "You got the lock out!",
+    "incisions_needed": 2,
+    "temperature": 101.6,
+    "bleeding": 1,
+    "dirt": 6
+  },
+  {
+    "diagnostic": "Herinated Disc",
+    "scan_text": "Patient's spine is damaged.",
+    "fix_text": "You've opened up the vertebrae.",
+    "post_fix_text": "You repaired the disc!",
+    "temperature": 100.4,
+    "incisions_needed": 3
+  },
+  {
+    "diagnostic": "Broken Everything",
+    "scan_text": "Patient was run over by a truck.",
+    "fix_text": "You've found gravel in the knees.",
+    "post_fix_text": "You removed the gravel!",
+    "incisions_needed": 2,
+    "temperature": 100.58,
+    "dirt": 6,
+    "bleeding": 1,
+    "shattered": 4
+  },
+  {
+    "diagnostic": "Serious Head Injury",
+    "scan_text": "Patient has a serious head injury.",
+    "fix_text": "You've opened the skull.",
+    "post_fix_text": "You reduced the swelling!",
+    "incisions_needed": 1,
+    "pulse": 20,
+    "dirt": 6,
+    "bleeding": 4
+  },
+  {
+    "diagnostic": "Serious Trauma",
+    "scan_text": "Patient suffered serious trauma with a punctured lung.",
+    "fix_text": "You found the lung puncture.",
+    "post_fix_text": "You repaired it.",
+    "incisions_needed": 2,
+    "pulse": 30,
+    "dirt": 10,
+    "bleeding": 3,
+    "broken": 2,
+    "shattered": 1
+  },
+  {
+    "diagnostic": "Massive Trauma",
+    "scan_text": "Patient suffered massive trauma with internal bleeding.",
+    "fix_text": "You found the internal bleed.",
+    "post_fix_text": "You cauterized it.",
+    "incisions_needed": 3,
+    "pulse": 30,
+    "dirt": 10,
+    "bleeding": 4,
+    "broken": 2,
+    "shattered": 2
+  },
+  {
+    "diagnostic": "Torn Punching Muscle",
+    "scan_text": "Patient has a torn punching muscle.",
+    "fix_text": "You've accessed the arm muscles.",
+    "post_fix_text": "You patched the torn punching muscle! They should be back to punching in no time.",
+    "incisions_needed": 3,
+    "dirt": 15
+  },
+  {
+    "diagnostic": "Gem Cuts",
+    "scan_text": "Patient is bleeding from multiple gem-induced cuts.",
+    "fix_text": "You've stitched the gem cuts closed and stopped the bleeding.",
+    "post_fix_text": "You cauterized it.",
+    "incisions_needed": 2,
+    "temperature": 98.6,
+    "dirt": 0,
+    "fever": 0,
+    "bleeding": 1
+  },
+  {
+    "diagnostic": "Grumbleteeth",
+    "scan_text": "Patient's teeth are chattering They sound angry.",
+    "fix_text": "You removed grumbleteeth",
+    "post_fix_text": "You've replaced the patient's angriest teeth and quited",
+    "incisions_needed": 1,
+    "temperature": 104.6,
+    "pulse": 20,
+    "shattered": 1,
+    "dirt": 5
+  },
+  {
+    "diagnostic": "Chicken Feet",
+    "scan_text": "Patient feet have turned into chicken toes..",
+    "fix_text": "You've insvestigated the feet.",
+    "post_fix_text": "You fixed the patient's feet. They look like normal blocky toes again!",
+    "incisions_needed": 2,
+    "temperature": 98.6,
+    "fever": 1.56,
+    "dirt": 10,
+    "shattered": 2
+  },
+  {
+    "diagnostic": "Broken Heart",
+    "scan_text": "Patient suffered from a Broken Heart.",
+    "fix_text": "You've revealed the heart.",
+    "post_fix_text": "You've repaired the fractured in the patient's heart",
+    "incisions_needed": 1,
+    "shattered": 2,
+    "temperature": 107.6,
+    "fever": 1.2,
+    "dirt": 2
+  },
+  {
+    "diagnostic": "Brainworms",
+    "scan_text": "Patient suffers from Brainworms.",
+    "fix_text": "You've exposed the brain and found the worm.",
+    "post_fix_text": "You've shut down the worm party in the patient brain and cleared away their trash.",
+    "incisions_needed": 2,
+    "temperature": 100.58,
+    "shattered": 1,
+    "fever": 0.8,
+    "dirt": 10,
+    "bleeding": 5
+  },
+  {
+    "diagnostic": "Moldy Guts",
+    "scan_text": "Patient suffers from Moldy Guts.",
+    "fix_text": "You've openned the abdomen.",
+    "post_fix_text": "You'e cleaned out the patient's internal organs and applied a light air freshener",
+    "incisions_needed": 2,
+    "pulse": 20,
+    "temperature": 104.6,
+    "fever": 1.98,
+    "shattered": 1
+  },
+  {
+    "diagnostic": "Fatty Liver",
+    "scan_text": "Patient poor diet has led to a high degree of fat build-up in their liver.",
+    "fix_text": "You've exposed the liver.",
+    "post_fix_text": "You pickup it.",
+    "incisions_needed": 3,
+    "temperature": 101.6,
+    "fever": 2.0,
+    "dirt": 10,
+    "bleeding": 3
+  },
+  {
+    "diagnostic": "Chaos Infection",
+    "scan_text": "Patient suffers from a Vicious Chaos Infection. You have tamed the Vicious malady with a UV Vaccine",
+    "fix_text": "You've exposed a central artery",
+    "post_fix_text": "You've drawn corrupted blood out of the patient and severed their connection to chaos.",
+    "incisions_needed": 3,
+    "temperature": 105.6,
+    "fever": 2.6,
+    "broken": 2,
+    "dirt": 10,
+    "bleeding": 3
+  }
+]

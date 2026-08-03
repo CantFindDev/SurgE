@@ -1,3 +1,19 @@
+# SurgE Growtopia surgery simulator discord bot
+# Copyright (C) 2024 CantFind
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import sys
 import os
 import pathlib
@@ -12,21 +28,6 @@ try:
 except ImportError:
     HAS_SOCKS_SUPPORT = False
 
-# SurgE Growtopia surgery simulator discord bot
-# Copyright (C) 2024 CantFind
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published
-# by the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 load_dotenv()
 
@@ -38,7 +39,6 @@ is_socks = BOT_PROXY and BOT_PROXY.startswith("socks")
 native_http_proxy = BOT_PROXY if (BOT_PROXY and not is_socks) else None
 
 bot = commands.Bot(
-    command_prefix="!",
     intents=discord.Intents.default(),
     proxy=native_http_proxy
 )
@@ -52,7 +52,7 @@ async def setup_hook():
             print("To use SOCKS proxies, install it with: pip install aiohttp-socks\n")
             sys.exit(1)
 
-    await bot.load_extension("Surgery")
+    await bot.load_extension("cogs.surgery_cog")
 
 bot.setup_hook = setup_hook
 
@@ -64,6 +64,5 @@ async def on_ready():
         print(f"Synced {len(synced)} command(s)")
     except Exception as e:
         print(e)
-
 
 bot.run(BOT_TOKEN)

@@ -1,0 +1,126 @@
+[
+    {
+        "ItemName": "Thingamabob",
+        "ItemChance": 1
+    },
+    {
+        "ItemName": "Magnifying Glass",
+        "ItemChance": 2
+    },
+    {
+        "ItemName": "Edison Zoomster",
+        "ItemChance": 5
+    },
+    {
+        "ItemName": "Medical Scarf",
+        "ItemChance": 9
+    },
+    {
+        "ItemName": "DNA Processor",
+        "ItemChance": 15
+    },
+    {
+        "ItemName": "Techno Visor",
+        "ItemChance": 20
+    },
+    {
+        "ItemName": "Cybernetic Eye",
+        "ItemChance": 25
+    },
+    {
+        "ItemName": "Autoclave",
+        "ItemChance": 30
+    },
+    {
+        "ItemName": "Steel Spike",
+        "ItemChance": 35
+    },
+    {
+        "ItemName": "Wolf Whistle",
+        "ItemChance": 40
+    },
+    {
+        "ItemName": "Antidote",
+        "ItemChance": 45
+    },
+    {
+        "ItemName": "Legal Briefs",
+        "ItemChance": 50
+    },
+    {
+        "ItemName": "Scrub Cap",
+        "ItemChance": 90
+    },
+    {
+        "ItemName": "Scrub Mask",
+        "ItemChance": 130
+    },
+    {
+        "ItemName": "Scrub Top",
+        "ItemChance": 170
+    },
+    {
+        "ItemName": "Scrub Pants",
+        "ItemChance": 210
+    },
+    {
+        "ItemName": "Candy Striper Cap",
+        "ItemChance": 250
+    },
+    {
+        "ItemName": "Candy Striper Uniform",
+        "ItemChance": 290
+    },
+    {
+        "ItemName": "Candy Striper Skirt",
+        "ItemChance": 330
+    },
+    {
+        "ItemName": "Hospital Wall",
+        "ItemChance": 370
+    },
+    {
+        "ItemName": "Hospital Window",
+        "ItemChance": 410
+    },
+    {
+        "ItemName": "Hospital Curtain",
+        "ItemChance": 450
+    },
+    {
+        "ItemName": "Hospital Bed",
+        "ItemChance": 490
+    },
+    {
+        "ItemName": "Homeopathic Medicine",
+        "ItemChance": 510
+    },
+    {
+        "ItemName": "SurgicalScalpel",
+        "ItemChance": 580
+    },
+    {
+        "ItemName": "SurgicalStitches",
+        "ItemChance": 650
+    },
+    {
+        "ItemName": "SurgicalSponge",
+        "ItemChance": 720
+    },
+    {
+        "ItemName": "SurgicalAntiseptic",
+        "ItemChance": 790
+    },
+    {
+        "ItemName": "SurgicalAnesthetic",
+        "ItemChance": 860
+    },
+    {
+        "ItemName": "SurgicalAntibiotics",
+        "ItemChance": 930
+    },
+    {
+        "ItemName": "SurgicalSplint",
+        "ItemChance": 9999
+    }
+]
