@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f6fdfbd1-e03d-481f-bd6c-0f057da4ba1c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Surgery.py" beforeDir="false" afterPath="$PROJECT_DIR$/Surgery.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/Bot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EMPTY_.env" beforeDir="false" afterPath="$PROJECT_DIR$/EMPTY_.env" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +31,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Developement&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/USER/Desktop/GrowSurg/SurgE&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -65,6 +67,9 @@
       <workItem from="1740154091245" duration="2950000" />
       <workItem from="1740264872526" duration="4890000" />
       <workItem from="1740280470954" duration="6367000" />
+      <workItem from="1785744160166" duration="8000" />
+      <workItem from="1785744175866" duration="34000" />
+      <workItem from="1785744211148" duration="623000" />
     </task>
     <servers />
   </component>

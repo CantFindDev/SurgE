@@ -22,11 +22,16 @@ import discord
 load_dotenv()
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+BOT_PROXY = os.getenv("BOT_PROXY")
 BASE_DIR = pathlib.Path(__file__).parent
 
 
 
-bot = commands.Bot(command_prefix="!", intents=discord.Intents.default())
+bot = commands.Bot(
+    command_prefix="!"
+    ,intents=discord.Intents.default()
+    ,proxy=BOT_PROXY
+)
 
 @bot.event
 async def on_ready():
