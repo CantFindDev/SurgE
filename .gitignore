@@ -29,14 +29,53 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-#Intellij Raider cache directory
-.idea/
+#########################################################################
+#####################   Python & Environments   #########################
+#########################################################################
 
-#Envoirement variables file
+# Environment variables file
 .env*
 
-#Ignore Pycache
+# Ignore Pycache
 __pycache__/
+*.py[cod]
+*$py.class
 
-#virtual envoirement
+# Virtual environment
 .venv/
+venv/
+ENV/
+env/
+
+#########################################################################
+#################   PyCharm / JetBrains (Rider)   #######################
+#########################################################################
+
+# IntelliJ/JetBrains cache directory (Covers PyCharm, Rider, CLion, etc.)
+.idea/
+
+# Project configuration files
+*.iml
+*.iws
+*.ipr
+out/
+
+#########################################################################
+#########################   Visual Studio   #############################
+#########################################################################
+
+# Visual Studio cache/options directory
+.vs/
+
+# User-specific files
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+# Visual Studio Code (Included just in case!)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
