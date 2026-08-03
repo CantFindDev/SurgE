@@ -33,12 +33,20 @@ load_dotenv()
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 BOT_PROXY = os.getenv("BOT_PROXY")
+
+if not HAS_SOCKS_SUPPORT:
+    BOT_PROXY = None
+
 BASE_DIR = pathlib.Path(__file__).parent
 
 is_socks = BOT_PROXY and BOT_PROXY.startswith("socks")
-native_http_proxy = BOT_PROXY if (BOT_PROXY and not is_socks) else None
+if not is_socks:
+    BOT_PROXY = None
+
+native_http_proxy = None
 
 bot = commands.Bot(
+    command_prefix="!",
     intents=discord.Intents.default(),
     proxy=native_http_proxy
 )

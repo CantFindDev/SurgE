@@ -181,6 +181,10 @@ The following files are essential once you open the project:
    py -3 -m pip install -U discord.py
    py -3 -m pip install audioop-lts
    ```
+   *(Optional)* If you plan to use a SOCKS proxy, you must also install `aiohttp-socks`:
+   ```
+   py -3 -m pip install aiohttp-socks
+   ```
    <img src="https://i.imgur.com/UI1EXwF.png" width=50% height=50%>
    
 3. Rename the `EMPTY_.env` file to `.env`:
