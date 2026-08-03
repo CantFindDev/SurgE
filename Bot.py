@@ -1,8 +1,15 @@
 import os
 import pathlib
+import sys
 from dotenv.main import load_dotenv
 from discord.ext import commands
 import discord
+
+try:
+    from aiohttp_socks import ProxyConnector
+    HAS_SOCKS_SUPPORT = True
+except ImportError:
+    HAS_SOCKS_SUPPORT = False
 
  # SurgE Growtopia surgery simulator discord bot
  # Copyright (C) 2024 CantFind
@@ -25,13 +32,22 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 BOT_PROXY = os.getenv("BOT_PROXY")
 BASE_DIR = pathlib.Path(__file__).parent
 
-
+is_socks = BOT_PROXY and BOT_PROXY.startswith("socks")
+native_http_proxy = BOT_PROXY if (BOT_PROXY and not is_socks) else None
 
 bot = commands.Bot(
     command_prefix="!"
     ,intents=discord.Intents.default()
-    ,proxy=BOT_PROXY
+    ,proxy=native_http_proxy
 )
+
+if is_socks:
+    if HAS_SOCKS_SUPPORT:
+        bot.http.connector = ProxyConnector.from_url(BOT_PROXY)
+    else:
+        print("\n[ERROR] A SOCKS proxy was configured in .env, but 'aiohttp-socks' is not installed.")
+        print("To use SOCKS proxies, install it with: pip install aiohttp-socks\n")
+        sys.exit(1)
 
 @bot.event
 async def on_ready():
