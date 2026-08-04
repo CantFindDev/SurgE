@@ -45,24 +45,25 @@ if not is_socks:
 
 native_http_proxy = None
 
-bot = commands.Bot(
+class SurgeBot(commands.Bot):
+    async def login(self, token: str):
+        if is_socks and HAS_SOCKS_SUPPORT:
+            self.http.connector = ProxyConnector.from_url(BOT_PROXY, rdns=False)
+        await super().login(token)
+        
+    async def setup_hook(self):
+        if is_socks and not HAS_SOCKS_SUPPORT:
+            print("\n[ERROR] A SOCKS proxy was configured in .env, but 'aiohttp-socks' is not installed.")
+            print("To use SOCKS proxies, install it with: pip install aiohttp-socks\n")
+            sys.exit(1)
+            
+        await self.load_extension("cogs.surgery_cog")
+
+bot = SurgeBot(
     command_prefix="!",
     intents=discord.Intents.default(),
     proxy=native_http_proxy
 )
-
-async def setup_hook():
-    if is_socks:
-        if HAS_SOCKS_SUPPORT:
-            bot.http.connector = ProxyConnector.from_url(BOT_PROXY)
-        else:
-            print("\n[ERROR] A SOCKS proxy was configured in .env, but 'aiohttp-socks' is not installed.")
-            print("To use SOCKS proxies, install it with: pip install aiohttp-socks\n")
-            sys.exit(1)
-
-    await bot.load_extension("cogs.surgery_cog")
-
-bot.setup_hook = setup_hook
 
 @bot.event
 async def on_ready():
